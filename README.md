@@ -34,6 +34,25 @@ sudo reboot -now
 ```
 Once the server has rebooted, enter the server ip address in your browser and login with the supplied username and password. 
 
+## Update
+
+SSH on to your server. 
+
+```
+cd /tmp
+```
+Get the Ubuntu Updater
+
+```
+wget https://raw.githubusercontent.com/morph1904/TygerCaddy/master/TygerCaddy/tyger-update-ubuntu.sh
+```
+Now run it with sudo privileges
+
+```
+sudo . tyger-install-ubuntu.sh
+```
+
+Once complete, enter the server ip address in your browser and log on as normal. 
 
 ## Built With
 
