@@ -9,10 +9,7 @@ from django.contrib.auth.models import User
 def generate_caddyfile():
     project = settings.BASE_DIR
     caddyfilepath = project + '/caddyfile.conf'
-    # os.remove(caddyfilepath)
-    print(caddyfilepath)
-    print(os.remove(caddyfilepath))
-    print('Caddyfile deleted')
+
     caddyfile = open(caddyfilepath, "w+")
 
     user = User.objects.get(pk=1)
@@ -20,30 +17,25 @@ def generate_caddyfile():
     config = Config.objects.get(pk=1)
 
     for caddyhost in host_set:
-        print(caddyhost.tls)
         if (caddyhost.tls == False):
             domain = caddyhost.host_name + ':80 { \n \n'
         else:
             domain = caddyhost.host_name + ' { \n \n'
 
-        print('Proxy ' + caddyhost.proxy_host)
         proxy = 'proxy / ' + caddyhost.proxy_host + ' { \n' \
                 'transparent \n' \
                 'insecure_skip_verify' \
                 '  } \n'
 
         if caddyhost.tls:
-            print('TLS ' + user.email)
             caddytls = 'tls ' + user.email + '\n } \n \n'
             caddyfile.write(domain + proxy + caddytls)
         else:
-            print('No TLS ')
             proxy = proxy + '} \n \n'
             caddyfile.write(domain + proxy)
             caddyfile.close()
 
     caddyfile = open(caddyfilepath, "a")
-    print('Generating default host' + config.interface)
     domain = config.interface + ' { \n \n'
 
     proxy = 'proxy / ' + config.proxy_host + ' { \n' \
@@ -54,7 +46,6 @@ def generate_caddyfile():
            '} \n'
     caddyfile.write(domain + proxy + root)
     caddyfile.close()
-    print('Finished')
 
     # with open(project + '/caddypid.txt', 'r') as caddyservice:
     #   caddypid = caddyservice.read().replace('\n', '')
