@@ -22,45 +22,38 @@
 
     {# load Dashboard CSS #}
     <link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/paper-dashboard.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/now-ui-dashboard.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}" />
 
 
 </head>
-<body>
+<body class="">
 <div class="wrapper">
     {% include 'base/navs/left_nav.html' %}
 
     <div class="main-panel">
         {% include 'base/navs/top_nav.html' %}
-
-
-        <div class="content">
-            <div class="container-fluid">
-
-                <div class="row">
-                    {# Display django.contrib.messages as Bootstrap alerts #}
-
-                </div>
-                 {% block content %}
-                {% endblock %}
-
-                </div>
-            </div>
+        <div class="panel-header panel-header-sm">
         </div>
 
+        <div class="content">
 
-    {% include 'base/sections/footer.html' %}
+            {% block content %}
+                {% endblock %}
+
+        </div>
+
+        {% include 'base/sections/footer.html' %}
 
     </div>
-
-
+</div>
 
 {# Load JS #}
-<script src="{% static 'js/jquery-1.10.2.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/bootstrap-checkbox-radio.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/bootstrap-notify.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/paper-dashboard.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/core/jquery.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/core/popper.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/core/bootstrap.min.js' %}" type="text/javascript"></script>
+
+<script src="{% static 'js//core/bootstrap-notify.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/core/now-ui-dashboard.js' %}" type="text/javascript"></script>
 </body>
 </html>
