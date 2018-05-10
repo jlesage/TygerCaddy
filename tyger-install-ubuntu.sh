@@ -89,6 +89,8 @@ sleep 3
 
 python3 manage.py migrate
 python3 manage.py loaddata config
+python3 manage.py loaddata dns
+python3 manage.py loaddata variables
 
 
 read -p 'Please enter a username: ' uservar

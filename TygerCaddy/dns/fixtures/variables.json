@@ -1,0 +1,458 @@
+[
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 1,
+      "dns_provider_id": 1,
+      "variable": "AURORA_USER_ID"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 2,
+      "dns_provider_id": 1,
+      "variable": "AURORA_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 3,
+      "dns_provider_id": 1,
+      "variable": "AURORA_ENDPOINT"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 4,
+      "dns_provider_id": 2,
+      "variable": "AZURE_CLIENT_ID"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 5,
+      "dns_provider_id": 2,
+      "variable": "AZURE_CLIENT_SECRET"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 6,
+      "dns_provider_id": 2,
+      "variable": "AZURE_SUBSCRIPTION_ID"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 7,
+      "dns_provider_id": 2,
+      "variable": "AZURE_TENANT_ID"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 8,
+      "dns_provider_id": 3,
+      "variable": "CLOUDFLARE_EMAIL"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 9,
+      "dns_provider_id": 3,
+      "variable": "CLOUDFLARE_API_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 10,
+      "dns_provider_id": 4,
+      "variable": "CLOUDXNS_API_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 11,
+      "dns_provider_id": 4,
+      "variable": "CLOUDXNS_SECRET_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 12,
+      "dns_provider_id": 5,
+      "variable": "DO_AUTH_TOKEN"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 13,
+      "dns_provider_id": 6,
+      "variable": "DNSIMPLE_EMAIL"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 14,
+      "dns_provider_id": 6,
+      "variable": "DNSIMPLE_OAUTH_TOKEN"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 15,
+      "dns_provider_id": 7,
+      "variable": "DNSMADEEASY_API_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 16,
+      "dns_provider_id": 7,
+      "variable": "DNSMADEEASY_API_SECRET"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 17,
+      "dns_provider_id": 7,
+      "variable": "DNSMADEEASY_SANDBOX (true/false)"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 18,
+      "dns_provider_id": 8,
+      "variable": "DNSPOD_API_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 19,
+      "dns_provider_id": 9,
+      "variable": "DYN_CUSTOMER_NAME"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 20,
+      "dns_provider_id": 9,
+      "variable": "DYN_USER_NAME"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 21,
+      "dns_provider_id": 9,
+      "variable": "DYN_PASSWORD"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 22,
+      "dns_provider_id": 10,
+      "variable": "GANDI_API_KEY / GANDIV5_API_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 23,
+      "dns_provider_id": 11,
+      "variable": "GODADDY_API_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 24,
+      "dns_provider_id": 11,
+      "variable": "GODADDY_API_SECRET"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 25,
+      "dns_provider_id": 12,
+      "variable": "GCE_PROJECT"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 26,
+      "dns_provider_id": 12,
+      "variable": "GCE_DOMAIN"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 27,
+      "dns_provider_id": 12,
+      "variable": "GOOGLE_APPLICATION_CREDENTIALS"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 28,
+      "dns_provider_id": 12,
+      "variable": "(or GCE_SERVICE_ACCOUNT_FILE)"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 29,
+      "dns_provider_id": 13,
+      "variable": "AWS_ACCESS_KEY_ID"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 30,
+      "dns_provider_id": 13,
+      "variable": "AWS_SECRET_ACCESS_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 31,
+      "dns_provider_id": 13,
+      "variable": "AWS_SESSION_TOKEN (optional)"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 32,
+      "dns_provider_id": 13,
+      "variable": "DNS_ZONE (optional)"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 33,
+      "dns_provider_id": 14,
+      "variable": "LINODE_API_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 34,
+      "dns_provider_id": 15,
+      "variable": "NAMECHEAP_API_USER"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 35,
+      "dns_provider_id": 15,
+      "variable": "NAMECHEAP_API_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 36,
+      "dns_provider_id": 16,
+      "variable": "NS1_API_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 37,
+      "dns_provider_id": 17,
+      "variable": "NAMECOM_USERNAME"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 38,
+      "dns_provider_id": 18,
+      "variable": "NAMECOM_API_TOKEN"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 39,
+      "dns_provider_id": 19,
+      "variable": "OVH_ENDPOINT"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 40,
+      "dns_provider_id": 19,
+      "variable": "OVH_APPLICATION_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 41,
+      "dns_provider_id": 19,
+      "variable": "OVH_APPLICATION_SECRET"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 42,
+      "dns_provider_id": 19,
+      "variable": "OVH_CONSUMER_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 43,
+      "dns_provider_id": 20,
+      "variable": "OTC_DOMAIN_NAME"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 44,
+      "dns_provider_id": 20,
+      "variable": "OTC_USER_NAME"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 45,
+      "dns_provider_id": 20,
+      "variable": "OTC_PASSWORD"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 46,
+      "dns_provider_id": 20,
+      "variable": "OTC_PROJECT_NAME"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 47,
+      "dns_provider_id": 20,
+      "variable": "OTC_IDENTITY_ENDPOINT (optional)"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 48,
+      "dns_provider_id": 21,
+      "variable": "PDNS_API_URL"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 49,
+      "dns_provider_id": 21,
+      "variable": "PDNS_API_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 50,
+      "dns_provider_id": 22,
+      "variable": "RACKSPACE_USER"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 51,
+      "dns_provider_id": 22,
+      "variable": "RACKSPACE_API_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 52,
+      "dns_provider_id": 22,
+      "variable": "RFC2136_NAMESERVER"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 53,
+      "dns_provider_id": 22,
+      "variable": "RFC2136_TSIG_ALGORITHM"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 54,
+      "dns_provider_id": 22,
+      "variable": "RFC2136_TSIG_KEY"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 55,
+      "dns_provider_id": 22,
+      "variable": "RFC2136_TSIG_SECRET"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 56,
+      "dns_provider_id": 23,
+      "variable": "AWS_ACCESS_KEY_ID"
+    }
+  },
+  {
+    "model": "dns.evariables",
+    "fields": {
+      "id": 57,
+      "dns_provider_id": 23,
+      "variable": "AWS_SECRET_ACCESS_KEY"
+    }
+  }
+]

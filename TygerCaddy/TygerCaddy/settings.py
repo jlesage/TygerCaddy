@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     'dashboard.apps.DashboardConfig',
     'hosts.apps.HostsConfig',
+    'dns.apps.DnsConfig',
 ]
 
 MIDDLEWARE = [
