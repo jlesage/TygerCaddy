@@ -19,7 +19,7 @@ cd /tmp
 Get the Ubuntu Installer
 
 ```
-wget https://raw.githubusercontent.com/morph1904/TygerCaddy/master/TygerCaddy/tyger-install-ubuntu.sh
+wget https://raw.githubusercontent.com/morph1904/TygerCaddy/master/tyger-install-ubuntu.sh
 ```
 Now run it with sudo privileges
 

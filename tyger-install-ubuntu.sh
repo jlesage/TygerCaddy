@@ -55,7 +55,6 @@ chown -R root:www-data /etc/caddy
 mkdir -p /etc/ssl/caddy
 chown -R www-data:root /etc/ssl/caddy
 chmod 770 /etc/ssl/caddy
-touch /etc/caddy/Caddyfile
 mkdir -p /var/www
 chown www-data:www-data /var/www
 chmod 755 /var/www
