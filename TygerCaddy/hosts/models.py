@@ -15,5 +15,9 @@ class Host(models.Model):
 
 
 class Config(models.Model):
+    name = models.CharField(max_length=200, blank=False, unique=True)
     interface = models.CharField(max_length=200, blank=False, unique=True)
-    proxy_host = models.CharField(max_length=200, blank=True)
+    port = models.IntegerField(blank=False, unique=True)
+    proxy_host = models.CharField(max_length=200, blank=False)
+    proxy_exception = models.CharField(max_length=200, blank=False)
+    root_dir = models.CharField(max_length=200, blank=False)

@@ -1,4 +1,6 @@
 {% load static %}
+{% load active_link_tags %}
+
 <div class="sidebar" data-color="orange">
 
     <!--
@@ -17,10 +19,16 @@
         </div>
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="active">
+                <li class="{% active_link 'dashboard' %}">
                     <a href="{% url 'dashboard' %}">
                         <i class="now-ui-icons design_app"></i>
                         <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="{% if request.path == '/hosts/config/edit/primary/' %} active {% endif %}">
+                    <a href="{% url 'update-config' slug='primary' %}">
+                        <i class="now-ui-icons loader_gear"></i>
+                        <p>Configuration</p>
                     </a>
                 </li>
             </ul>

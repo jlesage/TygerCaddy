@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header ">
+                    <h5 class="card-category">Config</h5>
+                    <h4 class="card-title">Edit Config</h4>
+                </div>
+                <div class="card-body ">
+                    <div class="alert-danger">WARNING: Editing things here can break things. If you get issues please
+                        try to access your dashboard with http://
+                        <your-ip>:9090/</your-ip>
+                    </div>
+                    <form action="" method="post" class="form">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
