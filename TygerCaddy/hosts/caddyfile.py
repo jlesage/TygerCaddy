@@ -6,6 +6,25 @@ from .models import Host, Config
 from django.contrib.auth.models import User
 
 
+def generate_dash():
+    project = settings.BASE_DIR
+    caddyfilepath = project + '/caddyfile.conf'
+    config = Config.objects.get(pk=1)
+
+    block = config.interface + ':' + str(config.port) + ' { \n \n' \
+                                                        'proxy / ' + config.proxy_host + ' { \n' \
+                                                                                         'transparent \n' \
+                                                                                         'except ' + config.proxy_exception + '\n' \
+                                                                                                                              '} \n \n' \
+                                                                                                                              'root ' + str(
+        config.root_dir) + '\n' \
+                           '} \n'
+
+    caddyfile = open(caddyfilepath, "a")
+    caddyfile.write(block)
+    caddyfile.close()
+
+
 def generate_caddyfile():
     project = settings.BASE_DIR
     caddyfilepath = project + '/caddyfile.conf'
@@ -14,7 +33,6 @@ def generate_caddyfile():
 
     user = User.objects.get(pk=1)
     host_set = Host.objects.all()
-    config = Config.objects.get(pk=1)
 
     for caddyhost in host_set:
         if (caddyhost.tls == False):
@@ -35,26 +53,8 @@ def generate_caddyfile():
             caddyfile.write(domain + proxy)
             caddyfile.close()
 
-    caddyfile = open(caddyfilepath, "a")
-    domain = config.interface + ' { \n \n'
-
-    proxy = 'proxy / ' + config.proxy_host + ' { \n' \
-                                             'transparent \n' \
-                                             'except /assets \n' \
-                                             '} \n \n'
-    root = 'root /apps/TygerCaddy/TygerCaddy/ \n' \
-           '} \n'
-    caddyfile.write(domain + proxy + root)
-    caddyfile.close()
-
-    # with open(project + '/caddypid.txt', 'r') as caddyservice:
-    #   caddypid = caddyservice.read().replace('\n', '')
-    #  print(caddypid)
-
-    # command = "kill -s USR1 " + caddypid
-    # print(command)
-    # reload = subprocess.run(command, shell=True)
-    subprocess.call(['sudo', 'service', 'caddy', 'reload'])
+    generate_dash()
+    # subprocess.call(['sudo', 'service', 'caddy', 'reload'])
     return True
 
 
