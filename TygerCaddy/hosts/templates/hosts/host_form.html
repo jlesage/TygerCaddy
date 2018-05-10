@@ -3,17 +3,22 @@
 {% block content %}
 
 <div class="row">
-    <div class="col-lg-6 col-lg-offset-3 col-sm-12">
+    <div class="col-md-12">
         <div class="card">
-            <div class="content">
+            <div class="card-header ">
+                <h5 class="card-category">Hosts</h5>
+                <h4 class="card-title">Add Host</h4>
+            </div>
+            <div class="card-body ">
                 <form action="" method="post" class="form">
                     {% csrf_token %}
                     {% bootstrap_form form %}
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
 
 
