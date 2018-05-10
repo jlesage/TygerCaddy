@@ -25,7 +25,13 @@ Licensed under the MIT license - http://opensource.org/licenses/MIT
 
 Copyright (c) 2015 Daniel Eden
 */
-
+@media all and (min-width: 992px) {
+    .sidebar .nav > li.active-pro {
+        position: absolute;
+        width: 100%;
+        bottom: 10px;
+    }
+}
 .animated {
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
