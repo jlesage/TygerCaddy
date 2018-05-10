@@ -1,8 +1,8 @@
 import os
-import time
 import subprocess
 from django.conf import settings
 from .models import Host, Config
+from dns.models import EVariables
 from django.contrib.auth.models import User
 
 
@@ -25,7 +25,20 @@ def generate_dash():
     caddyfile.close()
 
 
+def set_evariables(config, dns):
+    variables = EVariables.objects.filter(dns_provider_id=dns.id)
+
+    for var in variables:
+        os.environ[var.variable] = str(var.value)
+        print(os.environ[var.variable])
+
+
 def generate_caddyfile():
+    config = Config.objects.get(pk=1)
+    if config.dns_provider:
+        dns = config.dns_provider
+        caddyname = dns.caddy_name
+        set_evariables(config=config, dns=dns)
     project = settings.BASE_DIR
     caddyfilepath = project + '/caddyfile.conf'
 
@@ -35,24 +48,21 @@ def generate_caddyfile():
     host_set = Host.objects.all()
 
     for caddyhost in host_set:
-        if (caddyhost.tls == False):
-            domain = caddyhost.host_name + ':80 { \n \n'
-        else:
-            domain = caddyhost.host_name + ' { \n \n'
-
+        block = caddyhost.host_name + ' { \n \n'
         proxy = 'proxy / ' + caddyhost.proxy_host + ' { \n' \
-                'transparent \n' \
-                'insecure_skip_verify' \
-                '  } \n'
-
-        if caddyhost.tls:
-            caddytls = 'tls ' + user.email + '\n } \n \n'
-            caddyfile.write(domain + proxy + caddytls)
+                                                    'transparent \n' \
+                                                    'insecure_skip_verify \n' \
+                                                    '  } \n'
+        if caddyhost.tls == False:
+            caddytls = 'tls off \n } \n \n'
+        elif config.dns_challenge:
+            caddytls = 'tls ' + caddyname + '\n } \n \n'
         else:
-            proxy = proxy + '} \n \n'
-            caddyfile.write(domain + proxy)
-            caddyfile.close()
+            caddytls = 'tls ' + user.email + '\n } \n \n'
 
+        caddyfile.write(block + proxy + caddytls)
+
+    caddyfile.close()
     generate_dash()
     # subprocess.call(['sudo', 'service', 'caddy', 'reload'])
     return True
