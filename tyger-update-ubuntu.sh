@@ -16,7 +16,7 @@ sleep 6
 
 echo 'Backing up DB and caddyfile'
 
-mkdir /backup
+mkdir -p /backup
 
 cp /apps/TygerCaddy/TygerCaddy/db.sqlite3 /backup/db.sqlite3
 cp /apps/TygerCaddy/TygerCaddy/caddyfile.conf /backup/caddyfile.conf
