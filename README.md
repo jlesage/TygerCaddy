@@ -45,7 +45,7 @@ cd /tmp
 Get the Ubuntu Updater
 
 ```
-wget https://raw.githubusercontent.com/morph1904/TygerCaddy/master/TygerCaddy/tyger-update-ubuntu.sh
+wget https://raw.githubusercontent.com/morph1904/TygerCaddy/master/tyger-update-ubuntu.sh
 ```
 Now run it with sudo privileges
 
