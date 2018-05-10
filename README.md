@@ -6,6 +6,7 @@ Caddy based reverse proxy app with web GUI
 
 ##INFO!
 Please be aware this is still in BETA and not suitable for a production environment. 
+Although this app uses Caddy, we are not affiliated with or endorsed by the Caddy team. 
 
 ###Install Instructions (Ubuntu 16.04 +)
 Currently only ubuntu is supported by the install script
