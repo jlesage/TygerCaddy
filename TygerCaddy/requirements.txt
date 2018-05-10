@@ -19,3 +19,4 @@ six==1.11.0
 urllib3==1.22
 whichcraft==0.4.1
 uwsgi==2.0.17
+django-active-link==0.1.4

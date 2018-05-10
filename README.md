@@ -4,11 +4,11 @@ Caddy based reverse proxy app with web GUI
 
 
 
-##INFO!
+# INFO!
 Please be aware this is still in BETA and not suitable for a production environment. 
 Although this app uses Caddy, we are not affiliated with or endorsed by the Caddy team. 
 
-###Install Instructions (Ubuntu 16.04 +)
+## Install Instructions (Ubuntu 16.04 +)
 Currently only ubuntu is supported by the install script
 
 
@@ -45,12 +45,12 @@ cd /tmp
 Get the Ubuntu Updater
 
 ```
-wget https://raw.githubusercontent.com/morph1904/TygerCaddy/master/TygerCaddy/tyger-update-ubuntu.sh
+wget https://raw.githubusercontent.com/morph1904/TygerCaddy/master/tyger-update-ubuntu.sh
 ```
 Now run it with sudo privileges
 
 ```
-sudo . tyger-install-ubuntu.sh
+sudo . tyger-update-ubuntu.sh
 ```
 
 Once complete, enter the server ip address in your browser and log on as normal. 

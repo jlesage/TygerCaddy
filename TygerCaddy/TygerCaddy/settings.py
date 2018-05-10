@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     # Custom Apps
 
     'bootstrap4',
+    'active_link',
 
-    #internal apps
+    # internal apps
 
     'dashboard.apps.DashboardConfig',
     'hosts.apps.HostsConfig',
