@@ -51,7 +51,9 @@ service uwsgi start
 service caddy start
 
 echo Setting up initial install....
-
+cd /apps/TygerCaddy/TygerCaddy
+pip3 install -r requirements.txt
+python3 manage.py migrate
 
 echo Install Complete!, Enter the server IP in your chosen browser and login.
 
