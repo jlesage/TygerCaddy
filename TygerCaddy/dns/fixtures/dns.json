@@ -1,0 +1,163 @@
+[
+  {
+    "model": "dns.dns",
+    "fields": {
+      "name": "Aurora DNS by PCExtreme",
+      "caddy_name": "auroradns"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "Azure DNS",
+      "caddy_name": "azure"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "Cloudflare",
+      "caddy_name": "cloudflare"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "CloudXNS",
+      "caddy_name": "cloudxns"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "DigitalOcean",
+      "caddy_name": "digitalocean"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "DNSimple",
+      "caddy_name": "dnsimple"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "DNS Made Easy",
+      "caddy_name": "dnsmadeeasy"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "DNSPod",
+      "caddy_name": "dnspod"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "DynDNS",
+      "caddy_name": "dyn"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "Gandi",
+      "caddy_name": "gandi / gandiv5"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "GoDaddy",
+      "caddy_name": "godaddy"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "Google Cloud DNS",
+      "caddy_name": "googlecloud"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "Lightsail by AWS",
+      "caddy_name": "lightsail"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "Linode",
+      "caddy_name": "linode"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "Namecheap",
+      "caddy_name": "namecheap"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "NS1.",
+      "caddy_name": "ns1"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "Name.com",
+      "caddy_name": "namedotcom"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "OVH",
+      "caddy_name": "ovh"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "Open Telekom Cloud Managed DNS",
+      "caddy_name": "otc"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "PowerDNS",
+      "caddy_name": "pdns"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "Rackspace",
+      "caddy_name": "rackspace"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "Route53 by AWS",
+      "caddy_name": "route53"
+    }
+  },
+  {
+    "model": "dns.dns",
+    "fields": {
+      "provider_name": "Vultr",
+      "caddy_name": "vultr"
+    }
+  }
+]

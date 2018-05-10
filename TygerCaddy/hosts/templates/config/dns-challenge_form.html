@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header ">
+                    <h5 class="card-category">Config</h5>
+                    <h4 class="card-title">Setup DNS Challenge</h4>
+                </div>
+                <div class="card-body ">
+                    <div class="alert-danger">WARNING: Editing things here can break stuff. You may loose your SSL
+                        capability if this is configured incorrectly.<br>
+                        If you have selected DNS Challenge you, must fill out this page correctly or HTTPS may not work
+                        and your reverse proxy may not operate at all. <br>
+                        Visit the website of your DNS provider to get the below required information.
+                    </div>
+                    <form action="" method="post" class="form">
+                        {% csrf_token %}
+                        {% for var in variables %}
+                            <div class="form-group">
+                                <label for="{{ var.id }}">{{ var.variable }}</label>
+                                <input type="text" class="form-control" name="{{ var.variable }}" id="{{ var.id }}"
+                                       value="{% if var.value %}{{ var.value }}{% endif %}">
+                                {% if not var.value %}
+                                    <p>No value currently set!</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
