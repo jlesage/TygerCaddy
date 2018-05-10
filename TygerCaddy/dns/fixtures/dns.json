@@ -2,7 +2,7 @@
   {
     "model": "dns.dns",
     "fields": {
-      "name": "Aurora DNS by PCExtreme",
+      "provider_name": "Aurora DNS by PCExtreme",
       "caddy_name": "auroradns"
     }
   },
