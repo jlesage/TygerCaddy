@@ -4,33 +4,16 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4 text-left">
-                <nav>
-                    <ul>
-                        <li>
-                            <a href="https://github.com/morph1904/TygerCaddy">
-                                TygerCaddy by morph1904
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+               TygerCaddy on <a href="https://github.com/morph1904/TygerCaddy" target="_blank">Github</a>
             </div>
-            <div class="col-md-4 text-center">
-                <a href="https://caddyserver.com"><img src="{% static '/img/party-front-caddy-back-black.png' %}"></a>
+             <div class="col-md-4 text-center">
+                <a href="https://caddyserver.com" target="_blank"><img class="caddy-logo" src="{% static '/img/party-front-caddy-back-black.png' %}"></a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 text-right">
                 <div class="copyright">
-                    &copy;
-                    <script>
-                        document.write(new Date().getFullYear())
-                    </script>
-                    , Lead Developer
-                    <a href="https://github.com/morph1904/" target="_blank">Morph1904</a>.
-                    Coded by
-                    <a href="https://www.creative-tim.com" target="_blank">Morph1904</a>.
+                    &copy; {% now 'Y' %} Lead Developer <a href="https://github.com/morph1904/" target="_blank">Morph1904</a>.
                 </div>
             </div>
         </div>
-
-
     </div>
 </footer>
