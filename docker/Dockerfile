@@ -25,7 +25,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
 
 # Install application
 RUN mkdir -p /apps && cd /apps && \
-  git clone https://github.com/morph1904/TygerCaddy.git && \
+  git clone -b docker --single-branch https://github.com/sparky8251/TygerCaddy.git --depth 1 && \
   mkdir -p /apps/TygerCaddy/sites && \
   curl https://getcaddy.com | bash -s personal hook.service,http.filemanager,http.jwt,http.mailout,http.minify,http.proxyprotocol,http.upload,net,tls.dns.godaddy && \
   cd /apps/TygerCaddy/TygerCaddy && \
