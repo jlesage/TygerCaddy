@@ -25,6 +25,11 @@ class Index(View):
         dnsbool = 0
         if form['dns'] == 'on':
             dnsbool = '1'
+
+        if not form['dns_provider']:
+            dns_provider = ""
+        else:
+            dns_provider = form['dns_provider']
         config = {
             'username': form['username'],
             'password': form['password'],
@@ -33,7 +38,7 @@ class Index(View):
             'port': form['port'],
             'proxy-host': form['proxy-host'],
             'dns': dnsbool,
-            'dns-provider': form['dns_provider'],
+            'dns-provider': dns_provider,
             'dash-colour': form['dash-colour']
         }
 
