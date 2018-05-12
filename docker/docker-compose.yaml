@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  tygercaddy:
+    image: tygercaddy/tygercaddy:testing
+    environment:
+      - username=admin
+      - password=secret
+      - email=admin@example.com
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
