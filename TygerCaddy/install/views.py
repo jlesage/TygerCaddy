@@ -46,7 +46,7 @@ class Index(View):
                             name='primary', port=config['port'],
                             proxy_exception='/assets',
                             root_dir='/apps/TygerCaddy/TygerCaddy',
-                            dns_challenge=dnsbool,
+                            dns_challenge=dns_check,
                             dns_provider_id=config['dns-provider'])
         new_config.save()
         generate_keyfile()
