@@ -48,7 +48,7 @@ RUN mkdir -p /etc/caddy && \
 
 EXPOSE 80 443
 
-VOLUME ["/apps/TygerCaddy/sites/","/etc/ssl/caddy/"]
+VOLUME ["/apps/TygerCaddy/","/etc/ssl/caddy/"]
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
