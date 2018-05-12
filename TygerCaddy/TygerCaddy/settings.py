@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-
+from pathlib import Path
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -20,7 +20,12 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '35xmd5qnsjdmyhp8kdc3j)lf&a@%$m$1+*g%)ex_!c1qw9d%&x'
+key = Path(os.path.join(BASE_DIR, 'data/secret.txt'))
+if not key.exists():
+    SECRET_KEY = 'thisisatemporarykeyuntilltheinstallercompletes'
+else:
+    with open(key) as f:
+        SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -48,6 +53,7 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'hosts.apps.HostsConfig',
     'dns.apps.DnsConfig',
+    'install.apps.InstallConfig',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'TygerCaddy.install_middleware.InstallMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -87,7 +94,7 @@ WSGI_APPLICATION = 'TygerCaddy.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'data/db.sqlite3'),
     }
 }
 
@@ -134,3 +141,8 @@ STATIC_ROOT = ''
 STATIC_URL = '/assets/'
 
 STATICFILES_DIRS = ( os.path.join('assets'), )
+
+try:
+    from .install import *
+except ImportError:
+    pass

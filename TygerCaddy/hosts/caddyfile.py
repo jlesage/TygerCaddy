@@ -1,14 +1,15 @@
 import os
-import subprocess
+
 from django.conf import settings
-from .models import Host, Config
-from dns.models import EVariables
 from django.contrib.auth.models import User
+from dns.models import EVariables
+
+from .models import Host, Config
 
 
 def generate_dash():
     project = settings.BASE_DIR
-    caddyfilepath = project + '/caddyfile.conf'
+    caddyfilepath = project + '/data/caddyfile.conf'
     config = Config.objects.get(pk=1)
 
     block = config.interface + ':' + str(config.port) + ' { \n \n' \
@@ -40,7 +41,7 @@ def generate_caddyfile():
         caddyname = dns.caddy_name
         set_evariables(config=config, dns=dns)
     project = settings.BASE_DIR
-    caddyfilepath = project + '/caddyfile.conf'
+    caddyfilepath = project + '/data/caddyfile.conf'
 
     caddyfile = open(caddyfilepath, "w+")
 

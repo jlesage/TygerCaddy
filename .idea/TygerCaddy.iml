@@ -12,6 +12,7 @@
         <option value="$MODULE_DIR$/TygerCaddy/dashboard/templates" />
         <option value="$MODULE_DIR$/TygerCaddy/templates" />
         <option value="$MODULE_DIR$/TygerCaddy/hosts/templates" />
+        <option value="$MODULE_DIR$/TygerCaddy/install/templates" />
       </list>
     </option>
   </component>

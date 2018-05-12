@@ -41,6 +41,7 @@ sleep 3
 cd /apps
 git clone https://github.com/morph1904/TygerCaddy.git
 mkdir /apps/TygerCaddy/sites
+mkdir /apps/TygerCaddy/data
 
 
 echo Installing and setting up CaddyServer
@@ -70,7 +71,7 @@ cp /apps/TygerCaddy/uwsgi.service /etc/systemd/system/uwsgi.service
 systemctl daemon-reload
 systemctl enable caddy.service
 systemctl enable uwsgi.service
-chmod -R 0777 /apps
+chmod -R 0775 /apps
 cd /apps/TygerCaddy/TygerCaddy
 
 echo Starting base Services.....
@@ -84,37 +85,14 @@ sleep 3
 
 pip3 install -r requirements.txt
 
-echo Installing TygerCaddy almost there! We need some input from you here.
+echo Installing TygerCaddy almost there!
 sleep 3
 
-python3 manage.py migrate
-python3 manage.py loaddata config
-python3 manage.py loaddata dns
-python3 manage.py loaddata variables
-
-
-read -p 'Please enter a username: ' uservar
-read -sp 'Please enter a password: ' passvar
-read -p 'Please enter an email address: ' emailvar
-echo creating user with your details:
-sleep 3
-script="
-from django.contrib.auth.models import User;
-username = '$uservar';
-password = '$passvar';
-email = '$emailvar';
-if User.objects.filter(username=username).count()==0:
-    User.objects.create_superuser(username, email, password);
-    print('Superuser created.');
-else:
-    print('Superuser creation skipped.');
-"
-printf "$script" | python3 manage.py shell
 
 service uwsgi stop
 service uwsgi start
 
-echo Install Complete!, Enter the server IP in your chosen browser and login with username $uservar and the password you provided earlier.
+echo Install Complete!, Enter the server IP in your chosen browser complete the install wizard.
 
 
 

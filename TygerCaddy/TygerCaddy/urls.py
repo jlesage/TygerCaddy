@@ -14,16 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.views.generic import RedirectView
-from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/dashboard/')),
+    path('install/', include('install.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('hosts/', include('hosts.urls')),
     path('admin/', admin.site.urls),
-    path('accounts/login/', auth_views.login, {'template_name': 'dashboard/login.html'} , name='login'),
+    path('accounts/login/', auth_views.login, {'template_name': 'dashboard/login.html'}, name='login'),
     path('accounts/logout/', auth_views.logout, {'next_page': '/accounts/login'}, name='logout'),
     path('accounts/password/change/', auth_views.password_change, {'template_name': 'dashboard/pass-change.html'},  name='update-password'),
     path('accounts/password/change/done/', auth_views.password_change_done, {'template_name': 'dashboard/pass-change-done.html'}, name='password_change_done'),
