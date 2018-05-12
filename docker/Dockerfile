@@ -2,9 +2,9 @@
 # AUTHOR:       Tyler Parisi <tyler@possumlodge.me>
 # DESCRIPTION:  WebUI autoproxy with Caddy
 # TO_BUILD:     docker build -t tygercaddy/tygercaddy .
-# TO_RUN:       docker run -d -p 80:80 -p 443:443 --name tygercaddy tygercaddy/tygercaddy
 
 FROM ubuntu:16.04
+ENV TYGER_ROOT=/apps/TygerCaddy/
 
 # update, install, and cleanup packages
 RUN DEBIAN_FRONTEND=noninteractive \
@@ -25,14 +25,13 @@ RUN DEBIAN_FRONTEND=noninteractive \
 
 # Install application
 RUN mkdir -p /apps && cd /apps && \
-  git clone -b docker --single-branch https://github.com/sparky8251/TygerCaddy.git --depth 1 && \
-  mkdir -p /apps/TygerCaddy/sites && \
+  git clone https://github.com/morph1904/TygerCaddy.git --depth 1 && \
   curl https://getcaddy.com | bash -s personal hook.service,http.filemanager,http.jwt,http.mailout,http.minify,http.proxyprotocol,http.upload,net,tls.dns.godaddy && \
-  cd /apps/TygerCaddy/TygerCaddy && \
+  cd $TYGER_ROOT/TygerCaddy && \
   pip3 install uwsgi && \
-  pip3 install -r /apps/TygerCaddy/TygerCaddy/requirements.txt
+  pip3 install -r $TYGER_ROOT/TygerCaddy/requirements.txt
 
-# Add any additional folders required, correct file permissions
+# Add any additional folders required, correct file permissions, initialize db
 RUN mkdir -p /etc/caddy && \
   mkdir -p /etc/ssl/caddy && \
   mkdir -p /var/www && \
@@ -44,11 +43,15 @@ RUN mkdir -p /etc/caddy && \
   chmod 770 /etc/ssl/caddy && \
   chown www-data:www-data /var/www && \
   chmod 755 /var/www && \
-  chmod -R 0775 /apps
+  chmod -R 0775 /apps && \
+  python3 $TYGER_ROOT/TygerCaddy/manage.py migrate && \
+  python3 $TYGER_ROOT/TygerCaddy/manage.py loaddata config && \
+  python3 $TYGER_ROOT/TygerCaddy/manage.py loaddata dns && \
+  python3 $TYGER_ROOT/TygerCaddy/manage.py loaddata variables
 
 EXPOSE 80 443
 
-VOLUME ["/apps/TygerCaddy/TygerCaddy/db.sqlite3","/etc/ssl/caddy/"]
+VOLUME ["/apps/TygerCaddy/TygerCaddy","/etc/ssl/caddy/"]
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
