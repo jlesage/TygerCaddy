@@ -8,23 +8,25 @@ body, html {
 	position: relative;
 }
 #login-box {
-	position: absolute;
-	top: 0px;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 350px;
-	margin: 0 auto;
-	border: 1px solid black;
-	background: rgba(48, 46, 45, 1);
-	min-height: 250px;
-	padding: 20px;
-	z-index: 9999;
+    margin: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    width: 350px;
+    border: 1px solid black;
+    background: rgba(48, 46, 45, 1);
+    min-height: 250px;
+    padding: 20px;
+    z-index: 9999;
+	border-radius: 5px;
 }
 #login-box .logo .logo-caption {
 	font-family: 'Poiret One', cursive;
 	color: white;
 	text-align: center;
 	margin-bottom: 0px;
+    margin-top: 25px;
 }
 #login-box .logo .tweak {
 	color: #ff5252;
@@ -32,11 +34,9 @@ body, html {
 #login-box .controls {
 	padding-top: 30px;
 }
-#login-box .controls input {
+#login-box .controls  {
 	border-radius: 0px;
-	background: rgb(98, 96, 96);
 	border: 0px;
-	color: white;
 	font-family: 'Nunito', sans-serif;
 }
 #login-box .controls input:focus {
@@ -75,4 +75,25 @@ body, html {
   	position: fixed;
   	top: 0px;
   	z-index:1;
+}
+
+
+.main-logo {
+    height: 100px; /*can be anything*/
+    width: 100px; /*can be anything*/
+}
+img {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+	border-radius: 50%;
+}
+
+::placeholder {
+  color: white;
 }
