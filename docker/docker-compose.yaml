@@ -2,7 +2,7 @@ version: '2'
 
 services:
   tygercaddy:
-    image: tygercaddy/tygercaddy:testing
+    image: morph1904/tygercaddy:alpine-testing
     environment:
       - username=admin
       - password=secret
