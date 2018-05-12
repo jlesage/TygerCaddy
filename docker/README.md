@@ -14,7 +14,7 @@ Running TygerCaddy
         -e username=admin \
         -e password=secret \
         -e email=admin@example.com \
-        tygercaddy/tygercaddy:testing
+        morph1904/tygercaddy:alpine-testing
 
 Then point your browser to http://127.0.0.1/ and login with the provided credentials
 
@@ -23,4 +23,4 @@ Building TygerCaddy
 
 First clone the repo and cd to it
 
-    docker build -t tygercaddy/tygercaddy:testing docker/.
+    docker build -t morph1904/tygercaddy:alpine-testing docker/.

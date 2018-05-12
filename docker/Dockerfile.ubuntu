@@ -1,0 +1,47 @@
+# VERSION 0.1
+# AUTHOR:       Tyler Parisi <tyler@possumlodge.me>
+# DESCRIPTION:  WebUI autoproxy with Caddy
+# TO_BUILD:     docker build -t morph1904/tygercaddy .
+
+FROM ubuntu:16.04
+ENV TYGER_ROOT=/apps/TygerCaddy/
+
+# update, install, and cleanup packages
+RUN DEBIAN_FRONTEND=noninteractive \
+  apt-get update && apt-get -y upgrade && apt-get -y install --no-install-recommends \
+    python3 \
+    python3-pip \
+    python3-setuptools \
+    python3-wheel \
+    python3-dev \
+    gcc \
+    libssl1.0.0 \
+    libffi6 \
+    git \
+    curl && \
+  apt-get clean autoclean && \
+  apt-get autoremove && \
+  rm -rf /var/lib/{apt,dpkg,cache,log}
+
+# Install application
+RUN mkdir -p /apps && cd /apps && \
+  git clone https://github.com/morph1904/TygerCaddy.git --depth 1 && \
+  curl https://getcaddy.com | bash -s personal hook.service,http.filemanager,http.jwt,http.mailout,http.minify,http.proxyprotocol,http.upload,net,tls.dns.godaddy && \
+  cd $TYGER_ROOT/TygerCaddy && \
+  pip3 install uwsgi && \
+  pip3 install -r $TYGER_ROOT/TygerCaddy/requirements.txt
+
+# Add any additional folders required, correct file permissions, initialize db
+RUN mkdir -p /etc/ssl/caddy && \
+  python3 $TYGER_ROOT/TygerCaddy/manage.py migrate && \
+  python3 $TYGER_ROOT/TygerCaddy/manage.py loaddata config && \
+  python3 $TYGER_ROOT/TygerCaddy/manage.py loaddata dns && \
+  python3 $TYGER_ROOT/TygerCaddy/manage.py loaddata variables
+
+EXPOSE 80 443
+
+VOLUME ["/apps/TygerCaddy/TygerCaddy","/etc/ssl/caddy/"]
+
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["run"]
