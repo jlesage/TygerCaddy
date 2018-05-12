@@ -6,8 +6,8 @@
 <html lang="en" class="perfect-scrollbar-on">
 <head>
     <meta charset="UTF-8">
-    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'nowui/img/apple-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'nowui/img/favicon.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/apple-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'img/favicon.png' %}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
     {% if view.title %}
@@ -17,7 +17,7 @@
     {% endif %}
 
     {# Load CSS #}
-    <link rel="stylesheet" href="{% static 'nowui/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
           name='viewport'/>
@@ -26,7 +26,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
 
     {# load Dashboard CSS #}
-    <link rel="stylesheet" href="{% static 'nowui/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/smart_wizard.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/smart_wizard_theme_arrows.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/now-ui-dashboard.min.css' %}"/>
@@ -222,15 +222,15 @@
 </body>
 
 <!--   Core JS Files   -->
-<script src="{% static 'nowui/js/core/jquery.3.2.1.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'nowui/js/core/popper.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'nowui/js/core/bootstrap.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/core/jquery.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/core/popper.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/core/bootstrap.min.js' %}" type="text/javascript"></script>
 <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
-<script src="{% static 'nowui/js/plugins/bootstrap-switch.js' %}"></script>
+<script src="{% static 'js/plugins/bootstrap-switch.js' %}"></script>
 <!-- Share Library etc -->
-<script src="{% static 'nowui/js/plugins/jquery.sharrre.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/plugins/jquery.sharrre.js' %}" type="text/javascript"></script>
 <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
-<script src="{% static 'nowui/js/now-ui-kit.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/now-ui-dashboard.min.js' %}" type="text/javascript"></script>
 
 <!-- Forms Validations Plugin -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
