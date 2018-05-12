@@ -48,7 +48,7 @@ RUN mkdir -p /etc/caddy && \
 
 EXPOSE 80 443
 
-VOLUME ["/apps/TygerCaddy/","/etc/ssl/caddy/"]
+VOLUME ["/apps/TygerCaddy/TygerCaddy/db.sqlite3","/etc/ssl/caddy/"]
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
