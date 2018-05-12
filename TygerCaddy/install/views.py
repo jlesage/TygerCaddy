@@ -22,9 +22,7 @@ class Index(View):
         call_command('loaddata', 'dns')
         call_command('loaddata', 'variables')
         form = request.POST
-        dnsbool = 0
-        if form['dns'] == 'on':
-            dnsbool = '1'
+        dns_check = request.POST.get('dns-switch', False);
 
         if not form['dns_provider']:
             dns_provider = ""
@@ -37,7 +35,7 @@ class Index(View):
             'interface': form['interface'],
             'port': form['port'],
             'proxy-host': form['proxy-host'],
-            'dns': dnsbool,
+            'dns-switch': dns_check,
             'dns-provider': dns_provider,
             'dash-colour': form['dash-colour']
         }
