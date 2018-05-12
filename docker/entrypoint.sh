@@ -3,6 +3,9 @@
 TYGER_DIR=/apps/TygerCaddy/TygerCaddy
 
 python3 $TYGER_DIR/manage.py migrate
+python3 $TYGER_DIR/manage.py loaddata config
+python3 $TYGER_DIR/manage.py loaddata dns
+python3 $TYGER_DIR/manage.py loaddata variables
 
 script="
 from django.contrib.auth.models import User;
@@ -17,5 +20,5 @@ else:
 "
 printf "$script" | python3 $TYGER_DIR/manage.py shell
 
-uwsgi --emperor /apps/TygerCaddy/uwsgi.ini &
-caddy -log stdout -pidfile=$TYGER_DIR/caddypid.txt -agree=true -conf=$TYGER_DIR/caddyfile.conf -root=/var/tmp
+/usr/local/bin/uwsgi --emperor /apps/TygerCaddy/uwsgi.ini &
+/usr/local/bin/caddy -log stdout -pidfile=$TYGER_DIR/caddypid.txt -agree=true -conf=$TYGER_DIR/caddyfile.conf -root=/var/tmp
