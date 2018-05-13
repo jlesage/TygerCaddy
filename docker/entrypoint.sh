@@ -10,4 +10,4 @@ else
 fi
 
 uwsgi --emperor /apps/TygerCaddy/uwsgi.ini &
-caddy -log stdout -pidfile=$TYGER_DIR/caddypid.txt -agree=true -conf=$TYGER_DIR/caddyfile.conf -root=/var/tmp
+caddy -log stdout -pidfile=$TYGER_DIR/data/caddypid.txt -agree=true -conf=$TYGER_DIR/data/caddyfile.conf -root=/var/tmp
