@@ -2,12 +2,12 @@ version: '2'
 
 services:
   tygercaddy:
-    image: tygercaddy/tygercaddy:testing
-    environment:
-      - username=admin
-      - password=secret
-      - email=admin@example.com
+    image: morph1904/tygercaddy:alpine-latest
     restart: unless-stopped
+    volumes:
+      - {$PWD}/data/config:/apps/TygerCaddy/TygerCaddy/data
+      - {$PWD}/data/certs:/etc/ssl/certs
     ports:
       - 80:80
       - 443:443
+      - 9090:9090

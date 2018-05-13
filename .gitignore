@@ -1,0 +1,4 @@
+# ignore docker files used for docker debugging
+buildlog.txt
+runlog.txt
+data/*
