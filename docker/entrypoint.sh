@@ -1,7 +1,6 @@
 #!/bin/bash
 
 TYGER_DIR=/apps/TygerCaddy/TygerCaddy
-CADDYPATH=$TYGER_DIR/data
 
 if [ -e $TYGER_DIR/data/db.sqlite3 ]
 then
