@@ -13,6 +13,7 @@ Running TygerCaddy
     docker run -d -p 80:80 -p 443:443 -p 9090:9090 --name tygercaddy \
         -v $PWD/data/config:/apps/TygerCaddy/TygerCaddy/data \
         -v $PWD/data/certs:/etc/ssl/certs \
+        -v $PWD/data/logs:/var/log/uwsgi
         morph1904/tygercaddy
 
 Then point your browser to http://127.0.0.1/ and login with the provided credentials
