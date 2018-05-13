@@ -43,9 +43,9 @@ VOLUME ["/apps/TygerCaddy/TygerCaddy/data","/etc/ssl/caddy/"]
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["run"]
-
 ARG BUILD_DATE
 ARG VCS_REF
+
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.name="TygerCaddy" \
       org.label-schema.description="Caddy based reverse proxy app with web GUI " \

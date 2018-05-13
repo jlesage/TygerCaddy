@@ -43,7 +43,6 @@
     <index id="24" parent="6" name="sqlite_autoindex_auth_group_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>name</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="25" parent="6">
@@ -73,17 +72,13 @@
     <index id="30" parent="7" name="auth_group_permissions_group_id_permission_id_0cd325b0_uniq">
       <ColNames>group_id
 permission_id</ColNames>
-      <ColumnCollations>
-</ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="31" parent="7" name="auth_group_permissions_group_id_b120cbf9">
       <ColNames>group_id</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <index id="32" parent="7" name="auth_group_permissions_permission_id_84c5c92e">
       <ColNames>permission_id</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <key id="33" parent="7">
       <ColNames>id</ColNames>
@@ -127,13 +122,10 @@ permission_id</ColNames>
     <index id="40" parent="8" name="auth_permission_content_type_id_codename_01ab375a_uniq">
       <ColNames>content_type_id
 codename</ColNames>
-      <ColumnCollations>
-</ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="41" parent="8" name="auth_permission_content_type_id_2f476e4b">
       <ColNames>content_type_id</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <key id="42" parent="8">
       <ColNames>id</ColNames>
@@ -204,7 +196,6 @@ codename</ColNames>
     <index id="55" parent="9" name="sqlite_autoindex_auth_user_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>username</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="56" parent="9">
@@ -234,17 +225,13 @@ codename</ColNames>
     <index id="61" parent="10" name="auth_user_groups_user_id_group_id_94350c0c_uniq">
       <ColNames>user_id
 group_id</ColNames>
-      <ColumnCollations>
-</ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="62" parent="10" name="auth_user_groups_user_id_6a12ed8b">
       <ColNames>user_id</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <index id="63" parent="10" name="auth_user_groups_group_id_97559544">
       <ColNames>group_id</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <key id="64" parent="10">
       <ColNames>id</ColNames>
@@ -283,17 +270,13 @@ group_id</ColNames>
     <index id="70" parent="11" name="auth_user_user_permissions_user_id_permission_id_14a6b632_uniq">
       <ColNames>user_id
 permission_id</ColNames>
-      <ColumnCollations>
-</ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="71" parent="11" name="auth_user_user_permissions_user_id_a95ead1b">
       <ColNames>user_id</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <index id="72" parent="11" name="auth_user_user_permissions_permission_id_1fbb5f2c">
       <ColNames>permission_id</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <key id="73" parent="11">
       <ColNames>id</ColNames>
@@ -354,11 +337,9 @@ permission_id</ColNames>
     </column>
     <index id="84" parent="12" name="django_admin_log_content_type_id_c4bce8eb">
       <ColNames>content_type_id</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <index id="85" parent="12" name="django_admin_log_user_id_c564eba6">
       <ColNames>user_id</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <key id="86" parent="12">
       <ColNames>id</ColNames>
@@ -397,8 +378,6 @@ permission_id</ColNames>
     <index id="92" parent="13" name="django_content_type_app_label_model_76bd3d3b_uniq">
       <ColNames>app_label
 model</ColNames>
-      <ColumnCollations>
-</ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="93" parent="13">
@@ -448,12 +427,10 @@ model</ColNames>
     <index id="102" parent="15" name="sqlite_autoindex_django_session_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>session_key</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="103" parent="15" name="django_session_expire_date_a5c62663">
       <ColNames>expire_date</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <key id="104" parent="15">
       <ColNames>session_key</ColNames>
@@ -479,7 +456,6 @@ model</ColNames>
     <index id="108" parent="16" name="sqlite_autoindex_dns_dns_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>provider_name</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="109" parent="16">
@@ -513,7 +489,6 @@ model</ColNames>
     </column>
     <index id="115" parent="17" name="dns_evariables_dns_provider_id_2b2a7c3f">
       <ColNames>dns_provider_id</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <key id="116" parent="17">
       <ColNames>id</ColNames>
@@ -574,24 +549,20 @@ model</ColNames>
     <index id="127" parent="18" name="sqlite_autoindex_hosts_config_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>interface</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="128" parent="18" name="sqlite_autoindex_hosts_config_2">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>name</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="129" parent="18" name="sqlite_autoindex_hosts_config_3">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>port</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="130" parent="18" name="hosts_config_dns_provider_id_f1dc53de">
       <ColNames>dns_provider_id</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <key id="131" parent="18">
       <ColNames>id</ColNames>
@@ -645,7 +616,6 @@ model</ColNames>
     <index id="141" parent="19" name="sqlite_autoindex_hosts_host_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>host_name</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="142" parent="19">
