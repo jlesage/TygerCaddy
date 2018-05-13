@@ -2,64 +2,56 @@
 set -eu -o pipefail # fail on error , debug all lines
 
 sudo -n true
-test $? -eq 0 || exit 1 "you should have sudo priveledge to run this script"
+test $? -eq 0 || exit 1 "You need sudo privileges to run this script"
 
-echo 'Starting updater...'
-
-sleep 3
-
-echo 'Backing up config...'
-echo 'You have 5 seconds to proceed ...'
-echo 'or hit Ctrl+C to quit'
-echo -e "\n"
+echo 'Starting updater...' \
+     'Backing up config...' \
+     'You have 5 seconds to proceed...' \
+     'or hit Ctrl+C to quit' \
+     -e "\n"
 sleep 6
 
-echo 'Backing up DB and caddyfile'
-
-mkdir -p /backup
-
-cp /apps/TygerCaddy/TygerCaddy/db.sqlite3 /backup/db.sqlite3
-cp /apps/TygerCaddy/TygerCaddy/caddyfile.conf /backup/caddyfile.conf
-
 echo 'Taking services down'
+
 service caddy stop
 service uwsgi stop
 
-echo 'Removing Directory...'
-rm -R /apps
+echo 'Backing up DB and caddyfile'
 
-echo Cloning repository....
+mkdir -p /backup/TygerCaddy
+
+cp /apps/TygerCaddy/TygerCaddy/db.sqlite3     /backup/TygerCaddy/db.sqlite3
+cp /apps/TygerCaddy/TygerCaddy/caddyfile.conf /backup/TygerCaddy/caddyfile.conf
+
+echo 'Removing Directory...'
+rm -R /apps/TygerCaddy
+
+echo 'Cloning repository...'
 sleep 3
 
-mkdir /apps
 cd /apps
 git clone https://github.com/morph1904/TygerCaddy.git
-chmod -R 0777 /apps
-
 
 echo 'Restoring config...'
 
-cp /backup/db.sqlite3 /apps/TygerCaddy/TygerCaddy/db.sqlite3
-cp /backup/caddyfile.conf /apps/TygerCaddy/TygerCaddy/caddyfile.conf
+cp /backup/TygerCaddy/db.sqlite3     /apps/TygerCaddy/TygerCaddy/db.sqlite3
+cp /backup/TygerCaddy/caddyfile.conf /apps/TygerCaddy/TygerCaddy/caddyfile.conf
 
-mv /backup/db.sqlite3 /backup/db.sqlite3.bak
-mv /backup/caddyfile.conf /backup/caddyfile.conf.bak
+mv /backup/TygerCaddy/db.sqlite3     /backup/TygerCaddy/db.sqlite3.bak
+mv /backup/TygerCaddy/caddyfile.conf /backup/TygerCaddy/caddyfile.conf.bak
 
-echo Restarting base Services.....
+chmod -R 0775 /apps/TygerCaddy
+
+echo 'Restarting base Services...'
 
 service uwsgi start
 service caddy start
 
-echo Setting up initial install....
+echo 'Setting up initial install...'
 cd /apps/TygerCaddy/TygerCaddy
 pip3 install -r requirements.txt
 python3 manage.py migrate
 
-echo Install Complete!, Enter the server IP in your chosen browser and login.
+echo 'Update complete!, Enter the server IP in your chosen browser and login.'
 
 sleep 3
-
-
-
-
-

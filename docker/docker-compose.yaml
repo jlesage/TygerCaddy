@@ -2,7 +2,7 @@ version: '2'
 
 services:
   tygercaddy:
-    image: morph1904/tygercaddy:alpine-latest
+    image: morph1904/tygercaddy:latest
     restart: unless-stopped
     volumes:
       - {$PWD}/data/config:/apps/TygerCaddy/TygerCaddy/data
