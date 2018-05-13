@@ -6,8 +6,6 @@ services:
     restart: unless-stopped
     volumes:
       - {$PWD}/data/config:/apps/TygerCaddy/TygerCaddy/data
-      - {$PWD}/data/certs:/etc/ssl/certs
-      - {$PWD}/data/logs:/var/log/uwsgi
     ports:
       - 80:80
       - 443:443
