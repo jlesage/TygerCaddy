@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+<<<<<<< Updated upstream
+    <data-source name="db.sqlite3" uuid="02af906d-16b2-4585-b493-bf9c971169ed">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+=======
+    <data-source name="db.sqlite3 [2]" uuid="2535fef8-1953-4411-b79e-fb3374fafdc9">
+      <database-info product="SQLite" version="3.20.1" jdbc-version="2.1" driver-name="SQLite JDBC" driver-version="3.20.1.1" />
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <secret-storage>master_key</secret-storage>
+      <auth-required>false</auth-required>
+>>>>>>> Stashed changes
+      <introspection-schemas>*:main</introspection-schemas>
+    </data-source>
+  </component>
+</project>

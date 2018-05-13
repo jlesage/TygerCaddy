@@ -67,11 +67,12 @@ cp /apps/TygerCaddy/caddy-reload.path /etc/systemd/system/caddy-reload.path
 cp /apps/TygerCaddy/caddy-reload.service /etc/systemd/system/caddy-reload.service
 chown root:root /etc/systemd/system/caddy.service
 chmod 744 /etc/systemd/system/caddy.service
+chmod -R 0775 /apps
 cp /apps/TygerCaddy/uwsgi.service /etc/systemd/system/uwsgi.service
 systemctl daemon-reload
 systemctl enable caddy.service
 systemctl enable uwsgi.service
-chmod -R 0775 /apps
+
 cd /apps/TygerCaddy/TygerCaddy
 
 echo Starting base Services.....

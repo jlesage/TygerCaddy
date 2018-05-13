@@ -23,6 +23,8 @@ urlpatterns = [
     path('install/', include('install.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('hosts/', include('hosts.urls')),
+    path('proxies/', include('proxies.urls')),
+    path('config/', include('config.urls')),
     path('admin/', admin.site.urls),
     path('accounts/login/', auth_views.login, {'template_name': 'dashboard/login.html'}, name='login'),
     path('accounts/logout/', auth_views.logout, {'next_page': '/accounts/login'}, name='logout'),
