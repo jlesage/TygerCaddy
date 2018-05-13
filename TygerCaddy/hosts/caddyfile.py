@@ -1,5 +1,5 @@
 import os
-
+import subprocess
 from django.conf import settings
 from django.contrib.auth.models import User
 from dns.models import EVariables
@@ -21,9 +21,11 @@ def generate_dash():
                                                         'root ' + str(config.root_dir) + '\n' \
                                                         '} \n'
 
-    caddyfile = open(caddyfilepath, "a")
+    caddyfile = open(caddyfilepath, "a+")
     caddyfile.write(block)
     caddyfile.close()
+
+    return True
 
 
 def set_evariables(config, dns):
@@ -50,7 +52,7 @@ def generate_caddyfile():
 
     for caddyhost in host_set:
         block = caddyhost.host_name + ' { \n \n'
-        proxy = 'proxy / ' + caddyhost.proxy_host + ' { \n' \
+        proxy = 'proxy ' + caddyhost.proxy.proxy_from + ' ' + caddyhost.proxy.proxy_to + ' { \n' \
                                                     'transparent \n' \
                                                     'insecure_skip_verify \n' \
                                                     '  } \n'
@@ -65,7 +67,6 @@ def generate_caddyfile():
 
     caddyfile.close()
     generate_dash()
-    # subprocess.call(['sudo', 'service', 'caddy', 'reload'])
     return True
 
 

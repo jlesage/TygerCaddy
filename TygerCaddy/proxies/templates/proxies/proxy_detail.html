@@ -1,0 +1,122 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+<div class="card ">
+
+    <div class="card-header ">
+    <h4 class="card-title">Proxy Detail - <small class="description">{{ proxy.name }}</small></h4>
+    </div>
+    <div class="card-body ">
+            <div class="row">
+                                <div class="col-lg-3 col-md-6">
+                                    <!--
+                                        color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-pills-warning","nav-pills-danger"
+                                    -->
+                                    <ul class="nav nav-pills nav-pills-primary nav-pills-icons flex-column" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#details" role="tablist" aria-expanded="true">
+                                                <i class="now-ui-icons objects_umbrella-13"></i>
+                                                Details
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#settings" role="tablist" aria-expanded="false">
+                                                <i class="now-ui-icons ui-2_settings-90"></i>
+                                                Settings
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="details" aria-expanded="true">
+                                          <div class="row">
+                                            <div class="col-md-6">
+                                                <h4>Name: <small>{{ proxy.name }}</small></h4>
+                                          <h5>From: <small>{{ proxy.proxy_from }}</small></h5>
+                                          <h5>To: <small>{{ proxy.proxy_to }}</small></h5>
+                                            </div>
+
+                                              <div class="col-md-6">
+                                                  <h6>Insecure Skip Verify: {% if proxy.insecure_skip_verify %}
+                                                <span class="badge-success badge">True</span>
+                                                {% else %}
+                                                <span class="badge badge-success">False</span>
+                                                {% endif %}</h6>
+                                         <h6>Websocket:  {% if proxy.websocket %}
+                                                <span class="badge badge-success">True</span>
+                                                {% else %}
+                                                <span class="badge badge-danger">False</span>
+                                                {% endif %}
+                                         </h6>
+                                            <h6>Transparent:
+                                                {% if proxy.transparent %}
+                                                <span class="badge badge-success">True</span>
+                                                {% else %}
+                                                <span class="badge badge-danger">False</span>
+                                                {% endif %}
+                                            </h6>
+                                            </div>
+                                          </div>
+
+
+                                        </div>
+                                        <div class="tab-pane" id="settings" aria-expanded="false">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                  <h6>Load policy: {% if proxy.load_policy %}<small>{{ proxy.load_policy }}</small>{% else %}<span class="badge badge-danger">N/A</span>{% endif %}</h6>
+                                                  <h6>Fail timeout: {% if proxy.fail_timeout %}<small>{{ proxy.fail_timeout }}</small>{% else %}<span class="badge badge-danger">N/A</span>{% endif %}</h6>
+                                                  <h6>Max fails: {% if proxy.max_fails %}<small>{{ proxy.max_fails }}</small>{% else %}<span class="badge badge-danger">N/A</span>{% endif %}</h6>
+                                                  <h6>Max Conns: {% if proxy.max_conns %}<small>{{ proxy.max_conns }}</small>{% else %}<span class="badge badge-danger">N/A</span>{% endif %}</h6>
+                                                  <h6>Try duration: {% if proxy.try_duration %}<small>{{ proxy.try_duration }}</small>{% else %}<span class="badge badge-danger">N/A</span>{% endif %}</h6>
+                                                  <h6>Try interval: {% if proxy.try_interval %}<small>{{ proxy.try_interval }}</small>{% else %}<span class="badge badge-danger">N/A</span>{% endif %}</h6>
+                                                  <h6>Health check: {% if proxy.health_check %}<small>{{ proxy.health_check }}</small>{% else %}<span class="badge badge-danger">N/A</span>{% endif %}</h6>
+                                            </div>
+                                        <div class="col-md-6">
+                                            <h6>Health check port: {% if proxy.health_check_port %}<small>{{ proxy.health_check_port }}</small>{% else %}<span class="badge badge-danger">N/A</span>{% endif %}</h6>
+                                          <h6>Health check interval: {% if proxy.health_check_interval %}<small>{{ proxy.health_check_interval }}</small>{% else %}<span class="badge badge-danger">N/A</span>{% endif %}</h6>
+                                          <h6>Health check timeout: {% if proxy.health_check_timeout %}<small>{{ proxy.health_check_timeout }}</small>{% else %}<span class="badge badge-danger">N/A</span>{% endif %}</h6>
+                                          <h6>Keep alive: {% if proxy.keep_alive %}<small>{{ proxy.keep_alive }}</small>{% else %}<span class="badge badge-danger">N/A</span>{% endif %}</h6>
+                                          <h6>Timeout: {% if proxy.timeout %}<small>{{ proxy.timeout }}</small>{% else %}<span class="badge badge-danger">N/A</span>{% endif %}</h6>
+                                          <h6>Without: {% if proxy.without %}<small>{{ proxy.without }}</small>{% else %}<span class="badge badge-danger">N/A</span>{% endif %}</h6>
+                                          <h6>Exceptions: {% if proxy.exceptions %}<small>{{ proxy.exceptions }}</small>{% else %}<span class="badge badge-danger">N/A</span>{% endif %}</h6>
+
+                                        </div>
+                                        </div>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    </div>
+
+{% endblock %}

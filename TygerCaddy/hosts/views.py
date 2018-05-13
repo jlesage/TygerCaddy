@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.contrib import messages
 from django.shortcuts import redirect, render
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from .caddyfile import generate_caddyfile
 
 from .models import Host
@@ -27,6 +27,14 @@ class CreateHost(LoginRequiredMixin, CreateView):
         form.save()
         caddy = generate_caddyfile()
         return redirect(reverse_lazy('dashboard'))
+
+
+class AllHosts(LoginRequiredMixin, ListView):
+    template_name = 'hosts/all_hosts.html'
+    context_object_name = 'hosts'
+    queryset = Host.objects.order_by('id')
+    paginate_by = 10
+    title = 'All Hosts'
 
 
 class UpdateHost(LoginRequiredMixin, UpdateView):

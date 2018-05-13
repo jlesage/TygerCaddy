@@ -22,6 +22,80 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+            <li class="{% active_link 'create-host' %}{% active_link 'all-hosts' %}">
+                    <a data-toggle="collapse" href="#hosts" aria-expanded="false" class="collapsed">
+                        <i class="now-ui-icons files_single-copy-04"></i>
+                        <p>
+                          Hosts <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="hosts" style="">
+                        <ul class="nav">
+                          <li class="{% active_link 'all-hosts' %}">
+                              <a href="{% url 'all-hosts' %}">
+                                  <span class="sidebar-mini-icon">AH</span>
+                                  <span class="sidebar-normal"> All Hosts </span>
+                              </a>
+                          </li>
+                           <li class="{% active_link 'create-host' %}">
+                              <a href="{% url 'create-host' %}">
+                                  <span class="sidebar-mini-icon ui-1_simple-add"><i class="now-ui-icons ui-1_simple-add"></i></span>
+                                  <span class="sidebar-normal"> Add Host </span>
+                              </a>
+                          </li>
+                      </ul>
+                  </div>
+              </li>
+
+            <li class="{% active_link 'create-proxy' %}{% active_link 'all-proxies' %}">
+                    <a data-toggle="collapse" href="#proxies" aria-expanded="false" class="collapsed">
+                        <i class="now-ui-icons design_vector"></i>
+                        <p>
+                          Proxies <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="proxies" style="">
+                        <ul class="nav">
+                          <li class="{% active_link 'all-proxies' %}">
+                              <a href="{% url 'all-proxies' %}">
+                                  <span class="sidebar-mini-icon">AP</span>
+                                  <span class="sidebar-normal"> All Proxies </span>
+                              </a>
+                          </li>
+                           <li class="{% active_link 'create-proxy' %}">
+                              <a href="{% url 'create-proxy' %}">
+                                  <span class="sidebar-mini-icon ui-1_simple-add"><i class="now-ui-icons ui-1_simple-add"></i></span>
+                                  <span class="sidebar-normal"> Add Proxy </span>
+                              </a>
+                          </li>
+                      </ul>
+                  </div>
+              </li>
+            <li class="{% active_link 'create-header' %}{% active_link 'all-headers' %}">
+                    <a data-toggle="collapse" href="#headers" aria-expanded="false" class="collapsed">
+                        <i class="now-ui-icons design_vector"></i>
+                        <p>
+                          Headers <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="headers" style="">
+                        <ul class="nav">
+                          <li class="{% active_link 'all-headers' %}">
+                              <a href="{% url 'all-headers' %}">
+                                  <span class="sidebar-mini-icon">AP</span>
+                                  <span class="sidebar-normal"> All Headers </span>
+                              </a>
+                          </li>
+                           <li class="{% active_link 'create-header' %}">
+                              <a href="{% url 'create-header' %}">
+                                  <span class="sidebar-mini-icon ui-1_simple-add"><i class="now-ui-icons ui-1_simple-add"></i></span>
+                                  <span class="sidebar-normal"> Add Header </span>
+                              </a>
+                          </li>
+                      </ul>
+                  </div>
+              </li>
+
                 <li class="{% if request.path == '/hosts/config/edit/primary/' %} active {% endif %}">
                     <a href="{% url 'update-config' slug='primary' %}">
                         <i class="now-ui-icons loader_gear"></i>
