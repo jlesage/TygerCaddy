@@ -7,7 +7,7 @@ from django.core.management import call_command
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from hosts.caddyfile import *
-from hosts.models import Config
+from config.models import Config
 
 
 # Create your views here.

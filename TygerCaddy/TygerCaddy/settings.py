@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'hosts.apps.HostsConfig',
     'dns.apps.DnsConfig',
     'install.apps.InstallConfig',
+    'config.apps.ConfigConfig',
+    'proxies.apps.ProxiesConfig',
 ]
 
 MIDDLEWARE = [

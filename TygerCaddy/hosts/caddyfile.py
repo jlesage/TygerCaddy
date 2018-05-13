@@ -4,7 +4,8 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from dns.models import EVariables
 
-from .models import Host, Config
+from .models import Host
+from config.models import Config
 
 
 def generate_dash():
@@ -14,12 +15,11 @@ def generate_dash():
 
     block = config.interface + ':' + str(config.port) + ' { \n \n' \
                                                         'proxy / ' + config.proxy_host + ' { \n' \
-                                                                                         'transparent \n' \
-                                                                                         'except ' + config.proxy_exception + '\n' \
-                                                                                                                              '} \n \n' \
-                                                                                                                              'root ' + str(
-        config.root_dir) + '\n' \
-                           '} \n'
+                                                        'transparent \n' \
+                                                        'except ' + config.proxy_exception + '\n' \
+                                                        '} \n \n' \
+                                                        'root ' + str(config.root_dir) + '\n' \
+                                                        '} \n'
 
     caddyfile = open(caddyfilepath, "a")
     caddyfile.write(block)
