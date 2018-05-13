@@ -1,5 +1,5 @@
 # TygerCaddy
-[![Docker Pulls](https://img.shields.io/docker/pulls/morph1904/tygercaddy)](https://hub.docker.com/r/morph1904/tygercaddy/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/portainer/portainer.svg)](https://hub.docker.com/r/morph1904/tygercaddy/)
 [![Microbadger](https://images.microbadger.com/badges/image/morph1904/tygercaddy.svg)](http://microbadger.com/images/morph1904/tygercaddy "Image size")
 
 Caddy based reverse proxy app with web GUI
