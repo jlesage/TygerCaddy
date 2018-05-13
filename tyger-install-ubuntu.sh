@@ -41,7 +41,7 @@ sleep 3
 cd /apps
 git clone https://github.com/morph1904/TygerCaddy.git
 mkdir /apps/TygerCaddy/sites
-mkdir /apps/TygerCaddy/data
+mkdir /apps/TygerCaddy/TygerCaddy/data
 
 
 echo Installing and setting up CaddyServer
