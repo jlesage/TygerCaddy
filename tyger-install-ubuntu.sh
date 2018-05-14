@@ -37,7 +37,7 @@ git clone https://github.com/morph1904/TygerCaddy.git
 
 mkdir -p /apps/TygerCaddy/sites \
       /apps/TygerCaddy/TygerCaddy/data \
-      /apps/TygerCaddy/TygerCaddy/data\logs
+      /apps/TygerCaddy/TygerCaddy/data/logs
 
 touch /apps/TygerCaddy/TygerCaddy/data/caddyfile.conf
 touch /apps/TygerCaddy/TygerCaddy/data/logs/caddy.txt
