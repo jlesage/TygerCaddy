@@ -24,6 +24,7 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('hosts/', include('hosts.urls')),
     path('proxies/', include('proxies.urls')),
+    path('logs/', include('logs.urls')),
     path('config/', include('config.urls')),
     path('admin/', admin.site.urls),
     path('accounts/login/', auth_views.login, {'template_name': 'dashboard/login.html'}, name='login'),

@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-contributions ">
+                <div class="card-header ">
+                    <h4 class="card-title">Caddy Logs</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-full-width table-responsive">
+                        {{ caddy }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-contributions ">
+                <div class="card-header ">
+                    <h4 class="card-title">App Logs</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-full-width table-responsive">
+                        {{ uwsgi }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -95,7 +95,12 @@
                       </ul>
                   </div>
               </li>
-
+                <li class="{% active_link 'all-logs' %}">
+                    <a href="{% url 'all-logs' %}">
+                        <i class="now-ui-icons loader_gear"></i>
+                        <p>Logs</p>
+                    </a>
+                </li>
                 <li class="{% if request.path == '/hosts/config/edit/primary/' %} active {% endif %}">
                     <a href="{% url 'update-config' slug='primary' %}">
                         <i class="now-ui-icons loader_gear"></i>

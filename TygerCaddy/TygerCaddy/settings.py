@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'install.apps.InstallConfig',
     'config.apps.ConfigConfig',
     'proxies.apps.ProxiesConfig',
+    'logs.apps.LogsConfig',
 ]
 
 MIDDLEWARE = [
