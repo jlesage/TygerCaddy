@@ -22,66 +22,66 @@ def generate_caddyfile():
         set_evariables(config=config, dns=dns)
 
     hosts = Host.objects.all()
+    if hosts:
+        for caddyhost in hosts:
+            headerlist = Header.objects.filter(proxy_id=caddyhost.proxy.id)
 
-    for caddyhost in hosts:
-        headerlist = Header.objects.filter(proxy_id=caddyhost.proxy.id)
+            block = caddyhost.host_name + ' { \n'
+            block += '\t root ' + caddyhost.root_path + '\n'
+            block += '\t\t proxy ' + caddyhost.proxy.proxy_from + ' ' + caddyhost.proxy.proxy_to + ' { \n'
+            print(caddyhost.proxy)
+            if caddyhost.proxy.load_policy:
+                block += '\t\t\t load_policy ' + str(caddyhost.proxy.load_policy.name) + '\n'
+            if caddyhost.proxy.fail_timeout:
+                block += '\t\t\t fail_timeout ' + str(caddyhost.proxy.fail_timeout) + '\n'
+            if caddyhost.proxy.max_fails:
+                block += '\t\t\t max_fails ' + str(caddyhost.proxy.max_fails) + '\n'
+            if caddyhost.proxy.max_conns:
+                block += '\t\t\t max_conns ' + str(caddyhost.proxy.max_conns) + '\n'
+            if caddyhost.proxy.try_duration:
+                block += '\t\t\t try_duration ' + str(caddyhost.proxy.try_duration) + '\n'
+            if caddyhost.proxy.try_interval:
+                block += '\t\t\t try_interval ' + str(caddyhost.proxy.try_interval) + '\n'
+            if caddyhost.proxy.health_check:
+                block += '\t\t\t health_check ' + str(caddyhost.proxy.health_check) + '\n'
+            if caddyhost.proxy.health_check_port:
+                block += '\t\t\t health_check_port ' + str(caddyhost.proxy.health_check_port) + '\n'
+            if caddyhost.proxy.health_check_interval:
+                block += '\t\t\t health_check_interval ' + str(caddyhost.proxy.health_check_interval) + '\n'
+            if caddyhost.proxy.health_check_timeout:
+                block += '\t\t\t health_check_timeout ' + str(caddyhost.proxy.health_check_timeout) + '\n'
+            if caddyhost.proxy.keep_alive:
+                block += '\t\t\t keep_alive ' + str(caddyhost.proxy.keep_alive) + '\n'
+            if caddyhost.proxy.timeout:
+                block += '\t\t\t timeout ' + str(caddyhost.proxy.timeout) + '\n'
+            if caddyhost.proxy.without:
+                block += '\t\t\t without ' + str(caddyhost.proxy.without) + '\n'
+            if caddyhost.proxy.exceptions:
+                block += '\t\t\t exceptions ' + str(caddyhost.proxy.exceptions) + '\n'
+            if caddyhost.proxy.insecure_skip_verify:
+                block += '\t\t\t insecure_skip_verify \n'
+            if caddyhost.proxy.websocket:
+                block += '\t\t\t websocket \n'
+            if caddyhost.proxy.transparent:
+                block += '\t\t\t transparent \n'
 
-        block = caddyhost.host_name + ' { \n'
-        block += '\t root ' + caddyhost.root_path + '\n'
-        block += '\t\t proxy ' + caddyhost.proxy.proxy_from + ' ' + caddyhost.proxy.proxy_to + ' { \n'
-        print(caddyhost.proxy)
-        if caddyhost.proxy.load_policy:
-            block += '\t\t\t load_policy ' + str(caddyhost.proxy.load_policy.name) + '\n'
-        if caddyhost.proxy.fail_timeout:
-            block += '\t\t\t fail_timeout ' + str(caddyhost.proxy.fail_timeout) + '\n'
-        if caddyhost.proxy.max_fails:
-            block += '\t\t\t max_fails ' + str(caddyhost.proxy.max_fails) + '\n'
-        if caddyhost.proxy.max_conns:
-            block += '\t\t\t max_conns ' + str(caddyhost.proxy.max_conns) + '\n'
-        if caddyhost.proxy.try_duration:
-            block += '\t\t\t try_duration ' + str(caddyhost.proxy.try_duration) + '\n'
-        if caddyhost.proxy.try_interval:
-            block += '\t\t\t try_interval ' + str(caddyhost.proxy.try_interval) + '\n'
-        if caddyhost.proxy.health_check:
-            block += '\t\t\t health_check ' + str(caddyhost.proxy.health_check) + '\n'
-        if caddyhost.proxy.health_check_port:
-            block += '\t\t\t health_check_port ' + str(caddyhost.proxy.health_check_port) + '\n'
-        if caddyhost.proxy.health_check_interval:
-            block += '\t\t\t health_check_interval ' + str(caddyhost.proxy.health_check_interval) + '\n'
-        if caddyhost.proxy.health_check_timeout:
-            block += '\t\t\t health_check_timeout ' + str(caddyhost.proxy.health_check_timeout) + '\n'
-        if caddyhost.proxy.keep_alive:
-            block += '\t\t\t keep_alive ' + str(caddyhost.proxy.keep_alive) + '\n'
-        if caddyhost.proxy.timeout:
-            block += '\t\t\t timeout ' + str(caddyhost.proxy.timeout) + '\n'
-        if caddyhost.proxy.without:
-            block += '\t\t\t without ' + str(caddyhost.proxy.without) + '\n'
-        if caddyhost.proxy.exceptions:
-            block += '\t\t\t exceptions ' + str(caddyhost.proxy.exceptions) + '\n'
-        if caddyhost.proxy.insecure_skip_verify:
-            block += '\t\t\t insecure_skip_verify \n'
-        if caddyhost.proxy.websocket:
-            block += '\t\t\t websocket \n'
-        if caddyhost.proxy.transparent:
-            block += '\t\t\t transparent \n'
+            if headerlist:
+                for header in headerlist:
+                    if header.downstream:
+                        block += 'header_downstream ' + header.header + ' ' + header.value + '\n'
+                    if header.upstream:
+                        block += 'header_upstream ' + header.header + ' ' + header.value + '\n'
 
-        if headerlist:
-            for header in headerlist:
-                if header.downstream:
-                    block += 'header_downstream ' + header.header + ' ' + header.value + '\n'
-                if header.upstream:
-                    block += 'header_upstream ' + header.header + ' ' + header.value + '\n'
+            block += '\t\t } \n'
 
-        block += '\t\t } \n'
+            if caddyhost.tls == False:
+                block += '\ttls off \n } \n \n'
+            elif config.dns_challenge:
+                block += '\ttls ' + caddyname + '\n } \n \n'
+            else:
+                block += '\ttls ' + user.email + '\n } \n \n'
 
-        if caddyhost.tls == False:
-            block += '\ttls off \n } \n \n'
-        elif config.dns_challenge:
-            block += '\ttls ' + caddyname + '\n } \n \n'
-        else:
-            block += '\ttls ' + user.email + '\n } \n \n'
-
-    caddyfile.write(block)
+            caddyfile.write(block)
 
     caddyfile.close()
     generate_dash()
