@@ -39,9 +39,9 @@ mkdir -p /apps/TygerCaddy/sites \
       /apps/TygerCaddy/TygerCaddy/data \
       /apps/TygerCaddy/TygerCaddy/data\logs
 
-touch /apps/TygerCaddy/Tygercaddy/data/caddyfile.conf
-touch /apps/TygerCaddy/Tygercaddy/data/logs/caddy.txt
-touch /apps/TygerCaddy/Tygercaddy/data/logs/uwsgi.txt
+touch /apps/TygerCaddy/TygerCaddy/data/caddyfile.conf
+touch /apps/TygerCaddy/TygerCaddy/data/logs/caddy.txt
+touch /apps/TygerCaddy/TygerCaddy/data/logs/uwsgi.txt
 
 echo 'Installing Caddy...'
 sleep 3
