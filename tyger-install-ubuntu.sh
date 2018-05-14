@@ -36,7 +36,8 @@ cd /apps
 git clone https://github.com/morph1904/TygerCaddy.git
 
 mkdir -p /apps/TygerCaddy/sites \
-      -p /apps/TygerCaddy/data
+      -p /apps/TygerCaddy/TygerCaddy/data
+touch /apps/TygerCaddy/Tygercaddy/data/caddyfile.conf
 
 echo 'Installing Caddy...'
 sleep 3
