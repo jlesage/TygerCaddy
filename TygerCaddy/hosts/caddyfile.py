@@ -1,5 +1,6 @@
 import os
 import subprocess
+from pathlib import Path
 from django.conf import settings
 from django.contrib.auth.models import User
 from dns.models import EVariables
@@ -7,6 +8,18 @@ from dns.models import EVariables
 from .models import Host
 from config.models import Config
 from proxies.models import Header
+
+
+def reload_caddy():
+    pidpath = Path(os.path.join(settings.BASE_DIR, '/data/caddypid.txt'))
+    if pidpath.exists():
+        pidfile = open(pidpath, "r")
+        pid = pidfile.read()
+        pidfile.close()
+        subprocess.call('kill', '-SIGUSR1', pid)
+
+    return True
+
 
 def generate_caddyfile():
     user = User.objects.get(pk=1)
@@ -85,7 +98,7 @@ def generate_caddyfile():
 
     caddyfile.close()
     generate_dash()
-
+    reload_caddy()
     return True
 
 def generate_dash():
