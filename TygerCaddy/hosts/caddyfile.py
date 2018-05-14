@@ -24,8 +24,7 @@ def generate_caddyfile():
     hosts = Host.objects.all()
 
     for caddyhost in hosts:
-        headerlist = Header.objects.filter(proxy__id=caddyhost.proxy.id)
-
+        headerlist = Header.objects.filter(proxy_id=caddyhost.proxy.id)
 
         block = caddyhost.host_name + ' { \n'
         block += '\t root ' + caddyhost.root_path + '\n'

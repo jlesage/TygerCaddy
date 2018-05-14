@@ -108,7 +108,7 @@ class CreateHeader(LoginRequiredMixin, CreateView):
 class ListHeaders(LoginRequiredMixin, ListView):
     template_name = 'proxies/headers/all_headers.html'
     context_object_name = 'headers'
-    queryset = Header.objects.all()
+    queryset = Header.objects.order_by('id')
     paginate_by = 10
     title = 'All Headers'
 
@@ -139,6 +139,7 @@ class UpdateHeader(LoginRequiredMixin, UpdateView):
 class DeleteHeader(LoginRequiredMixin, DeleteView):
     model = Header
     title = "Delete Header"
+    template_name = 'proxies/headers/header_confirm_delete.html'
     success_url = reverse_lazy('all-headers')
 
     def delete(self, request, *args, **kwargs):
