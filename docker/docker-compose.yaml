@@ -2,11 +2,10 @@ version: '2'
 
 services:
   tygercaddy:
-    image: morph1904/tygercaddy:alpine-latest
+    image: morph1904/tygercaddy:latest
     restart: unless-stopped
     volumes:
       - {$PWD}/data/config:/apps/TygerCaddy/TygerCaddy/data
-      - {$PWD}/data/certs:/etc/ssl/certs
     ports:
       - 80:80
       - 443:443

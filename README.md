@@ -7,15 +7,12 @@
 Caddy based reverse proxy app with web GUI
 ![alt text](https://github.com/morph1904/TygerCaddy/raw/master/TygerCaddy/assets/img/screenshot.png)
 
-
-
 # INFO!
 Please be aware this is still in BETA and not suitable for a production environment.
 Although this app uses Caddy, we are not affiliated with or endorsed by the Caddy team.
 
 ## Install Instructions (Ubuntu 16.04 +)
 Currently only ubuntu is supported by the install script
-
 
 SSH on to your server.
 
@@ -32,13 +29,7 @@ Now run it with sudo privileges
 ```
 sudo . tyger-install-ubuntu.sh
 ```
-
-When the script has installed the perquisites it will prompt you for a username, password and email address. Enter these in and then reboot your machine.
-
-```
-sudo reboot -now
-```
-Once the server has rebooted, enter the server ip address in your browser and login with the supplied username and password.
+Once the script completes, enter the server IP address in your browser. You will be prompted to setup your server
 
 ## Update
 
@@ -57,8 +48,10 @@ Now run it with sudo privileges
 ```
 sudo . tyger-update-ubuntu.sh
 ```
+Once complete, enter the server IP address in your browser and log in as normal.
 
-Once complete, enter the server ip address in your browser and log on as normal.
+## Install Instructions (Docker)
+[View Docker README](docker/README.md)
 
 ## Built With
 

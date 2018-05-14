@@ -2,7 +2,7 @@
 Description = Reload Caddy on CaddyFile Change
 
 [Path]
-PathChanged=/apps/TygerCaddy/TygerCaddy/caddyfile.conf
+PathChanged=/apps/TygerCaddy/TygerCaddy/data/caddyfile.conf
 
 [Install]
 WantedBy=multi-user.target

@@ -16,7 +16,8 @@ RUN apk add --no-cache \
     libc-dev \
     linux-headers \
     openssl-dev \
-    libffi && \
+    libffi \
+    ca-certificates && \
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
     pip3 install --upgrade pip setuptools
@@ -38,7 +39,7 @@ RUN mkdir -p /etc/ssl/caddy && \
 
 EXPOSE 80 443 9090
 
-VOLUME ["/apps/TygerCaddy/TygerCaddy/data","/etc/ssl/caddy/"]
+VOLUME ["/apps/TygerCaddy/TygerCaddy/data"]
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
