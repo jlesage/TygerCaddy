@@ -35,8 +35,8 @@ sleep 3
 cd /apps
 git clone https://github.com/morph1904/TygerCaddy.git
 
-mkdir /apps/TygerCaddy/sites \
-      /apps/TygerCaddy/data
+mkdir -p /apps/TygerCaddy/sites \
+      -p /apps/TygerCaddy/data
 
 echo 'Installing Caddy...'
 sleep 3
