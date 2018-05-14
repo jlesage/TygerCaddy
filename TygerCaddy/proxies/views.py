@@ -10,7 +10,7 @@ from .models import Proxy, Header
 class CreateProxy(LoginRequiredMixin, CreateView):
     template_name = 'proxies/add_proxy.html'
     model = Proxy
-    success_url = 'proxies/all'
+    success_url = '/proxies/list'
     fields = ['name',
               'proxy_from',
               'proxy_to',

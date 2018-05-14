@@ -4,6 +4,8 @@ from django.db import models
 class Policies(models.Model):
     name = models.CharField(max_length=255, blank=False)
 
+    def __str__(self):
+        return self.name
 
 # Create your models here.
 class Proxy(models.Model):
@@ -18,10 +20,10 @@ class Proxy(models.Model):
     try_interval = models.IntegerField(blank=True, null=True)
     health_check = models.CharField(max_length=255, blank=True, null=True)
     health_check_port = models.CharField(max_length=255, blank=True, null=True)
-    health_check_interval = models.IntegerField(blank=True, null=True)
-    health_check_timeout = models.IntegerField(blank=True, null=True)
+    health_check_interval = models.CharField(max_length=10, blank=True, null=True)
+    health_check_timeout = models.CharField(max_length=10, blank=True, null=True)
     keep_alive = models.IntegerField(blank=True, null=True)
-    timeout = models.IntegerField(blank=True, null=True)
+    timeout = models.CharField(max_length=10, blank=True, null=True)
     without = models.CharField(max_length=255, blank=True, null=True)
     exceptions = models.CharField(max_length=255, blank=True, null=True)
     insecure_skip_verify = models.BooleanField(default=False)
