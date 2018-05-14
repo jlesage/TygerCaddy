@@ -92,4 +92,4 @@ sleep 3
 systemctl start uwsgi
 systemctl start caddy
 
-echo 'Install complete!, Enter the server IP in your chosen browser complete the install wizard.''
+echo 'Install complete!, Enter the server IP in your chosen browser complete the install wizard.'
