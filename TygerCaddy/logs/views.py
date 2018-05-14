@@ -16,10 +16,13 @@ class LogsIndex(LoginRequiredMixin, View):
         caddylog = open(caddylogpath, 'r+')
         uwsgilog = open(uwsgilogpath, 'r+')
 
+
         caddy = caddylog.read()
+        caddy.replace('\n', '<br>')
         caddylog.close()
 
         uwsgi = uwsgilog.read()
+        uwsgi.replace('\n', '<br>')
         uwsgilog.close()
 
         context = {'caddy': caddy,
