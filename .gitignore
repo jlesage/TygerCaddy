@@ -2,3 +2,5 @@
 buildlog.txt
 runlog.txt
 data/*
+*.pyc
+*.sqlite3

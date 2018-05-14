@@ -44,4 +44,4 @@ class VariableSet(View):
             value.value = str(form_value)
             value.save()
 
-        return redirect('/hosts/config/edit/primary')
+        return redirect('/config/edit/primary')
