@@ -39,7 +39,7 @@ class Header(models.Model):
     upstream = models.BooleanField(default=False)
     downstream = models.BooleanField(default=False)
     value = models.CharField(max_length=255, blank=False)
-    proxy = models.ManyToManyField(Proxy)
+    proxy = models.ForeignKey(Proxy, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.header

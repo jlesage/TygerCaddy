@@ -27,10 +27,10 @@
                                     <td>{{ header.id }}</td>
                                     <td><a href="{% url 'header-detail' header.id %}">{{ header.header }}</a></td>
                                     <td>{{ header.value }}</td>
-                                    <td>{% for proxy in header.proxy %} <span class="badge badge-default">{{ proxy.name }}</span>{% endfor %} </td>
+                                    <td>{{ header.proxy }}</td>
                                     <td><a class="btn btn-sm btn-warning"
-                                           href="{% url 'update-proxy' pk=proxy.id %}">Edit</a></td>
-                                    <td><a class="btn btn-sm btn-danger" href="{% url 'delete-proxy' pk=proxy.id %}">Delete</a>
+                                           href="{% url 'update-header' pk=header.id %}">Edit</a></td>
+                                    <td><a class="btn btn-sm btn-danger" href="{% url 'delete-header' pk=header.id %}">Delete</a>
                                     </td>
                                 </tr>
                             {% endfor %}

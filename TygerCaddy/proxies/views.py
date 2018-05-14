@@ -97,7 +97,7 @@ class DeleteProxy(LoginRequiredMixin, DeleteView):
 class CreateHeader(LoginRequiredMixin, CreateView):
     template_name = 'proxies/headers/add_header.html'
     model = Header
-    success_url = 'headers/all'
+    success_url = '/proxies/headers/list'
     fields = ['header',
               'upstream',
               'downstream',
@@ -108,7 +108,7 @@ class CreateHeader(LoginRequiredMixin, CreateView):
 class ListHeaders(LoginRequiredMixin, ListView):
     template_name = 'proxies/headers/all_headers.html'
     context_object_name = 'headers'
-    queryset = Header.objects.order_by('id')
+    queryset = Header.objects.all()
     paginate_by = 10
     title = 'All Headers'
 

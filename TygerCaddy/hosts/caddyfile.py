@@ -6,7 +6,7 @@ from dns.models import EVariables
 
 from .models import Host
 from config.models import Config
-
+from proxies.models import Header
 
 def generate_caddyfile():
     user = User.objects.get(pk=1)
@@ -24,6 +24,9 @@ def generate_caddyfile():
     hosts = Host.objects.all()
 
     for caddyhost in hosts:
+        headerlist = Header.objects.filter(proxy__id=caddyhost.proxy.id)
+
+
         block = caddyhost.host_name + ' { \n'
         block += '\t root ' + caddyhost.root_path + '\n'
         block += '\t\t proxy ' + caddyhost.proxy.proxy_from + ' ' + caddyhost.proxy.proxy_to + ' { \n'
@@ -62,6 +65,13 @@ def generate_caddyfile():
             block += '\t\t\t websocket \n'
         if caddyhost.proxy.transparent:
             block += '\t\t\t transparent \n'
+
+        if headerlist:
+            for header in headerlist:
+                if header.downstream:
+                    block += 'header_downstream ' + header.header + ' ' + header.value + '\n'
+                if header.upstream:
+                    block += 'header_upstream ' + header.header + ' ' + header.value + '\n'
 
         block += '\t\t } \n'
 
