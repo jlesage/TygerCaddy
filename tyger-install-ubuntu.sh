@@ -20,8 +20,8 @@ apt-get update && apt-get -y upgrade && apt-get -y install --no-install-recommen
   python3-wheel \
   python3-dev \
   gcc \
-  libssl1.0.0 \
-  libffi6 \
+  libssl-dev \
+  libffi-dev \
   git \
   curl
 
@@ -62,7 +62,7 @@ chown -R root:www-data /etc/caddy \
 chown -R www-data:www-data /var/www
 chown root:root /etc/systemd/system/caddy.service \
                 /usr/local/bin/caddy
-                
+
 chmod -R 770 /etc/ssl/caddy
 chmod -R 755 /var/www \
              /usr/local/bin/caddy \
