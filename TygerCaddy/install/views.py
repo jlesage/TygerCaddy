@@ -7,7 +7,7 @@ from django.core.management import call_command
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from hosts.caddyfile import *
-from hosts.models import Config
+from config.models import Config
 
 
 # Create your views here.
@@ -22,12 +22,15 @@ class Index(View):
         call_command('loaddata', 'dns')
         call_command('loaddata', 'variables')
         form = request.POST
-        dns_check = request.POST.get('dns-switch', False);
-
-        if not form['dns_provider']:
-            dns_provider = ""
+        if form.get('dns-switch') == 'on':
+            dns_check = True
         else:
-            dns_provider = form['dns_provider']
+            dns_check = False
+
+        #  if not form['dns_provider']:
+        #      dns_provider = ""
+        #  else:
+        # dns_provider = form['dns_provider']
         config = {
             'username': form['username'],
             'password': form['password'],
@@ -36,7 +39,7 @@ class Index(View):
             'port': form['port'],
             'proxy-host': form['proxy-host'],
             'dns-switch': dns_check,
-            'dns-provider': dns_provider,
+            # 'dns-provider': dns_provider,
             'dash-colour': form['dash-colour']
         }
 
@@ -47,7 +50,7 @@ class Index(View):
                             proxy_exception='/assets',
                             root_dir='/apps/TygerCaddy/TygerCaddy',
                             dns_challenge=dns_check,
-                            dns_provider_id=config['dns-provider'])
+                            )
         new_config.save()
         generate_keyfile()
         generate_dash()

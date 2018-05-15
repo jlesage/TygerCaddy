@@ -2,99 +2,94 @@
 set -eu -o pipefail # fail on error , debug all lines
 
 sudo -n true
-test $? -eq 0 || exit 1 "you should have sudo priveledge to run this script"
+test $? -eq 0 || exit 1 "You need sudo privileges to run this script"
 
-echo 'Starting installer, please look out for the prompts, always select yes'
-
-apt update && apt upgrade -y
-
-echo Installing the app pre-requisites
-echo you have 5 seconds to proceed ...
-echo or
-echo hit Ctrl+C to quit
-echo -e "\n"
+echo 'Starting installer, please look out for the prompts. Always select yes.' \
+     'Installing pre-requisites' \
+     'you have 5 seconds to proceed...' \
+     'or' \
+     'hit Ctrl+C to quit' \
+     -e "\n"
 sleep 6
-echo Updating system,
-while read -r p ; do sudo apt-get install -y $p ; done < <(cat << "EOF"
-    zip unzip
-    python3-dev
-    python3-pip
-    build-essential
-    libssl-dev
-    libffi-dev
-EOF
-)
 
-echo Installing some handy extras...
-sleep 3
-apt-get install wget git -y
-pip3 install uwsgi
+echo 'Installing dependencies...'
+apt-get update && apt-get -y upgrade && apt-get -y install --no-install-recommends \
+  python3 \
+  python3-pip \
+  python3-setuptools \
+  python3-wheel \
+  python3-dev \
+  gcc \
+  libssl-dev \
+  libffi-dev \
+  git \
+  curl
 
-echo Making the app directories...
+echo 'Making the app directories...'
 sleep 3
 mkdir /apps
 
-
-echo Cloning repository....
+echo 'Cloning repository...'
 sleep 3
 
 cd /apps
 git clone https://github.com/morph1904/TygerCaddy.git
-mkdir /apps/TygerCaddy/sites
-mkdir /apps/TygerCaddy/TygerCaddy/data
 
+mkdir -p /apps/TygerCaddy/sites \
+      /apps/TygerCaddy/TygerCaddy/data \
+      /apps/TygerCaddy/TygerCaddy/data/logs
 
-echo Installing and setting up CaddyServer
+touch /apps/TygerCaddy/TygerCaddy/data/caddyfile.conf
+touch /apps/TygerCaddy/TygerCaddy/data/logs/caddy.txt
+touch /apps/TygerCaddy/TygerCaddy/data/logs/uwsgi.txt
+
+echo 'Installing Caddy...'
 sleep 3
-apt install curl
 curl https://getcaddy.com | bash -s personal hook.service,http.filemanager,http.jwt,http.mailout,http.minify,http.proxyprotocol,http.upload,net,tls.dns.godaddy
-chown root:root /usr/local/bin/caddy
-chmod 755 /usr/local/bin/caddy
+
+echo 'Creating folders, moving files, setting permissions...'
+mkdir -p /etc/caddy \
+         /etc/ssl/caddy \
+         /var/www
+
+cp /apps/TygerCaddy/caddy.service        /etc/systemd/system/caddy.service
+cp /apps/TygerCaddy/uwsgi.service        /etc/systemd/system/uwsgi.service
+cp /apps/TygerCaddy/caddy-reload.path    /etc/systemd/system/caddy-reload.path
+cp /apps/TygerCaddy/caddy-reload.service /etc/systemd/system/caddy-reload.service
+
+chown -R root:www-data /etc/caddy \
+                       /etc/ssl/caddy
+chown -R www-data:www-data /var/www
+chown root:root /etc/systemd/system/caddy.service \
+                /usr/local/bin/caddy
+
+chmod -R 770 /etc/ssl/caddy
+chmod -R 755 /var/www \
+             /usr/local/bin/caddy \
+             /apps
+chmod -R 744 /etc/systemd/system/caddy.service \
+             /etc/systemd/system/caddy-reload.path \
+             /etc/systemd/system/caddy-reload.service \
+             /etc/systemd/system/uwsgi.service
+
 setcap 'cap_net_bind_service=+eip' /usr/local/bin/caddy
-mkdir -p /etc/caddy
-chown -R root:www-data /etc/caddy
-mkdir -p /etc/ssl/caddy
-chown -R www-data:root /etc/ssl/caddy
-chmod 770 /etc/ssl/caddy
-mkdir -p /var/www
-chown www-data:www-data /var/www
-chmod 755 /var/www
-echo Setting up services to run on boot...
+
+echo 'Setting up services to run on boot...'
 sleep 3
 
-cp /apps/TygerCaddy/caddy.service /etc/systemd/system/caddy.service
-cp /apps/TygerCaddy/caddy-reload.path /etc/systemd/system/caddy-reload.path
-cp /apps/TygerCaddy/caddy-reload.service /etc/systemd/system/caddy-reload.service
-chown root:root /etc/systemd/system/caddy.service
-chmod 744 /etc/systemd/system/caddy.service
-cp /apps/TygerCaddy/uwsgi.service /etc/systemd/system/uwsgi.service
 systemctl daemon-reload
 systemctl enable caddy.service
 systemctl enable uwsgi.service
-chmod -R 0775 /apps
-cd /apps/TygerCaddy/TygerCaddy
 
-echo Starting base Services.....
+echo 'Setting up initial install...'
 sleep 3
 
-service uwsgi start
-service caddy start
+pip3 install -r /apps/TygerCaddy/TygerCaddy/requirements.txt
 
-echo Setting up initial install....
+echo 'Installing TygerCaddy almost there!'
 sleep 3
 
-pip3 install -r requirements.txt
+systemctl start uwsgi
+systemctl start caddy
 
-echo Installing TygerCaddy almost there!
-sleep 3
-
-
-service uwsgi stop
-service uwsgi start
-
-echo Install Complete!, Enter the server IP in your chosen browser complete the install wizard.
-
-
-
-
-
+echo 'Install complete!, Enter the server IP in your chosen browser complete the install wizard.'
