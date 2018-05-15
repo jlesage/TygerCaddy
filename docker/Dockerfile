@@ -1,7 +1,6 @@
 # VERSION 0.1
 # AUTHOR:       Tyler Parisi <tyler@possumlodge.me>
 # DESCRIPTION:  WebUI autoproxy with Caddy
-# TO_BUILD:     docker build -t morph1904/tygercaddy .
 
 FROM alpine:latest
 ENV TYGER_ROOT=/apps/TygerCaddy
@@ -17,7 +16,8 @@ RUN apk add --no-cache \
     libc-dev \
     linux-headers \
     openssl-dev \
-    libffi && \
+    libffi \
+    ca-certificates && \
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
     pip3 install --upgrade pip setuptools
@@ -39,8 +39,16 @@ RUN mkdir -p /etc/ssl/caddy && \
 
 EXPOSE 80 443 9090
 
-VOLUME ["/apps/TygerCaddy/TygerCaddy/data","/etc/ssl/caddy/"]
+VOLUME ["/apps/TygerCaddy/TygerCaddy/data"]
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["run"]
+
+ARG BUILD_DATE
+ARG VCS_REF
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="TygerCaddy" \
+      org.label-schema.description="Caddy based reverse proxy app with web GUI " \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/morph1904/TygerCaddy"

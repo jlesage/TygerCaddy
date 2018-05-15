@@ -58,9 +58,9 @@
                                         <li><a href="#step-2">System<br/>
                                             <small>Setup System</small>
                                         </a></li>
-                                        <li><a href="#step-3">DNS Configure<br/>
+                                        {% comment %}<li><a href="#step-3">DNS Configure<br/>
                                             <small>Set DNS Verification Options</small>
-                                        </a></li>
+                                        </a></li>{% endcomment %}
                                         <li><a href="#step-4">Dashboard<br/>
                                             <small>Configure Dashboard</small>
                                         </a></li>
@@ -117,7 +117,7 @@
                                                        placeholder="Proxy Host..." required/>
                                             </div>
                                         </div>
-                                        <div id="step-3" class="">
+                                        {% comment %}<div id="step-3" class="">
                                             <div class="form-group">
                                                 <div class="checkbox">
                                                     <label for="dns-switch" class="col-md-2 col-form-label pull-left">Use
@@ -184,7 +184,7 @@
 
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>{% endcomment %}
                                         <div id="step-4" class="">
                                             <div class="form-group">
                                                 <label for="dash-colour"
@@ -307,7 +307,7 @@
         $("#smartwizard").on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
             // Enable finish button only on last step
             console.log(stepNumber);
-            if (stepNumber === 3) {
+            if (stepNumber === 2) {
                 $('.finishbutton').removeClass('disabled');
             } else {
                 $('.finishbutton').addClass('disabled');
