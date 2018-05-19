@@ -27,7 +27,8 @@ wget https://raw.githubusercontent.com/morph1904/TygerCaddy/master/tyger-install
 Now run it with sudo privileges
 
 ```
-sudo . tyger-install-ubuntu.sh
+chmod +x tyger-install-ubuntu.sh
+./tyger-install-ubuntu.sh
 ```
 Once the script completes, enter the server IP address in your browser. You will be prompted to setup your server
 
@@ -46,7 +47,8 @@ wget https://raw.githubusercontent.com/morph1904/TygerCaddy/master/tyger-update-
 Now run it with sudo privileges
 
 ```
-sudo . tyger-update-ubuntu.sh
+chmod +x tyger-update-ubuntu.sh
+./tyger-update-ubuntu.sh
 ```
 Once complete, enter the server IP address in your browser and log in as normal.
 
@@ -54,12 +56,10 @@ Once complete, enter the server IP address in your browser and log in as normal.
 [View Docker README](docker/README.md)
 
 ## Built With
-
 * [Django 2](https://docs.djangoproject.com/en/2.0/) - Django 2 Python Web Framework
 * [CaddyServer](https://caddyserver.com/) - HTTP Reverse Proxy Server
 
 ## Authors
-
 * **Morph1904** - *Initial work* - [Morph1904](https://github.com/morph1904)
 
 ## License

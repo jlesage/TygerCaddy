@@ -1,18 +1,24 @@
-#!/bin/sh bash
-set -eu -o pipefail # fail on error , debug all lines
+#!/bin/bash
 
-sudo -n true
-test $? -eq 0 || exit 1 "You need sudo privileges to run this script"
+if [ "$(whoami)" != 'root' ]; then
+  printf "This script must be run as "root".\n"
+  printf "Enter password to elevate privileges:"
+  printf "\n"
+  SCRIPTPATH=$( cd $(dirname $0) ; pwd -P )
+  SELF=`basename $0`
+  sudo $SCRIPTPATH'/'$SELF
+  exit 1
+fi
 
-echo 'Starting installer, please look out for the prompts. Always select yes.' \
-     'Installing pre-requisites' \
-     'you have 5 seconds to proceed...' \
-     'or' \
-     'hit Ctrl+C to quit' \
-     -e "\n"
+printf "Starting installer, please look out for the prompts. Always select yes.\n" \
+     "Installing pre-requisites\n" \
+     "you have 5 seconds to proceed...\n" \
+     "or\n" \
+     "hit Ctrl+C to quit\n" \
+     "\n"
 sleep 6
 
-echo 'Installing dependencies...'
+printf "Installing dependencies...\n"
 apt-get update && apt-get -y upgrade && apt-get -y install --no-install-recommends \
   python3 \
   python3-pip \
@@ -25,11 +31,11 @@ apt-get update && apt-get -y upgrade && apt-get -y install --no-install-recommen
   git \
   curl
 
-echo 'Making the app directories...'
+printf "Making the app directories...\n"
 sleep 3
 mkdir /apps
 
-echo 'Cloning repository...'
+printf "Cloning repository...\n"
 sleep 3
 
 cd /apps
@@ -43,53 +49,54 @@ touch /apps/TygerCaddy/TygerCaddy/data/caddyfile.conf
 touch /apps/TygerCaddy/TygerCaddy/data/logs/caddy.txt
 touch /apps/TygerCaddy/TygerCaddy/data/logs/uwsgi.txt
 
-echo 'Installing Caddy...'
+printf "Installing Caddy...\n"
 sleep 3
 curl https://getcaddy.com | bash -s personal hook.service,http.filemanager,http.jwt,http.mailout,http.minify,http.proxyprotocol,http.upload,net,tls.dns.godaddy
 
-echo 'Creating folders, moving files, setting permissions...'
+printf "Creating folders, moving files, setting permissions...\n"
 mkdir -p /etc/caddy \
-         /etc/ssl/caddy \
-         /var/www
+         /etc/ssl/caddy
 
 cp /apps/TygerCaddy/caddy.service        /etc/systemd/system/caddy.service
 cp /apps/TygerCaddy/uwsgi.service        /etc/systemd/system/uwsgi.service
 cp /apps/TygerCaddy/caddy-reload.path    /etc/systemd/system/caddy-reload.path
 cp /apps/TygerCaddy/caddy-reload.service /etc/systemd/system/caddy-reload.service
 
-chown -R root:www-data /etc/caddy \
+chown -R www-data:root /etc/caddy \
                        /etc/ssl/caddy
-chown -R www-data:www-data /var/www
+chown -R www-data:www-data /apps/TygerCaddy
 chown root:root /etc/systemd/system/caddy.service \
+                /etc/systemd/system/uwsgi.service \
+                /etc/systemd/system/caddy-reload.path \
+                /etc/systemd/system/caddy-reload.service \
                 /usr/local/bin/caddy
 
-chmod -R 770 /etc/ssl/caddy
-chmod -R 755 /var/www \
+chmod -R 700 /etc/ssl/caddy
+chmod -R 755 /apps/TygerCaddy \
              /usr/local/bin/caddy \
-             /apps
-chmod -R 744 /etc/systemd/system/caddy.service \
+             /etc/systemd/system/caddy.service \
              /etc/systemd/system/caddy-reload.path \
              /etc/systemd/system/caddy-reload.service \
              /etc/systemd/system/uwsgi.service
 
 setcap 'cap_net_bind_service=+eip' /usr/local/bin/caddy
 
-echo 'Setting up services to run on boot...'
+printf "Setting up services to run on boot...\n"
 sleep 3
 
 systemctl daemon-reload
 systemctl enable caddy.service
 systemctl enable uwsgi.service
 
-echo 'Setting up initial install...'
+printf "Setting up initial install...\n"
 sleep 3
 
 pip3 install -r /apps/TygerCaddy/TygerCaddy/requirements.txt
 
-echo 'Installing TygerCaddy almost there!'
+printf "Installing TygerCaddy almost there!\n"
 sleep 3
 
 systemctl start uwsgi
 systemctl start caddy
 
-echo 'Install complete!, Enter the server IP in your chosen browser complete the install wizard.'
+printf "Install complete! Enter the server IP in your chosen browser complete the install wizard.\n"

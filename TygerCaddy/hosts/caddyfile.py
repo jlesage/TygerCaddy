@@ -11,13 +11,7 @@ from proxies.models import Header
 
 
 def reload_caddy():
-    pidpath = Path(os.path.join(settings.BASE_DIR, '/data/caddypid.txt'))
-    if pidpath.exists():
-        pidfile = open(pidpath, "r")
-        pid = pidfile.read()
-        pidfile.close()
-        subprocess.call('kill', '-SIGUSR1', pid)
-
+    subprocess.call('pkill -USR1 caddy', shell=True)
     return True
 
 
@@ -127,6 +121,3 @@ def set_evariables(config, dns):
     for var in variables:
         os.environ[var.variable] = str(var.value)
         print(os.environ[var.variable])
-
-
-

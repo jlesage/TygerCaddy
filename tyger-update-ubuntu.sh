@@ -1,38 +1,44 @@
-#!/bin/sh bash
-set -eu -o pipefail # fail on error , debug all lines
+#!/bin/bash
 
-sudo -n true
-test $? -eq 0 || exit 1 "You need sudo privileges to run this script"
+if [ "$(whoami)" != 'root' ]; then
+  printf "This script must be run as "root".\n"
+  printf "Enter password to elevate privileges:"
+  printf "\n"
+  SCRIPTPATH=$( cd $(dirname $0) ; pwd -P )
+  SELF=`basename $0`
+  sudo $SCRIPTPATH'/'$SELF
+  exit 1
+fi
 
-echo 'Starting updater...' \
-     'Backing up config...' \
-     'You have 5 seconds to proceed...' \
-     'or hit Ctrl+C to quit' \
-     -e "\n"
+printf "Starting updater...\n" \
+     "Backing up config...\n" \
+     "You have 5 seconds to proceed...\n" \
+     "or hit Ctrl+C to quit\n" \
+     "\n"
 sleep 6
 
-echo 'Taking services down'
+printf "Taking services down"
 
 service caddy stop
 service uwsgi stop
 
-echo 'Backing up DB and caddyfile'
+printf "Backing up DB and caddyfile"
 
 mkdir -p /backup/TygerCaddy
 
 cp /apps/TygerCaddy/TygerCaddy/db.sqlite3     /backup/TygerCaddy/db.sqlite3
 cp /apps/TygerCaddy/TygerCaddy/caddyfile.conf /backup/TygerCaddy/caddyfile.conf
 
-echo 'Removing Directory...'
+printf "Removing Directory..."
 rm -R /apps/TygerCaddy
 
-echo 'Cloning repository...'
+printf "Cloning repository..."
 sleep 3
 
 cd /apps
 git clone https://github.com/morph1904/TygerCaddy.git
 
-echo 'Restoring config...'
+printf "Restoring config..."
 
 cp /backup/TygerCaddy/db.sqlite3     /apps/TygerCaddy/TygerCaddy/db.sqlite3
 cp /backup/TygerCaddy/caddyfile.conf /apps/TygerCaddy/TygerCaddy/caddyfile.conf
@@ -42,16 +48,16 @@ mv /backup/TygerCaddy/caddyfile.conf /backup/TygerCaddy/caddyfile.conf.bak
 
 chmod -R 0775 /apps/TygerCaddy
 
-echo 'Restarting base Services...'
+printf "Restarting base Services..."
 
 service uwsgi start
 service caddy start
 
-echo 'Setting up initial install...'
+printf "Setting up initial install..."
 cd /apps/TygerCaddy/TygerCaddy
 pip3 install -r requirements.txt
 python3 manage.py migrate
 
-echo 'Update complete!, Enter the server IP in your chosen browser and login.'
+printf "Update complete!, Enter the server IP in your chosen browser and login."
 
 sleep 3

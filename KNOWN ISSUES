@@ -1,12 +1,10 @@
 Installer relies on files delivered via CDN
  - Ensure access to the following is allowed on your network:
-   - bootstrapcdn.com
-   - maxcdn.bootstrapcdn.com
-   - cloudflare.com
-   - cdnjs.cloudflare.com
-   - fonts.googleapis.com
-   - gstatic.com
-   - fonts.gstatic.com
+   - maxcdn.bootstrapcdn.com (CSS)
+   - cloudflare.com (Cookie)
+   - cdnjs.cloudflare.com (JS)
+   - fonts.googleapis.com (CSS)
+   - fonts.gstatic.com (CSS)
 
 Installer can be ran after first install
  - If you enter the same settings, it fails
@@ -19,7 +17,7 @@ all hosts must have proxy upon creation
 Docker containers non-functional
  - Does not create/read logs
  - Does not issue certificates
- 
+
 DNS domain verification
  - Does not issue certificates
  - Work in progress
