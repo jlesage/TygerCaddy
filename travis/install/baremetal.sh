@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DEBIAN_FRONTEND=noninteractive
+
 # Set used terminal colors
 GREEN=$(tput setaf 2)
 NORMAL=$(tput sgr0)
@@ -21,14 +23,6 @@ if [ "$(whoami)" != 'root' ]; then
   exit 1
 fi
 
-printf "${GREEN}You are about to install TygerCaddy.${NORMAL}\n"
-read -p "${LIME_YELLOW}Proceed? (y/N)${NORMAL} " -r
-printf "\n"
-if [[ ! $REPLY =~ ^[Yy*] ]]
-then
-    exit
-fi
-
 printf "${GREEN}Installing dependencies...${NORMAL}\n"
 apt-get update && apt-get -y upgrade && apt-get -y install --no-install-recommends \
   python3 \
@@ -46,7 +40,9 @@ printf "${GREEN}Cloning repository...${NORMAL}\n"
 mkdir $APPS_DIR
 cd $APPS_DIR
 
-git clone https://github.com/morph1904/TygerCaddy.git
+git clone https://github.com/$TRAVIS_REPO_SLUG.git
+cd $TYGER_ROOT
+git checkout -qf $TRAVIS_COMMIT
 
 mkdir -p $TYGER_DATA \
          $TYGER_DATA/logs
@@ -86,16 +82,20 @@ chmod -R 755 $TYGER_ROOT \
 
 setcap 'cap_net_bind_service=+eip' /usr/local/bin/caddy
 
-printf "${GREEN}Setting up services to run on boot...${NORMAL}\n"
-systemctl daemon-reload
-systemctl enable caddy.service
-systemctl enable uwsgi.service
+# printf "${GREEN}Setting up services to run on boot...${NORMAL}\n"
+# systemctl daemon-reload
+# systemctl enable caddy.service
+# systemctl enable uwsgi.service
 
 printf "${GREEN}Installing python dependencies...${NORMAL}\n"
 pip3 install -r $TYGER_DIR/requirements.txt
 
-printf "${GREEN}Starting TygerCaddy... Almost there!${NORMAL}\n"
-systemctl start uwsgi
-systemctl start caddy
+# printf "${GREEN}Starting TygerCaddy... Almost there!${NORMAL}\n"
+# systemctl start uwsgi
+# systemctl start caddy
+
+printf "${GREEN}Enabling services...${NORMAL}\n"
+ln -s /etc/systemd/system/caddy.service /etc/systemd/system/multi-user.target.wants/caddy.service
+ln -s /etc/systemd/system/uwsgi.service /etc/systemd/system/multi-user.target.wants/uwsgi.service
 
 printf "${GREEN}Install complete! Enter the server IP in your chosen browser complete the install wizard.${NORMAL}\n"
