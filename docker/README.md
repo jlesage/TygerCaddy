@@ -1,8 +1,6 @@
 TygerCaddy Docker Container
 ===========================
 
-_*This container is in development and not recommended for normal use!*_
-
 This container aims to be easy to understand, easy to backup/restore, and easy to operate.
 
 Any suggestions on improving this containers ease of use are welcome.
@@ -10,9 +8,11 @@ Any suggestions on improving this containers ease of use are welcome.
 Running TygerCaddy
 ------------------
 
-    docker run -d -p 80:80 -p 443:443 -p 9090:9090 --name tygercaddy \
+      docker run -d -p 80:80 -p 443:443 -p 9090:9090 --name tygercaddy \
         -v $PWD/data/config:/apps/TygerCaddy/TygerCaddy/data \
+        -v $PWD/data/certs:/root/.caddy \
         morph1904/tygercaddy
+
 
 Then point your browser to http://127.0.0.1/ and login with the provided credentials
 
@@ -34,22 +34,13 @@ Then build and tag the containers:
 
     docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
                  --build-arg VCS_REF=`git rev-parse --short HEAD` \
+                 --build-arg VERSION=`cat VERSION.txt` \
                  -t morph1904/tygercaddy:latest \
-                 -f docker/Dockerfile docker/. && \
-    docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
-                 --build-arg VCS_REF=`git rev-parse --short HEAD` \
-                 -t morph1904/tygercaddy:alpine-latest \
-                 -f docker/Dockerfile docker/. && \
-    docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
-                 --build-arg VCS_REF=`git rev-parse --short HEAD` \
-                 -t morph1904/tygercaddy:ubuntu-latest \
-                 -f docker/Dockerfile.ubuntu docker/.
+                 -f docker/Dockerfile docker/.
 
 Push the containers:
 
-    docker push morph1904/tygercaddy:latest && \
-    docker push morph1904/tygercaddy:alpine-latest && \
-    docker push morph1904/tygercaddy:ubuntu-latest
+    docker push morph1904/tygercaddy:latest
 
 Poll the stats counter to update:
 

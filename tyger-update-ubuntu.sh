@@ -1,8 +1,21 @@
 #!/bin/bash
 
+# Set used terminal colors
+GREEN=$(tput setaf 2)
+NORMAL=$(tput sgr0)
+LIME_YELLOW=$(tput setaf 190)
+
+# do not change, these are hardcoded elsewhere
+APPS_DIR=/apps
+BACKUP_DIR=/backup
+TYGER_ROOT=$APPS_DIR/TygerCaddy
+TYGER_DIR=$TYGER_ROOT/TygerCaddy
+TYGER_DATA=$TYGER_DIR/data
+TYGER_LOGS=$TYGER_DATA/logs
+TYGER_BACKUP=$BACKUP_DIR/TygerCaddy
+
 if [ "$(whoami)" != 'root' ]; then
-  printf "This script must be run as "root".\n"
-  printf "Enter password to elevate privileges:"
+  printf "${GREEN}This script must be run as \"root\"${NORMAL}\n"
   printf "\n"
   SCRIPTPATH=$( cd $(dirname $0) ; pwd -P )
   SELF=`basename $0`
@@ -10,54 +23,56 @@ if [ "$(whoami)" != 'root' ]; then
   exit 1
 fi
 
-printf "Starting updater...\n" \
-     "Backing up config...\n" \
-     "You have 5 seconds to proceed...\n" \
-     "or hit Ctrl+C to quit\n" \
-     "\n"
-sleep 6
+printf "${GREEN}You are about to update TygerCaddy.${NORMAL}\n"
+read -p "${LIME_YELLOW}Proceed? (y/N)${NORMAL} " -r
+printf "\n"
+if [[ ! $REPLY =~ ^[Yy*] ]]
+then
+    exit
+fi
 
-printf "Taking services down"
+printf "${GREEN}Taking services down...${NORMAL}\n"
+systemctl stop caddy
+systemctl stop uwsgi
 
-service caddy stop
-service uwsgi stop
+printf "${GREEN}Backing up DB and caddyfile...${NOMAL}\n"
+mkdir -p $TYGER_BACKUP
 
-printf "Backing up DB and caddyfile"
+cp $TYGER_DATA/db.sqlite3     $TYGER_BACKUP/db.sqlite3
+cp $TYGER_DATA/caddyfile.conf $TYGER_BACKUP/caddyfile.conf
+cp $TYGER_LOGS/caddy.txt      $TYGER_BACKUP/caddy.txt
+cp $TYGER_LOGS/uwsgi.txt      $TYGER_BACKUP/uwsgi.txt
 
-mkdir -p /backup/TygerCaddy
+printf "${GREEN}Removing old TygerCaddy install...${NORMAL}\n"
+rm -R $TYGER_ROOT
 
-cp /apps/TygerCaddy/TygerCaddy/db.sqlite3     /backup/TygerCaddy/db.sqlite3
-cp /apps/TygerCaddy/TygerCaddy/caddyfile.conf /backup/TygerCaddy/caddyfile.conf
-
-printf "Removing Directory..."
-rm -R /apps/TygerCaddy
-
-printf "Cloning repository..."
-sleep 3
-
-cd /apps
+printf "${GREEN}Cloning latest release...${NORMAL}\n"
+cd $APPS_DIR
 git clone https://github.com/morph1904/TygerCaddy.git
 
-printf "Restoring config..."
+printf "${GREEN}Restoring config...${NORMAL}\n"
+cp $TYGER_BACKUP/db.sqlite3     $TYGER_DATA/db.sqlite3
+cp $TYGER_BACKUP/caddyfile.conf $TYGER_DATA/caddyfile.conf
 
-cp /backup/TygerCaddy/db.sqlite3     /apps/TygerCaddy/TygerCaddy/db.sqlite3
-cp /backup/TygerCaddy/caddyfile.conf /apps/TygerCaddy/TygerCaddy/caddyfile.conf
+mkdir -p $TYGER_LOGS
+cp $TYGER_BACKUP/caddy.txt      $TYGER_LOGS/caddy.txt
+cp $TYGER_BACKUP/uwsgi.txt      $TYGER_LOGS/uwsgi.txt
 
-mv /backup/TygerCaddy/db.sqlite3     /backup/TygerCaddy/db.sqlite3.bak
-mv /backup/TygerCaddy/caddyfile.conf /backup/TygerCaddy/caddyfile.conf.bak
+mv $TYGER_BACKUP/db.sqlite3     $TYGER_BACKUP/db.sqlite3.bak
+mv $TYGER_BACKUP/caddyfile.conf $TYGER_BACKUP/caddyfile.conf.bak
 
-chmod -R 0775 /apps/TygerCaddy
+rm $TYGER_BACKUP/caddy.txt \
+   $TYGER_BACKUP/uwsgi.txt
 
-printf "Restarting base Services..."
+chmod -R 0775 $TYGER_ROOT
 
-service uwsgi start
-service caddy start
+printf "${GREEN}Restarting base Services...${NORMAL}\n"
+systemctl start uwsgi
+systemctl start caddy
 
-printf "Setting up initial install..."
-cd /apps/TygerCaddy/TygerCaddy
+printf "${GREEN}Setting up initial install...${NORMAL}\n"
+cd $TYGER_DIR
 pip3 install -r requirements.txt
 python3 manage.py migrate
 
-printf "Update complete!, Enter the server IP in your chosen browser and login."
-
-sleep 3
+printf "${GREEN}Update complete! Enter the server IP in your chosen browser and login${NORMAL}\n"

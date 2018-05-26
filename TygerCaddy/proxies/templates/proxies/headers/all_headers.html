@@ -8,6 +8,9 @@
                     <h5 class="card-category">Showing {{ page_obj.start_index }} - {{ page_obj.end_index }}
                         of {{ page_obj.paginator.count }}</h5>
                     <h4 class="card-title">All Headers</h4>
+                     <div class=" text-left">
+                   <a href="{% url 'create-header' %}" class="btn btn-sm btn-primary">Add Header</a>
+                </div>
                 </div>
                 <div class="card-body">
                     <div class="table-full-width table-responsive">

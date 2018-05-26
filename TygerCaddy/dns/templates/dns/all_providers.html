@@ -7,33 +7,34 @@
                 <div class="card-header ">
                     <h5 class="card-category">Showing {{ page_obj.start_index }} - {{ page_obj.end_index }}
                         of {{ page_obj.paginator.count }}</h5>
-                    <h4 class="card-title">All Proxies</h4>
-                     <div class=" text-left">
-                       <a href="{% url 'create-proxy' %}" class="btn btn-sm btn-primary">Add Proxy</a>
+                    <h4 class="card-title">All Hosts</h4>
+                    <div class=" text-left">
+                        <a href="{% url 'create-host' %}" class="btn btn-sm btn-primary">Add Host</a>
                     </div>
                 </div>
+
                 <div class="card-body">
                     <div class="table-full-width table-responsive">
                         <table class="table ">
-                            <thead >
+                            <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Proxy from</th>
-                                <th>Proxy to</th>
+                                <th>Domain</th>
+                                <th>Proxy</th>
+                                <th>Root Path</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for proxy in proxies %}
+                            {% for host in hosts %}
                                 <tr>
-                                    <td>{{ proxy.id }}</td>
-                                    <td><a href="{% url 'proxy-detail' proxy.id %}">{{ proxy.name }}</a></td>
-                                    <td>{{ proxy.proxy_from }}</td>
-                                    <td>{{ proxy.proxy_to }}</td>
+                                    <td>{{ host.id }}</td>
+                                    <td>{{ host.host_name }}</td>
+                                    <td>{{ host.proxy.name }}</td>
+                                    <td>{{ host.root_path }}</td>
                                     <td><a class="btn btn-sm btn-warning"
-                                           href="{% url 'update-proxy' pk=proxy.id %}">Edit</a></td>
-                                    <td><a class="btn btn-sm btn-danger" href="{% url 'delete-proxy' pk=proxy.id %}">Delete</a>
+                                           href="{% url 'update-host' pk=host.id %}">Edit</a></td>
+                                    <td><a class="btn btn-sm btn-danger" href="{% url 'delete-host' pk=host.id %}">Delete</a>
                                     </td>
                                 </tr>
                             {% endfor %}

@@ -8,9 +8,9 @@
                     <h4 class="card-title">Caddy Logs</h4>
                 </div>
                 <div class="card-body">
-                    <div class="table-full-width table-responsive">
+                    <pre >
                         {{ caddy |safe }}
-                    </div>
+                    </pre >
                 </div>
             </div>
         </div>
@@ -22,9 +22,7 @@
                     <h4 class="card-title">App Logs</h4>
                 </div>
                 <div class="card-body">
-                    <div class="table-full-width table-responsive">
-                        {{ uwsgi |safe }}
-                    </div>
+                    <pre > {{ uwsgi |safe }} </pre>
                 </div>
             </div>
         </div>

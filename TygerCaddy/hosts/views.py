@@ -1,31 +1,32 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views import View
-from django.contrib import messages
-from django.shortcuts import redirect, render
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
-from .caddyfile import generate_caddyfile
 
+from .caddyfile import generate_caddyfile
 from .models import Host
-from config.models import Config
-from dns.models import DNS, EVariables
+
 
 # Create your views here.
 
 
 class CreateHost(LoginRequiredMixin, CreateView):
     model = Host
-    fields = ['host_name', 'proxy', 'root_path', 'tls']
+    fields = ['host_name', 'proxy', 'root_path', 'tls', 'staging']
     title = 'Add Host'
     success_url = reverse_lazy('dashboard')
 
     def form_valid(self, form):
+        host = form.save(commit=False)
+        if not form.cleaned_data['tls']:
+            if 'http://' not in form.cleaned_data['host_name']:
+                host.host_name = 'http://' + form.cleaned_data['host_name']
 
-        form.save()
-        caddy = generate_caddyfile()
+        host.save()
+        generate_caddyfile()
+
         return redirect(reverse_lazy('dashboard'))
 
 
@@ -39,13 +40,17 @@ class AllHosts(LoginRequiredMixin, ListView):
 
 class UpdateHost(LoginRequiredMixin, UpdateView):
     model = Host
-    fields = ['host_name', 'proxy', 'root_path', 'tls']
+    fields = ['host_name', 'proxy', 'root_path', 'tls', 'staging']
     slug_field = 'host_name'
     success_url = reverse_lazy('dashboard')
+    title = 'Update Host'
 
     def form_valid(self, form):
-
-        form.save()
+        host = form.save(commit=False)
+        if not form.cleaned_data['tls']:
+            if 'http://' not in form.cleaned_data['host_name']:
+                host.host_name = 'http://' + form.cleaned_data['host_name']
+        host.save()
         caddy = generate_caddyfile()
         return redirect(reverse_lazy('dashboard'))
 

@@ -1,8 +1,23 @@
 #!/bin/bash
 
+# Set used terminal colors
+RED=$(tput setaf 1)
+BLINK=$(tput blink)
+GREEN=$(tput setaf 2)
+NORMAL=$(tput sgr0)
+LIME_YELLOW=$(tput setaf 190)
+
+# do not change, these are hardcoded elsewhere
+APPS_DIR=/apps
+BACKUP_DIR=/backup
+TYGER_ROOT=$APPS_DIR/TygerCaddy
+TYGER_DIR=$TYGER_ROOT/TygerCaddy
+TYGER_DATA=$TYGER_DIR/data
+TYGER_LOGS=$TYGER_DATA/logs
+TYGER_BACKUP=$BACKUP_DIR/TygerCaddy
+
 if [ "$(whoami)" != 'root' ]; then
-  printf "This script must be run as "root".\n"
-  printf "Enter password to elevate privileges:"
+  printf "${GREEN}This script must be run as \"root\"${NORMAL}\n"
   printf "\n"
   SCRIPTPATH=$( cd $(dirname $0) ; pwd -P )
   SELF=`basename $0`
@@ -10,43 +25,44 @@ if [ "$(whoami)" != 'root' ]; then
   exit 1
 fi
 
-printf "Starting uninstaller\n" \
-     "You have 5 before uninstallation begins...\n" \
-     "or hit Ctrl+C to quit\n" \
-     "\n"
-sleep 6
+printf "${RED}You are about to uninstall TygerCaddy${NORMAL}\n"
+read -p "${LIME_YELLOW}Proceed? (y/N)${NORMAL} " -r
+printf "\n"
+if [[ ! $REPLY =~ ^[Yy*] ]]
+then
+    exit 1
+fi
 
-printf "Stopping Services"
-
+printf "${GREEN}Stopping and removing services...${NORMAL}\n"
 service uwsgi stop
 service caddy stop
 
-printf "Removing Python Packages..."
-
-pip3 uninstall -y -r /apps/TygerCaddy/TygerCaddy/requirements.txt
-
-printf "Removing TygerCaddy\n" \
-     "WARNING! This will remove the whole /apps directory and all backups.\n" \
-     "This is your last chance to cancel\n" \
-     "You have 5 seconds to proceed...\n" \
-     "or hit Ctrl+C to quit\n" \
-     "\n"
-sleep 6
-
 rm -rf /usr/local/bin/caddy \
-      /etc/caddy \
-      /etc/ssl/caddy \
-      /etc/systemd/system/caddy.service \
-      /etc/systemd/system/caddy-reload.path \
-      /etc/systemd/system/caddy-reload.service \
-      /etc/systemd/system/uwsgi.service \
-      /apps/TygerCaddy \
-      /backup/TygerCaddy
+       /etc/systemd/system/caddy.service \
+       /etc/systemd/system/caddy-reload.path \
+       /etc/systemd/system/caddy-reload.service \
+       /etc/systemd/system/uwsgi.service
 
 apt remove -y uwsgi
 systemctl daemon-reload
 
+printf "${GREEN}Remove Python packages?${NORMAL} "
+read -p "${LIME_YELLOW}(y/N)${NORMAL} " -r
+printf "\n"
+if [[ $REPLY =~ ^[Yy*] ]]
+  then
+    pip3 uninstall -y -r $TYGER_DIR/requirements.txt
+fi
 
-printf "Uninstall Complete!"
+printf "${RED}${BLINK}About to uninstall all user data${NORMAL}\n"
+read -p "${RED}Proceed? (y/N)${NORMAL} " -r
+printf "\n"
+if [[ $REPLY =~ ^[Yy*] ]]
+  then
+    rm -rf /etc/caddy \
+           /etc/ssl/caddy \
+           $TYGER_ROOT \
+           $TYGER_BACKUP
+fi
 
-sleep 3
+printf "${GREEN}Uninstall Complete!${NORMAL}\n"

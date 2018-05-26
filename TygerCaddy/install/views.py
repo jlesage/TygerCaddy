@@ -35,12 +35,12 @@ class Index(View):
             'username': form['username'],
             'password': form['password'],
             'email': form['email'],
-            'interface': form['interface'],
-            'port': form['port'],
-            'proxy-host': form['proxy-host'],
+            'interface': form['listen_ip'],
+            'port': form['listen_port'],
+            'proxy-host': form['backend_proxy'],
             'dns-switch': dns_check,
             # 'dns-provider': dns_provider,
-            'dash-colour': form['dash-colour']
+            'dash-colour': 'orange'
         }
 
         admin = User.objects.create_superuser(config['username'], config['email'], config['password'])

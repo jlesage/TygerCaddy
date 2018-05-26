@@ -1,6 +1,11 @@
 
 # Created by https://www.gitignore.io/api/linux,macos,django,windows,pycharm,sublimetext,visualstudiocode
 
+# ignore docker files used for docker debugging
+/buildlog.txt
+/runlog.txt
+/data/
+
 ### Django ###
 *.log
 *.pot
@@ -182,6 +187,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-
 # End of https://www.gitignore.io/api/linux,macos,django,windows,pycharm,sublimetext,visualstudiocode
-data/

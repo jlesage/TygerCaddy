@@ -1,13 +1,12 @@
-import os
 import subprocess
-from pathlib import Path
+
+from config.models import Config
 from django.conf import settings
 from django.contrib.auth.models import User
 from dns.models import EVariables
+from proxies.models import Header
 
 from .models import Host
-from config.models import Config
-from proxies.models import Header
 
 
 def reload_caddy():
@@ -31,6 +30,8 @@ def generate_caddyfile():
     hosts = Host.objects.all()
     if hosts:
         for caddyhost in hosts:
+            # if caddyhost.dns_verification:
+            # set_evariables(config=config, dns=caddyhost.dns_provider)
             headerlist = Header.objects.filter(proxy_id=caddyhost.proxy.id)
 
             block = caddyhost.host_name + ' { \n'
@@ -85,6 +86,12 @@ def generate_caddyfile():
                 block += '\ttls off \n } \n \n'
             elif config.dns_challenge:
                 block += '\ttls ' + caddyname + '\n } \n \n'
+            elif caddyhost.staging:
+                block += '\ttls ' + user.email + ' {\n' \
+                                                 '\t ca https://acme-staging-v02.api.letsencrypt.org/directory\n' \
+                                                 '\t } \n' \
+                                                 '} \n'
+
             else:
                 block += '\ttls ' + user.email + '\n } \n \n'
 
@@ -94,6 +101,7 @@ def generate_caddyfile():
     generate_dash()
     reload_caddy()
     return True
+
 
 def generate_dash():
     project = settings.BASE_DIR
@@ -117,7 +125,14 @@ def generate_dash():
 
 def set_evariables(config, dns):
     variables = EVariables.objects.filter(dns_provider_id=dns.id)
+    project = settings.BASE_DIR
+    envpath = project + '/data/dns.env'
+    env = open(envpath, 'w+')
 
     for var in variables:
-        os.environ[var.variable] = str(var.value)
-        print(os.environ[var.variable])
+        line = var.variable + '=' + var.value + '\n'
+        env.write(line)
+
+    env.close()
+
+    return True

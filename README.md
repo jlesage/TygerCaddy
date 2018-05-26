@@ -60,7 +60,9 @@ Once complete, enter the server IP address in your browser and log in as normal.
 * [CaddyServer](https://caddyserver.com/) - HTTP Reverse Proxy Server
 
 ## Authors
-* **Morph1904** - *Initial work* - [Morph1904](https://github.com/morph1904)
+* **Morph1904** - *Project Lead/Creator* - [Morph1904](https://github.com/morph1904)
+* **sparky8251** - *Docker Builds/Testing* - [sparky8251](https://github.com/sparky8251)
+* **arevindh** - *UI Improvements/Testing* - [arevindh](https://github.com/arevindh)
 
 ## License
 

@@ -8,7 +8,11 @@
                     <h5 class="card-category">Showing {{ page_obj.start_index }} - {{ page_obj.end_index }}
                         of {{ page_obj.paginator.count }}</h5>
                     <h4 class="card-title">All Hosts</h4>
+                    <div class=" text-left">
+                       <a href="{% url 'create-host' %}" class="btn btn-sm btn-primary">Add Host</a>
+                    </div>
                 </div>
+
                 <div class="card-body">
                     <div class="table-full-width table-responsive">
                         <table class="table ">
@@ -26,11 +30,18 @@
                                 <tr>
                                     <td>{{ host.id }}</td>
                                     <td>{{ host.host_name }}</td>
-                                    <td>{{ host.proxy.name }}</td>
+                                    <td><a href="{% url 'update-proxy' host.proxy.id %}">{{ host.proxy.name }}</a></td>
                                     <td>{{ host.root_path }}</td>
-                                    <td><a class="btn btn-sm btn-warning"
-                                           href="{% url 'update-host' pk=host.id %}">Edit</a></td>
-                                    <td><a class="btn btn-sm btn-danger" href="{% url 'delete-host' pk=host.id %}">Delete</a>
+                                    <td>
+                                        <a class="btn btn-sm btn-warning"
+                                           href="{% url 'update-host' pk=host.id %}">Edit</a>
+
+                                        {% if host.dns_verification %}
+
+                                            <a class="btn btn-sm btn-info"
+                                               href="{% url 'set-vars' host.dns_provider.id %}">Set DNS Variables</a>
+                                        {% endif %}
+                                        <a class="btn btn-sm btn-danger" href="{% url 'delete-host' pk=host.id %}">Delete</a>
                                     </td>
                                 </tr>
                             {% endfor %}

@@ -21,6 +21,7 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('', RedirectView.as_view(url='/dashboard/')),
     path('install/', include('install.urls')),
+    path('dns/', include('dns.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('hosts/', include('hosts.urls')),
     path('proxies/', include('proxies.urls')),
