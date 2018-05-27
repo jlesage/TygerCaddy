@@ -1,15 +1,9 @@
 pipeline {
-  agent {
-    docker {
-      image 'python:3.5.1'
-    }
-
-  }
+  agent none
   stages {
-    stage('Build') {
+    stage('Initialise') {
       steps {
-        sh 'python --version'
-        isUnix()
+        echo 'This is a test'
       }
     }
   }
