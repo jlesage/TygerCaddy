@@ -40,7 +40,7 @@ class AllHosts(LoginRequiredMixin, ListView):
 
 class UpdateHost(LoginRequiredMixin, UpdateView):
     model = Host
-    fields = ['host_name', 'proxy', 'root_path', 'tls', 'staging']
+    fields = ['host_name', 'root_path', 'tls', 'staging']
     slug_field = 'host_name'
     success_url = reverse_lazy('dashboard')
     title = 'Update Host'
