@@ -35,7 +35,7 @@ class CreateProxy(LoginRequiredMixin, CreateView):
               'websocket',
               'transparent']
     hosts = Host.objects.all()
-    success_url = reverse_lazy('all-proxies')
+
 
     def get_context_data(self, **kwargs):
         ctx = super(CreateProxy, self).get_context_data(**kwargs)
@@ -66,6 +66,7 @@ class DetailProxy(LoginRequiredMixin, DetailView):
 class UpdateProxy(LoginRequiredMixin, UpdateView):
     model = Proxy
     template_name = 'proxies/proxy_form.html'
+    success_url = reverse_lazy('all-proxies')
     fields = ['name',
               'host',
               'proxy_from',
