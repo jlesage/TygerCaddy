@@ -36,7 +36,7 @@ Then build and tag the containers:
                  --build-arg VCS_REF=`git rev-parse --short HEAD` \
                  --build-arg VERSION=`cat VERSION.txt` \
                  -t morph1904/tygercaddy:latest \
-                 -f docker/Dockerfile docker/.
+                 -f docker/Dockerfile .
 
 Push the containers:
 

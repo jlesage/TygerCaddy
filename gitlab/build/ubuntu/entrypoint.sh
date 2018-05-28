@@ -10,5 +10,5 @@ if [ -e $TYGER_ROOT ]
 then
   exec /sbin/init --log-target=journal 3>&1
 else
-  exec /baremetal.sh
+  exec /ubuntu-install.sh
 fi

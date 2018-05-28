@@ -36,7 +36,10 @@ ENV TYGER_ROOT=$APPS_DIR/TygerCaddy
 ENV TYGER_DIR=$TYGER_ROOT/TygerCaddy
 ENV TYGER_DATA=$TYGER_DIR/data
 ENV TYGER_LOGS=$TYGER_DATA/logs
-
+#######################
+ARG CI_REPOSITORY_URL
+ARG CI_COMMIT_REF_NAME
+#######################
 # Install dependencies
 RUN apk add --no-cache \
     git \
@@ -57,7 +60,11 @@ RUN apk add --no-cache \
 
 # Install application
 RUN mkdir -p $APPS_DIR && cd $APPS_DIR && \
-    git clone --single-branch https://github.com/morph1904/TygerCaddy.git --depth 1 && \
+######################################
+    git clone $CI_REPOSITORY_URL && \
+    cd $TYGER_ROOT && \
+    git checkout -qf $CI_COMMIT_REF_NAME && \
+######################################
     pip3 install -r $TYGER_DIR/requirements.txt
 
 # install caddy
@@ -76,6 +83,9 @@ EXPOSE 80 443 9090
 VOLUME ["/apps/TygerCaddy/TygerCaddy/data", "/root/.caddy"]
 
 COPY docker/entrypoint.sh /entrypoint.sh
+######################
+ADD gitlab/test /test
+######################
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["run"]
 
