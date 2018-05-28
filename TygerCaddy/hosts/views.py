@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, DeleteView, ListView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from .caddyfile import generate_caddyfile
 from .models import Host
@@ -14,7 +14,7 @@ from .models import Host
 
 class CreateHost(LoginRequiredMixin, CreateView):
     model = Host
-    fields = ['host_name', 'proxy', 'root_path', 'tls', 'staging']
+    fields = ['host_name', 'root_path', 'tls', 'staging']
     title = 'Add Host'
     success_url = reverse_lazy('dashboard')
 

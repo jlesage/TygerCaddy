@@ -12,7 +12,6 @@
                        <a href="{% url 'create-host' %}" class="btn btn-sm btn-primary">Add Host</a>
                     </div>
                 </div>
-
                 <div class="card-body">
                     <div class="table-full-width table-responsive">
                         <table class="table ">
@@ -20,7 +19,6 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Domain</th>
-                                <th>Proxy</th>
                                 <th>Root Path</th>
                                 <th>Actions</th>
                             </tr>
@@ -30,7 +28,6 @@
                                 <tr>
                                     <td>{{ host.id }}</td>
                                     <td>{{ host.host_name }}</td>
-                                    <td><a href="{% url 'update-proxy' host.proxy.id %}">{{ host.proxy.name }}</a></td>
                                     <td>{{ host.root_path }}</td>
                                     <td>
                                         <a class="btn btn-sm btn-warning"
