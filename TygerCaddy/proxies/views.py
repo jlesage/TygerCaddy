@@ -36,14 +36,12 @@ class CreateProxy(LoginRequiredMixin, CreateView):
               'transparent']
     hosts = Host.objects.all()
 
-
     def get_context_data(self, **kwargs):
         ctx = super(CreateProxy, self).get_context_data(**kwargs)
         ctx['hosts'] = self.hosts
         return ctx
 
     def form_valid(self, form):
-
         form.save()
         generate_caddyfile()
         return redirect(reverse_lazy('all-proxies'))
@@ -88,6 +86,11 @@ class UpdateProxy(LoginRequiredMixin, UpdateView):
               'insecure_skip_verify',
               'websocket',
               'transparent']
+
+    def form_valid(self, form):
+        form.save()
+        generate_caddyfile()
+        return redirect(reverse_lazy('all-proxies'))
 
 
 class DeleteProxy(LoginRequiredMixin, DeleteView):
