@@ -7,12 +7,46 @@
         <div class="card">
             <div class="card-header ">
                 <h5 class="card-category">Proxies</h5>
-                <h4 class="card-title">Edit Proxy</h4>
+                <h4 class="card-title">Edit Proxy {{ proxy.name }}</h4>
             </div>
             <div class="card-body ">
                 <form action="" method="post" class="form">
                     {% csrf_token %}
-                    {% bootstrap_form form %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {% bootstrap_field form.name %}
+                            {% bootstrap_field form.host %}
+                            {% bootstrap_field form.proxy_from %}
+                            {% bootstrap_field form.proxy_to %}
+                            {% bootstrap_field form.load_policy %}
+                            {% bootstrap_field form.fail_timeout %}
+                            {% bootstrap_field form.max_fails %}
+                            {% bootstrap_field form.max_conns %}
+                            {% bootstrap_field form.try_duration %}
+                        </div>
+                        <div class="col-md-6">
+                            {% bootstrap_field form.try_interval %}
+                            {% bootstrap_field form.health_check %}
+                            {% bootstrap_field form.health_check_port %}
+                            {% bootstrap_field form.health_check_interval %}
+                            {% bootstrap_field form.health_check_timeout %}
+                            {% bootstrap_field form.keep_alive %}
+                            {% bootstrap_field form.timeout %}
+                            {% bootstrap_field form.without %}
+                            {% bootstrap_field form.exceptions %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% bootstrap_field form.insecure_skip_verify %}
+                            {% bootstrap_field form.websocket %}
+                            {% bootstrap_field form.transparent %}
+                        </div>
+
+                        <!-- /.col-md-12 -->
+                    </div>
+                    <!-- /.row -->
+                        <!-- /.col-md-6 -->
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>

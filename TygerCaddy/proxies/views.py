@@ -1,11 +1,12 @@
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView
-from django.shortcuts import redirect
-from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from hosts.caddyfile import generate_caddyfile
+from hosts.models import Host
 
-from .models import Proxy, Header
+from .models import Header, Proxy
 
 
 class CreateProxy(LoginRequiredMixin, CreateView):
@@ -15,6 +16,7 @@ class CreateProxy(LoginRequiredMixin, CreateView):
     fields = ['name',
               'proxy_from',
               'proxy_to',
+              'host',
               'load_policy',
               'fail_timeout',
               'max_fails',
@@ -32,6 +34,13 @@ class CreateProxy(LoginRequiredMixin, CreateView):
               'insecure_skip_verify',
               'websocket',
               'transparent']
+    hosts = Host.objects.all()
+    success_url = reverse_lazy('all-proxies')
+
+    def get_context_data(self, **kwargs):
+        ctx = super(CreateProxy, self).get_context_data(**kwargs)
+        ctx['hosts'] = self.hosts
+        return ctx
 
     def form_valid(self, form):
 
@@ -56,7 +65,9 @@ class DetailProxy(LoginRequiredMixin, DetailView):
 
 class UpdateProxy(LoginRequiredMixin, UpdateView):
     model = Proxy
+    template_name = 'proxies/proxy_form.html'
     fields = ['name',
+              'host',
               'proxy_from',
               'proxy_to',
               'load_policy',
@@ -76,14 +87,6 @@ class UpdateProxy(LoginRequiredMixin, UpdateView):
               'insecure_skip_verify',
               'websocket',
               'transparent']
-    slug_field = 'name'
-    success_url = reverse_lazy('all-proxies')
-
-    def form_valid(self, form):
-
-        form.save()
-        generate_caddyfile()
-        return redirect(reverse_lazy('all-proxies'))
 
 
 class DeleteProxy(LoginRequiredMixin, DeleteView):

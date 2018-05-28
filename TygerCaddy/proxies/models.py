@@ -1,4 +1,5 @@
 from django.db import models
+from hosts.models import Host
 
 
 class Policies(models.Model):
@@ -6,6 +7,7 @@ class Policies(models.Model):
 
     def __str__(self):
         return self.name
+
 
 # Create your models here.
 class Proxy(models.Model):
@@ -29,6 +31,7 @@ class Proxy(models.Model):
     insecure_skip_verify = models.BooleanField(default=False)
     websocket = models.BooleanField(default=False)
     transparent = models.BooleanField(default=False)
+    host = models.ForeignKey(Host, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
