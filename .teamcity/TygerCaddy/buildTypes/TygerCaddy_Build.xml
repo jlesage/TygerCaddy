@@ -4,6 +4,7 @@
   <description />
   <settings>
     <options>
+      <option name="allowExternalStatus" value="true" />
       <option name="shouldFailBuildOnAnyErrorMessage" value="true" />
     </options>
     <disabled-settings>
