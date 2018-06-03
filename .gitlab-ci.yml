@@ -39,6 +39,7 @@ docker-test:
 
   before_script:
     - docker info
+    - BRANCH_LOWER=$(echo "$CI_COMMIT_REF_NAME" | awk '{print tolower($0)}')
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com/morph1904/tygercaddy
     - docker run -d -p 80:80 -p 443:443 -p 9090:9090 --name tygertest registry.gitlab.com/morph1904/tygercaddy/$BRANCH_LOWER/tygertest:ci-docker
 
