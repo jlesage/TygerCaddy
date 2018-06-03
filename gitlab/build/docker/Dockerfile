@@ -41,8 +41,7 @@ RUN mkdir -p $APPS_DIR && cd $APPS_DIR && \
 RUN curl https://getcaddy.com | bash -s personal hook.service
 
 # validate install
-RUN /usr/bin/caddy -version
-RUN /usr/bin/caddy -plugins | grep hook.service
+RUN caddy --version
 
 # Add any additional folders required, correct file permissions
 RUN mkdir -p $TYGER_DATA && \

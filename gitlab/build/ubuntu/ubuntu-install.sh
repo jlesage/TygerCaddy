@@ -53,6 +53,7 @@ touch $TYGER_LOGS/uwsgi.txt
 
 printf "${GREEN}Installing Caddy...${NORMAL}\n"
 curl https://getcaddy.com | bash -s personal hook.service
+caddy --version || exit 1
 
 printf "${GREEN}Creating folders, moving files, setting permissions...${NORMAL}\n"
 mkdir -p /etc/caddy \
