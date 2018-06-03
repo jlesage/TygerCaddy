@@ -39,8 +39,6 @@ service caddy stop
 
 rm -rf /usr/local/bin/caddy \
        /etc/systemd/system/caddy.service \
-       /etc/systemd/system/caddy-reload.path \
-       /etc/systemd/system/caddy-reload.service \
        /etc/systemd/system/uwsgi.service
 
 apt remove -y uwsgi

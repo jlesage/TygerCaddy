@@ -60,24 +60,18 @@ mkdir -p /etc/caddy \
 
 cp $TYGER_ROOT/caddy.service        /etc/systemd/system/caddy.service
 cp $TYGER_ROOT/uwsgi.service        /etc/systemd/system/uwsgi.service
-cp $TYGER_ROOT/caddy-reload.path    /etc/systemd/system/caddy-reload.path
-cp $TYGER_ROOT/caddy-reload.service /etc/systemd/system/caddy-reload.service
 
 chown -R www-data:root /etc/caddy \
                        /etc/ssl/caddy
 chown -R www-data:www-data $TYGER_ROOT
 chown root:root /etc/systemd/system/caddy.service \
                 /etc/systemd/system/uwsgi.service \
-                /etc/systemd/system/caddy-reload.path \
-                /etc/systemd/system/caddy-reload.service \
                 /usr/local/bin/caddy
 
 chmod -R 700 /etc/ssl/caddy
 chmod -R 755 $TYGER_ROOT \
              /usr/local/bin/caddy \
              /etc/systemd/system/caddy.service \
-             /etc/systemd/system/caddy-reload.path \
-             /etc/systemd/system/caddy-reload.service \
              /etc/systemd/system/uwsgi.service
 
 setcap 'cap_net_bind_service=+eip' /usr/local/bin/caddy

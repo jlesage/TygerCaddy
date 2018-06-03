@@ -1,27 +1,20 @@
 [Unit]
 Description=Caddy HTTP/2 web server
-Documentation=https://caddyserver.com/docs
 After=network-online.target
 Wants=network-online.target systemd-networkd-wait-online.service
 
 [Service]
 Restart=on-abnormal
-
 User=www-data
 Group=www-data
-
 Environment=CADDYPATH=/etc/ssl/caddy
-
 ExecStart=/usr/local/bin/caddy -log /apps/TygerCaddy/TygerCaddy/data/logs/caddy.txt -agree=true -conf=/apps/TygerCaddy/TygerCaddy/data/caddyfile.conf -root=/var/tmp
 ExecReload=/bin/kill -USR1 $MAINPID
-
 KillMode=mixed
 KillSignal=SIGQUIT
 TimeoutStopSec=5s
-
 LimitNOFILE=1048576
 LimitNPROC=512
-
 PrivateTmp=true
 PrivateDevices=false
 ProtectHome=true
