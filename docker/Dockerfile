@@ -1,33 +1,3 @@
-#
-# Builder
-#
-FROM golang:1.9-alpine as builder
-
-RUN apk add --no-cache curl git
-
-# caddy
-RUN git clone https://github.com/mholt/caddy /go/src/github.com/mholt/caddy \
-    && cd /go/src/github.com/mholt/caddy
-
-# builder dependency
-RUN git clone https://github.com/caddyserver/builds /go/src/github.com/caddyserver/builds
-
-# service plugin
-RUN go get github.com/hacdias/caddy-service
-
-# integrate service plugin
-RUN printf 'package caddyhttp\nimport _ "github.com/hacdias/caddy-service"' > \
-/go/src/github.com/mholt/caddy/caddyhttp/service.go
-
-# build
-RUN cd /go/src/github.com/mholt/caddy/caddy \
-    && git checkout -f \
-    && go run build.go \
-    && mv caddy /go/bin
-
-#
-# Final stage
-#
 FROM alpine:3.7
 LABEL maintainer "Tyler Parisi <tyer@possumlodge.me>"
 
@@ -61,7 +31,7 @@ RUN mkdir -p $APPS_DIR && cd $APPS_DIR && \
     pip3 install -r $TYGER_DIR/requirements.txt
 
 # install caddy
-COPY --from=builder /go/bin/caddy /usr/bin/caddy
+RUN curl https://getcaddy.com | bash -s personal hook.service
 
 # validate install
 RUN /usr/bin/caddy -version
