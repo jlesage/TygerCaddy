@@ -21,9 +21,9 @@ docker-build:
     - docker info
 
   script:
-    - docker build --build-arg CI_REPOSITORY_URL=$CI_REPOSITORY_URL --build-arg CI_COMMIT_REF_NAME=$CI_COMMIT_REF_NAME --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=`git rev-parse --short HEAD` --build-arg VERSION=`cat VERSION.txt` -t registry.gitlab.com/morph1904/tygercaddy:ci-docker -f gitlab/build/docker/Dockerfile .
+    - docker build --build-arg CI_REPOSITORY_URL=$CI_REPOSITORY_URL --build-arg CI_COMMIT_REF_NAME=$CI_COMMIT_REF_NAME --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=`git rev-parse --short HEAD` --build-arg VERSION=`cat VERSION.txt` -t registry.gitlab.com/morph1904/$CI_COMMIT_REF_NAME/tygercaddy:ci-docker -f gitlab/build/docker/Dockerfile .
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com/morph1904/tygercaddy
-    - docker push registry.gitlab.com/morph1904/tygercaddy:ci-docker
+    - docker push registry.gitlab.com/morph1904/$CI_COMMIT_REF_NAME/tygercaddy:ci-docker
 
 docker-test:
   stage: test
@@ -39,7 +39,7 @@ docker-test:
   before_script:
     - docker info
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com/morph1904/tygercaddy
-    - docker run -d -p 80:80 -p 443:443 -p 9090:9090 --name tygertest registry.gitlab.com/morph1904/tygercaddy:ci-docker
+    - docker run -d -p 80:80 -p 443:443 -p 9090:9090 --name tygertest registry.gitlab.com/morph1904/$CI_COMMIT_REF_NAME/tygercaddy:ci-docker
 
   script:
     - docker exec tygertest /bin/bash /test/shared/check-response.sh
@@ -63,9 +63,9 @@ ubuntu-build:
     - docker info
 
   script:
-    - docker build -t registry.gitlab.com/morph1904/tygercaddy:ci-ubuntu -f gitlab/build/ubuntu/Dockerfile .
+    - docker build -t registry.gitlab.com/morph1904/$CI_COMMIT_REF_NAME/tygercaddy:ci-ubuntu -f gitlab/build/ubuntu/Dockerfile .
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com/morph1904/tygercaddy
-    - docker push registry.gitlab.com/morph1904/tygercaddy:ci-ubuntu
+    - docker push registry.gitlab.com/morph1904/$CI_COMMIT_REF_NAME/tygercaddy:ci-ubuntu
 
 ubuntu-test:
   stage: test
@@ -82,7 +82,7 @@ ubuntu-test:
     - docker info
     - docker run --rm --privileged -v /:/host solita/ubuntu-systemd:16.04 setup
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com/morph1904/tygercaddy
-    - docker run -e CI_REPOSITORY_URL=$CI_REPOSITORY_URL -e CI_COMMIT_REF_NAME=$CI_COMMIT_REF_NAME --security-opt seccomp=unconfined -t -v /sys/fs/cgroup:/sys/fs/cgroup:ro --tmpfs /run --tmpfs /run/lock -p 80:80 -p 443:443 -p 9090:9090 --name tygertest registry.gitlab.com/morph1904/tygercaddy:ci-ubuntu
+    - docker run -e CI_REPOSITORY_URL=$CI_REPOSITORY_URL -e CI_COMMIT_REF_NAME=$CI_COMMIT_REF_NAME --security-opt seccomp=unconfined -t -v /sys/fs/cgroup:/sys/fs/cgroup:ro --tmpfs /run --tmpfs /run/lock -p 80:80 -p 443:443 -p 9090:9090 --name tygertest registry.gitlab.com/morph1904/$CI_COMMIT_REF_NAME/tygercaddy:ci-ubuntu
 
   script:
     - docker start tygertest
