@@ -14,6 +14,99 @@ def reload_caddy():
     return True
 
 
+def build_header_list(proxyID):
+    # Get a list of associated custom header directives
+    headerlist = Header.objects.filter(proxy_id=proxyID)
+    headerblock =''
+    # If the proxy has associated custom headers
+    if headerlist:
+        # For each of the header entries associated
+        for header in headerlist:
+            # If the header is a downstream header
+            if header.downstream:
+                # Build the downstream header value
+                headerblock += 'header_downstream ' + header.header + ' ' + header.value + '\n'
+            # If the header is a upstream header
+            if header.upstream:
+                # Build the upstream header value
+                headerblock += 'header_upstream ' + header.header + ' ' + header.value + '\n'
+        return headerblock
+    else:
+        return False
+
+
+def build_proxy_block(hostID):
+    # Get the associated proxies for the current host
+    proxies = Proxy.objects.filter(host_id=hostID)
+    if not proxies:
+        # Make the block blank...
+        return False
+    else:
+        proxyblock = ''
+        # For every proxy associated with this hostname
+        for proxy in proxies:
+            # Build the proxy block based on the found values in the DB
+            proxyblock += '\t\t proxy ' + proxy.proxy_from + ' ' + proxy.proxy_to + ' { \n'
+            if proxy.load_policy:
+                proxyblock += '\t\t\t load_policy ' + str(proxy.load_policy.name) + '\n'
+            if proxy.fail_timeout:
+                proxyblock += '\t\t\t fail_timeout ' + str(proxy.fail_timeout) + '\n'
+            if proxy.max_fails:
+                proxyblock += '\t\t\t max_fails ' + str(proxy.max_fails) + '\n'
+            if proxy.max_conns:
+                proxyblock += '\t\t\t max_conns ' + str(proxy.max_conns) + '\n'
+            if proxy.try_duration:
+                proxyblock += '\t\t\t try_duration ' + str(proxy.try_duration) + '\n'
+            if proxy.try_interval:
+                proxyblock += '\t\t\t try_interval ' + str(proxy.try_interval) + '\n'
+            if proxy.health_check:
+                proxyblock += '\t\t\t health_check ' + str(proxy.health_check) + '\n'
+            if proxy.health_check_port:
+                proxyblock += '\t\t\t health_check_port ' + str(proxy.health_check_port) + '\n'
+            if proxy.health_check_interval:
+                proxyblock += '\t\t\t health_check_interval ' + str(proxy.health_check_interval) + '\n'
+            if proxy.health_check_timeout:
+                proxyblock += '\t\t\t health_check_timeout ' + str(proxy.health_check_timeout) + '\n'
+            if proxy.keep_alive:
+                proxyblock += '\t\t\t keep_alive ' + str(proxy.keep_alive) + '\n'
+            if proxy.timeout:
+                proxyblock += '\t\t\t timeout ' + str(proxy.timeout) + '\n'
+            if proxy.without:
+                proxyblock += '\t\t\t without ' + str(proxy.without) + '\n'
+            if proxy.exceptions:
+                proxyblock += '\t\t\t exceptions ' + str(proxy.exceptions) + '\n'
+            if proxy.insecure_skip_verify:
+                proxyblock += '\t\t\t insecure_skip_verify \n'
+            if proxy.websocket:
+                proxyblock += '\t\t\t websocket \n'
+            if proxy.transparent:
+                proxyblock += '\t\t\t transparent \n'
+
+            headerblock = build_header_list(proxyID=proxy.id)
+
+            if headerblock:
+                proxyblock += headerblock
+
+            # Close off the proxyblock
+            proxyblock += '\t\t } \n'
+
+        return proxyblock
+
+
+def build_host_block(caddyhost, ):
+    # Start the host part of the block
+    # Set the host name to respond to
+    block = caddyhost.host_name + ' { \n'
+
+    # Add the root path
+    block += '\t root ' + caddyhost.root_path + '\n'
+
+    # Set the Proxy block variable to empty
+    proxyblock = ''
+
+    proxyblock = build_proxy_block(hostID=caddyhost.id)
+
+
 def generate_caddyfile():
     user = User.objects.get(pk=1)
 

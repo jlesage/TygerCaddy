@@ -76,3 +76,4 @@ def generate(request):
     run = generate_caddyfile()
     return redirect('/dashboard')
 
+
