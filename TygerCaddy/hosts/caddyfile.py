@@ -93,7 +93,7 @@ def build_proxy_block(hostID):
         return proxyblock
 
 
-def build_host_block(caddyhost, ):
+def build_host_block(caddyhost):
     # Start the host part of the block
     # Set the host name to respond to
     block = caddyhost.host_name + ' { \n'
@@ -105,6 +105,24 @@ def build_host_block(caddyhost, ):
     proxyblock = ''
 
     proxyblock = build_proxy_block(hostID=caddyhost.id)
+
+
+def caddyfile_build():
+    user = User.objects.get(pk=1)
+
+    project = settings.BASE_DIR
+    caddyfilepath = project + '/data/caddyfile.conf'
+    caddyfile = open(caddyfilepath, "w+")
+
+    hosts = Host.objects.all()
+
+    if hosts:
+        for caddyhost in hosts:
+            proxies = Proxy.objects.filter(host_id=caddyhost.id)
+            if not proxies:
+                block = ''
+            else:
+                block = build_host_block(caddyhost=ca)
 
 
 def generate_caddyfile():
