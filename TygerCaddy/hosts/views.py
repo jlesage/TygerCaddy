@@ -24,13 +24,14 @@ class CreateHost(LoginRequiredMixin, CreateView):
             if 'http://' not in form.cleaned_data['host_name']:
                 host.host_name = 'http://' + form.cleaned_data['host_name']
         host.save()
+        host.save_m2m()
         caddyfile_build()
 
         return redirect(reverse_lazy('dashboard'))
 
 
 class AllHosts(LoginRequiredMixin, ListView):
-    template_name = 'hosts/all_certificates.html'
+    template_name = 'hosts/all_hosts.html'
     context_object_name = 'hosts'
     queryset = Host.objects.order_by('id')
     paginate_by = 10
@@ -50,7 +51,8 @@ class UpdateHost(LoginRequiredMixin, UpdateView):
             if 'http://' not in form.cleaned_data['host_name']:
                 host.host_name = 'http://' + form.cleaned_data['host_name']
         host.save()
-        caddy = caddyfile_build()
+        form.save_m2m()
+        caddyfile_build()
         return redirect(reverse_lazy('dashboard'))
 
 

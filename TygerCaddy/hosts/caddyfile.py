@@ -1,3 +1,4 @@
+import os
 import subprocess
 
 from config.models import Config
@@ -95,38 +96,39 @@ def build_proxy_block(hostID):
 
 def build_ssl_block(caddyhost):
     user = User.objects.get(pk=1)
+    certblock = ''
     if not caddyhost.tls:
-        block = '\ttls off \n } \n \n'
-    if caddyhost.custom_ssl:
-        certsblock = ''
-        certs = caddyhost.custom_certs.all()
+        certblock = '\ttls off \n } \n \n'
 
     if caddyhost.staging:
-        block = '\ttls ' + user.email + ' {\n' \
-                                        '\t ca https://acme-staging-v02.api.letsencrypt.org/directory\n' \
-                                        '\t } \n' \
-                                        '} \n'
+        certblock = '\ttls ' + user.email + ' {\n' \
+                                            '\t ca https://acme-staging-v02.api.letsencrypt.org/directory\n' \
+                                            '\t } \n' \
+                                            '} \n'
+    certs = caddyhost.custom_certs.all()
+    if certs and caddyhost.custom_ssl:
+        for cert in certs:
+            certblock = '\ttls ' + os.path.join(cert.bundle_upload.bundle_file.path) + ' ' + os.path.join(
+                cert.key_upload.key_file.path) + '\n } \n \n'
     else:
-        block = '\ttls ' + user.email + '\n } \n \n'
+        certblock = '\ttls ' + user.email + '\n } \n \n'
+
+    return certblock
 
 
 def build_host_block(caddyhost):
     # Start the host part of the block
     # Set the host name to respond to
-    print(caddyhost)
-    proxyblock = caddyhost.host_name + ' { \n'
-    print(proxyblock)
+
+    if caddyhost.force_redirect_https:
+        proxyblock = caddyhost.host_name + ':443 { \n'
+    else:
+        proxyblock = caddyhost.host_name + ' { \n'
     # Add the root path
     proxyblock += '\t root ' + caddyhost.root_path + '\n'
     proxyblock += build_proxy_block(hostID=caddyhost.id)
-    proxyblock += build_ssl_block(caddyhost)
 
-    if proxyblock:
-        return proxyblock
-    else:
-        # Set the Proxy block variable to empty
-        proxyblock = ''
-        return proxyblock
+    return proxyblock
 
 
 def caddyfile_build():
@@ -146,6 +148,7 @@ def caddyfile_build():
             else:
                 block = build_host_block(caddyhost=caddyhost)
                 ssl = build_ssl_block(caddyhost=caddyhost)
+                block += ssl
 
         caddyfile.write(block)
         caddyfile.close()

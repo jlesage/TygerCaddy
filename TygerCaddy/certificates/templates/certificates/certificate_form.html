@@ -1,7 +1,28 @@
 {% extends 'base/base.html' %}
 {% load bootstrap4 %}
 {% block content %}
+    <style>
+        #customFile .custom-file-control:lang(en)::after {
+            content: "Select file...";
+        }
 
+        #customFile .custom-file-control:lang(en)::before {
+            content: "Click me";
+        }
+
+        /*when a value is selected, this class removes the content */
+        .custom-file-control.selected:lang(en)::after {
+            content: "" !important;
+        }
+
+        .custom-file {
+            overflow: hidden;
+        }
+
+        .custom-file-control {
+            white-space: nowrap;
+        }
+    </style>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -21,9 +42,13 @@
                         <div class="form-group">
                             <label for="id_Key-key_file">Key file</label>
                             <div class="row bootstrap4-multi-input">
+
                                 <div class="col-12">
-                                    <input name="Key-key_file" class="" title="" required="" id="id_Key-key_file"
-                                           type="file">
+                                    <label class="custom-file" id="customFile">
+                                        <input name="Key-key_file" type="file" class="custom-file-input"
+                                               id="id_Key-key_file" aria-describedby="fileHelp">
+                                        <span class="custom-file-control form-control-file"></span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -31,8 +56,11 @@
                             <label for="id_Bundle-bundle_file">Bundle file</label>
                             <div class="row bootstrap4-multi-input">
                                 <div class="col-12">
-                                    <input name="Bundle-bundle_file" class="" title="" required=""
-                                           id="id_Bundle-bundle_file" type="file">
+                                    <label class="custom-file" id="customFile">
+                                        <input name="Bundle-bundle_file" type="file" class="custom-file-input"
+                                               id="id_Bundle-bundle_file" aria-describedby="fileHelp">
+                                        <span class="custom-file-control form-control-file"></span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -42,6 +70,7 @@
             </div>
         </div>
     </div>
+
 {% endblock %}
 
 

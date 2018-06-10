@@ -1,3 +1,4 @@
+
 from certificates.models import Certificate
 from django.db import models
 from django.urls import reverse

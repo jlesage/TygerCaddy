@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from hosts.caddyfile import caddyfile_build
 from hosts.models import Host
 
 from .models import Header, Proxy
@@ -42,7 +43,7 @@ class CreateProxy(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.save()
-        generate_caddyfile()
+        caddyfile_build()
         return redirect(reverse_lazy('all-proxies'))
 
 
@@ -88,7 +89,7 @@ class UpdateProxy(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         form.save()
-        generate_caddyfile()
+        caddyfile_build()
         return redirect(reverse_lazy('all-proxies'))
 
 
@@ -104,7 +105,7 @@ class DeleteProxy(LoginRequiredMixin, DeleteView):
         """
         self.object = self.get_object()
         self.object.delete()
-        generate_caddyfile()
+        caddyfile_build()
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -120,7 +121,7 @@ class CreateHeader(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
 
         form.save()
-        generate_caddyfile()
+        caddyfile_build()
         return redirect(reverse_lazy('all-headers'))
 
 
@@ -168,5 +169,5 @@ class DeleteHeader(LoginRequiredMixin, DeleteView):
         """
         self.object = self.get_object()
         self.object.delete()
-        generate_caddyfile()
+        caddyfile_build()
         return HttpResponseRedirect(self.get_success_url())
