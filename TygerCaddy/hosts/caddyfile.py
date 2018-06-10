@@ -93,22 +93,43 @@ def build_proxy_block(hostID):
         return proxyblock
 
 
+def build_ssl_block(caddyhost):
+    user = User.objects.get(pk=1)
+    if not caddyhost.tls:
+        block = '\ttls off \n } \n \n'
+    if caddyhost.custom_ssl:
+        certsblock = ''
+        certs = caddyhost.custom_certs.all()
+
+    if caddyhost.staging:
+        block = '\ttls ' + user.email + ' {\n' \
+                                        '\t ca https://acme-staging-v02.api.letsencrypt.org/directory\n' \
+                                        '\t } \n' \
+                                        '} \n'
+    else:
+        block = '\ttls ' + user.email + '\n } \n \n'
+
+
 def build_host_block(caddyhost):
     # Start the host part of the block
     # Set the host name to respond to
-    block = caddyhost.host_name + ' { \n'
-
+    print(caddyhost)
+    proxyblock = caddyhost.host_name + ' { \n'
+    print(proxyblock)
     # Add the root path
-    block += '\t root ' + caddyhost.root_path + '\n'
+    proxyblock += '\t root ' + caddyhost.root_path + '\n'
+    proxyblock += build_proxy_block(hostID=caddyhost.id)
+    proxyblock += build_ssl_block(caddyhost)
 
-    # Set the Proxy block variable to empty
-    proxyblock = ''
-
-    proxyblock = build_proxy_block(hostID=caddyhost.id)
+    if proxyblock:
+        return proxyblock
+    else:
+        # Set the Proxy block variable to empty
+        proxyblock = ''
+        return proxyblock
 
 
 def caddyfile_build():
-    user = User.objects.get(pk=1)
 
     project = settings.BASE_DIR
     caddyfilepath = project + '/data/caddyfile.conf'
@@ -117,110 +138,117 @@ def caddyfile_build():
     hosts = Host.objects.all()
 
     if hosts:
+        block = ''
         for caddyhost in hosts:
             proxies = Proxy.objects.filter(host_id=caddyhost.id)
             if not proxies:
                 block = ''
             else:
-                block = build_host_block(caddyhost=ca)
+                block = build_host_block(caddyhost=caddyhost)
+                ssl = build_ssl_block(caddyhost=caddyhost)
+
+        caddyfile.write(block)
+        caddyfile.close()
+        generate_dash()
+        reload_caddy()
 
 
-def generate_caddyfile():
-    user = User.objects.get(pk=1)
-
-    project = settings.BASE_DIR
-    caddyfilepath = project + '/data/caddyfile.conf'
-    caddyfile = open(caddyfilepath, "w+")
-
-    config = Config.objects.get(pk=1)
-    if config.dns_provider:
-        dns = config.dns_provider
-        caddyname = dns.caddy_name
-        set_evariables(config=config, dns=dns)
-
-    hosts = Host.objects.all()
-    if hosts:
-        for caddyhost in hosts:
-            # if caddyhost.dns_verification:
-            # set_evariables(config=config, dns=caddyhost.dns_provider)
-
-            proxies = Proxy.objects.filter(host_id=caddyhost.id)
-            if not proxies:
-                block = ''
-            else:
-                block = caddyhost.host_name + ' { \n'
-                block += '\t root ' + caddyhost.root_path + '\n'
-                proxyblock = ''
-
-                for proxy in proxies:
-                    headerlist = Header.objects.filter(proxy_id=proxy.id)
-
-                    proxyblock += '\t\t proxy ' + proxy.proxy_from + ' ' + proxy.proxy_to + ' { \n'
-                    if proxy.load_policy:
-                        proxyblock += '\t\t\t load_policy ' + str(proxy.load_policy.name) + '\n'
-                    if proxy.fail_timeout:
-                        proxyblock += '\t\t\t fail_timeout ' + str(proxy.fail_timeout) + '\n'
-                    if proxy.max_fails:
-                        proxyblock += '\t\t\t max_fails ' + str(proxy.max_fails) + '\n'
-                    if proxy.max_conns:
-                        proxyblock += '\t\t\t max_conns ' + str(proxy.max_conns) + '\n'
-                    if proxy.try_duration:
-                        proxyblock += '\t\t\t try_duration ' + str(proxy.try_duration) + '\n'
-                    if proxy.try_interval:
-                        proxyblock += '\t\t\t try_interval ' + str(proxy.try_interval) + '\n'
-                    if proxy.health_check:
-                        proxyblock += '\t\t\t health_check ' + str(proxy.health_check) + '\n'
-                    if proxy.health_check_port:
-                        proxyblock += '\t\t\t health_check_port ' + str(proxy.health_check_port) + '\n'
-                    if proxy.health_check_interval:
-                        proxyblock += '\t\t\t health_check_interval ' + str(proxy.health_check_interval) + '\n'
-                    if proxy.health_check_timeout:
-                        proxyblock += '\t\t\t health_check_timeout ' + str(proxy.health_check_timeout) + '\n'
-                    if proxy.keep_alive:
-                        proxyblock += '\t\t\t keep_alive ' + str(proxy.keep_alive) + '\n'
-                    if proxy.timeout:
-                        proxyblock += '\t\t\t timeout ' + str(proxy.timeout) + '\n'
-                    if proxy.without:
-                        proxyblock += '\t\t\t without ' + str(proxy.without) + '\n'
-                    if proxy.exceptions:
-                        proxyblock += '\t\t\t exceptions ' + str(proxy.exceptions) + '\n'
-                    if proxy.insecure_skip_verify:
-                        proxyblock += '\t\t\t insecure_skip_verify \n'
-                    if proxy.websocket:
-                        proxyblock += '\t\t\t websocket \n'
-                    if proxy.transparent:
-                        proxyblock += '\t\t\t transparent \n'
-
-                    if headerlist:
-                        for header in headerlist:
-                            if header.downstream:
-                                proxyblock += 'header_downstream ' + header.header + ' ' + header.value + '\n'
-                            if header.upstream:
-                                proxyblock += 'header_upstream ' + header.header + ' ' + header.value + '\n'
-
-                    proxyblock += '\t\t } \n'
-
-                block += proxyblock
-
-                if caddyhost.tls == False:
-                    block += '\ttls off \n } \n \n'
-                elif config.dns_challenge:
-                    block += '\ttls ' + caddyname + '\n } \n \n'
-                elif caddyhost.staging:
-                    block += '\ttls ' + user.email + ' {\n' \
-                                                     '\t ca https://acme-staging-v02.api.letsencrypt.org/directory\n' \
-                                                     '\t } \n' \
-                                                     '} \n'
-
-                else:
-                    block += '\ttls ' + user.email + '\n } \n \n'
-
-            caddyfile.write(block)
-
-    caddyfile.close()
-    generate_dash()
-    reload_caddy()
-    return True
+# def generate_caddyfile():
+#     user = User.objects.get(pk=1)
+#
+#     project = settings.BASE_DIR
+#     caddyfilepath = project + '/data/caddyfile.conf'
+#     caddyfile = open(caddyfilepath, "w+")
+#
+#     config = Config.objects.get(pk=1)
+#     if config.dns_provider:
+#         dns = config.dns_provider
+#         caddyname = dns.caddy_name
+#         set_evariables(config=config, dns=dns)
+#
+#     hosts = Host.objects.all()
+#     if hosts:
+#         for caddyhost in hosts:
+#             # if caddyhost.dns_verification:
+#             # set_evariables(config=config, dns=caddyhost.dns_provider)
+#
+#             proxies = Proxy.objects.filter(host_id=caddyhost.id)
+#             if not proxies:
+#                 block = ''
+#             else:
+#                 block = caddyhost.host_name + ' { \n'
+#                 block += '\t root ' + caddyhost.root_path + '\n'
+#                 proxyblock = ''
+#
+#                 for proxy in proxies:
+#                     headerlist = Header.objects.filter(proxy_id=proxy.id)
+#
+#                     proxyblock += '\t\t proxy ' + proxy.proxy_from + ' ' + proxy.proxy_to + ' { \n'
+#                     if proxy.load_policy:
+#                         proxyblock += '\t\t\t load_policy ' + str(proxy.load_policy.name) + '\n'
+#                     if proxy.fail_timeout:
+#                         proxyblock += '\t\t\t fail_timeout ' + str(proxy.fail_timeout) + '\n'
+#                     if proxy.max_fails:
+#                         proxyblock += '\t\t\t max_fails ' + str(proxy.max_fails) + '\n'
+#                     if proxy.max_conns:
+#                         proxyblock += '\t\t\t max_conns ' + str(proxy.max_conns) + '\n'
+#                     if proxy.try_duration:
+#                         proxyblock += '\t\t\t try_duration ' + str(proxy.try_duration) + '\n'
+#                     if proxy.try_interval:
+#                         proxyblock += '\t\t\t try_interval ' + str(proxy.try_interval) + '\n'
+#                     if proxy.health_check:
+#                         proxyblock += '\t\t\t health_check ' + str(proxy.health_check) + '\n'
+#                     if proxy.health_check_port:
+#                         proxyblock += '\t\t\t health_check_port ' + str(proxy.health_check_port) + '\n'
+#                     if proxy.health_check_interval:
+#                         proxyblock += '\t\t\t health_check_interval ' + str(proxy.health_check_interval) + '\n'
+#                     if proxy.health_check_timeout:
+#                         proxyblock += '\t\t\t health_check_timeout ' + str(proxy.health_check_timeout) + '\n'
+#                     if proxy.keep_alive:
+#                         proxyblock += '\t\t\t keep_alive ' + str(proxy.keep_alive) + '\n'
+#                     if proxy.timeout:
+#                         proxyblock += '\t\t\t timeout ' + str(proxy.timeout) + '\n'
+#                     if proxy.without:
+#                         proxyblock += '\t\t\t without ' + str(proxy.without) + '\n'
+#                     if proxy.exceptions:
+#                         proxyblock += '\t\t\t exceptions ' + str(proxy.exceptions) + '\n'
+#                     if proxy.insecure_skip_verify:
+#                         proxyblock += '\t\t\t insecure_skip_verify \n'
+#                     if proxy.websocket:
+#                         proxyblock += '\t\t\t websocket \n'
+#                     if proxy.transparent:
+#                         proxyblock += '\t\t\t transparent \n'
+#
+#                     if headerlist:
+#                         for header in headerlist:
+#                             if header.downstream:
+#                                 proxyblock += 'header_downstream ' + header.header + ' ' + header.value + '\n'
+#                             if header.upstream:
+#                                 proxyblock += 'header_upstream ' + header.header + ' ' + header.value + '\n'
+#
+#                     proxyblock += '\t\t } \n'
+#
+#                 block += proxyblock
+#
+#                 if caddyhost.tls == False:
+#                     block += '\ttls off \n } \n \n'
+#                 elif config.dns_challenge:
+#                     block += '\ttls ' + caddyname + '\n } \n \n'
+#                 elif caddyhost.staging:
+#                     block += '\ttls ' + user.email + ' {\n' \
+#                                                      '\t ca https://acme-staging-v02.api.letsencrypt.org/directory\n' \
+#                                                      '\t } \n' \
+#                                                      '} \n'
+#
+#                 else:
+#                     block += '\ttls ' + user.email + '\n } \n \n'
+#
+#             caddyfile.write(block)
+#
+#     caddyfile.close()
+#     generate_dash()
+#     reload_caddy()
+#     return True
 
 
 def generate_dash():

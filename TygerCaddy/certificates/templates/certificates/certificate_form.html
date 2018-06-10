@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header ">
+                    <h5 class="card-category">Hosts</h5>
+                    <h4 class="card-title">{{ view.title }}</h4>
+                </div>
+                <div class="card-body ">
+                    <form action="" method="post" class="form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_Certificate-cert_name">Cert name</label>
+                            <input name="Certificate-cert_name" maxlength="200" class="form-control"
+                                   placeholder="Cert name" title="" required="" id="id_Certificate-cert_name"
+                                   type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="id_Key-key_file">Key file</label>
+                            <div class="row bootstrap4-multi-input">
+                                <div class="col-12">
+                                    <input name="Key-key_file" class="" title="" required="" id="id_Key-key_file"
+                                           type="file">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_Bundle-bundle_file">Bundle file</label>
+                            <div class="row bootstrap4-multi-input">
+                                <div class="col-12">
+                                    <input name="Bundle-bundle_file" class="" title="" required=""
+                                           id="id_Bundle-bundle_file" type="file">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+

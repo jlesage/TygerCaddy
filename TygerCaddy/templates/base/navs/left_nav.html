@@ -95,6 +95,39 @@
                       </ul>
                   </div>
               </li>
+                <li class="
+                        {% active_link 'create-certificate' %}{% active_link 'upload-certificate' %}{% active_link 'all-certificates' %}">
+                    <a data-toggle="collapse" href="#certificates" aria-expanded="false" class="collapsed">
+                        <i class="now-ui-icons design_vector"></i>
+                        <p>
+                            Certificates <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="certificates" style="">
+                        <ul class="nav">
+                            <li class="{% active_link 'all-certificates' %}">
+                                <a href="{% url 'all-certificates' %}">
+                                    <span class="sidebar-mini-icon">AP</span>
+                                    <span class="sidebar-normal"> All Certificates </span>
+                                </a>
+                            </li>
+                            <li class="{% active_link 'create-certificate' %}">
+                                <a href="{% url 'create-certificate' %}">
+                                    <span class="sidebar-mini-icon ui-1_simple-add"><i
+                                            class="now-ui-icons ui-1_simple-add"></i></span>
+                                    <span class="sidebar-normal"> Create Certificate </span>
+                                </a>
+                            </li>
+                            <li class="{% active_link 'upload-certificate' %}">
+                                <a href="{% url 'upload-certificate' %}">
+                                    <span class="sidebar-mini-icon ui-1_simple-add"><i
+                                            class="now-ui-icons ui-1_simple-add"></i></span>
+                                    <span class="sidebar-normal"> Upload Certificate </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
                 <li class="{% active_link 'all-logs' %}">
                     <a href="{% url 'all-logs' %}">
                         <i class="now-ui-icons loader_gear"></i>

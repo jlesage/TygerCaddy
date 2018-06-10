@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     'bootstrap4',
     'active_link',
+    'betterforms',
 
     # internal apps
 
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     'config.apps.ConfigConfig',
     'proxies.apps.ProxiesConfig',
     'logs.apps.LogsConfig',
+    'certificates.apps.CertificatesConfig',
 ]
 
 MIDDLEWARE = [
@@ -144,6 +146,8 @@ STATIC_ROOT = ''
 STATIC_URL = '/assets/'
 
 STATICFILES_DIRS = ( os.path.join('assets'), )
+
+MEDIA_ROOT = (os.path.join('data'))
 
 try:
     from .install import *

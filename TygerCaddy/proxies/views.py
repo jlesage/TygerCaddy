@@ -3,7 +3,6 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
-from hosts.caddyfile import generate_caddyfile
 from hosts.models import Host
 
 from .models import Header, Proxy

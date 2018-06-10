@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from .caddyfile import generate_caddyfile
+from .caddyfile import caddyfile_build
 from .models import Host
 
 
@@ -14,7 +14,7 @@ from .models import Host
 
 class CreateHost(LoginRequiredMixin, CreateView):
     model = Host
-    fields = ['host_name', 'root_path', 'tls', 'staging']
+    fields = ['host_name', 'root_path', 'tls', 'staging', 'custom_ssl', 'custom_certs', 'force_redirect_https']
     title = 'Add Host'
     success_url = reverse_lazy('dashboard')
 
@@ -23,15 +23,14 @@ class CreateHost(LoginRequiredMixin, CreateView):
         if not form.cleaned_data['tls']:
             if 'http://' not in form.cleaned_data['host_name']:
                 host.host_name = 'http://' + form.cleaned_data['host_name']
-
         host.save()
-        generate_caddyfile()
+        caddyfile_build()
 
         return redirect(reverse_lazy('dashboard'))
 
 
 class AllHosts(LoginRequiredMixin, ListView):
-    template_name = 'hosts/all_hosts.html'
+    template_name = 'hosts/all_certificates.html'
     context_object_name = 'hosts'
     queryset = Host.objects.order_by('id')
     paginate_by = 10
@@ -40,7 +39,7 @@ class AllHosts(LoginRequiredMixin, ListView):
 
 class UpdateHost(LoginRequiredMixin, UpdateView):
     model = Host
-    fields = ['host_name', 'root_path', 'tls', 'staging']
+    fields = ['host_name', 'root_path', 'tls', 'staging', 'custom_ssl', 'custom_certs', 'force_redirect_https']
     slug_field = 'host_name'
     success_url = reverse_lazy('dashboard')
     title = 'Update Host'
@@ -51,7 +50,7 @@ class UpdateHost(LoginRequiredMixin, UpdateView):
             if 'http://' not in form.cleaned_data['host_name']:
                 host.host_name = 'http://' + form.cleaned_data['host_name']
         host.save()
-        caddy = generate_caddyfile()
+        caddy = caddyfile_build()
         return redirect(reverse_lazy('dashboard'))
 
 
@@ -67,13 +66,12 @@ class DeleteHost(LoginRequiredMixin, DeleteView):
         """
         self.object = self.get_object()
         self.object.delete()
-        caddy = generate_caddyfile()
+        caddy = caddyfile_build()
         return HttpResponseRedirect(self.get_success_url())
 
 
 @login_required
 def generate(request):
-    run = generate_caddyfile()
-    return redirect('/dashboard')
-
-
+    run = caddyfile_build()
+    html = "<html><body><h2>Caddyfile has been regenerated</h2></body></html>"
+    return HttpResponse(html)
