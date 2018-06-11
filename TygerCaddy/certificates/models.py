@@ -21,8 +21,8 @@ class Certificate(models.Model):
     cert_name = models.CharField(max_length=200, blank=False, unique=True)
     bundle_upload = models.ForeignKey(Bundle, on_delete=models.CASCADE, blank=True, null=True)
     key_upload = models.ForeignKey(Key, on_delete=models.CASCADE, blank=True, null=True)
-    bundle_text = models.TextField(max_length=500, blank=True, null=True)
-    key_text = models.TextField(max_length=500, blank=True, null=True)
+    bundle_text = models.TextField(max_length=2000, blank=True, null=True)
+    key_text = models.TextField(max_length=2000, blank=True, null=True)
 
     def __str__(self):
         return self.cert_name
