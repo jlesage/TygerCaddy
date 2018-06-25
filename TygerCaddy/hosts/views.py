@@ -23,7 +23,8 @@ class CreateHost(LoginRequiredMixin, CreateView):
             if 'http://' not in form.cleaned_data['host_name']:
                 host.host_name = 'http://' + form.cleaned_data['host_name']
         host.save()
-        host.save_m2m()
+        if form.cleaned_data['custom_certs']:
+            form.save_m2m()
         caddyfile_build()
 
         return redirect(reverse_lazy('dashboard'))

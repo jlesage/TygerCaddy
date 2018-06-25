@@ -16,7 +16,7 @@ class Host(models.Model):
     dns_verification = models.BooleanField(default=False)
     dns_provider = models.ForeignKey(DNS, on_delete=models.CASCADE, blank=True, null=True)
     custom_ssl = models.BooleanField(default=False)
-    custom_certs = models.ManyToManyField(Certificate)
+    custom_certs = models.ManyToManyField(Certificate, blank=True)
     force_redirect_https = models.BooleanField(default=True)
 
     def __str__(self):
