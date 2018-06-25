@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'active_link',
     'betterforms',
+    'rest_framework',
 
     # internal apps
 
@@ -60,7 +61,13 @@ INSTALLED_APPS = [
     'logs.apps.LogsConfig',
     'certificates.apps.CertificatesConfig',
 ]
-
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -145,7 +152,7 @@ STATIC_ROOT = ''
 
 STATIC_URL = '/assets/'
 
-STATICFILES_DIRS = ( os.path.join('assets'), )
+STATICFILES_DIRS = (os.path.join('assets'),)
 
 MEDIA_ROOT = (os.path.join('data'))
 

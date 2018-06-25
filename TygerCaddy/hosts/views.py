@@ -11,7 +11,6 @@ from .models import Host
 
 # Create your views here.
 
-
 class CreateHost(LoginRequiredMixin, CreateView):
     model = Host
     fields = ['host_name', 'root_path', 'tls', 'staging', 'custom_ssl', 'custom_certs', 'force_redirect_https']
