@@ -4,3 +4,5 @@ django-betterforms==1.1.4
 django-bootstrap4==0.0.6
 pytz==2018.4
 six==1.11.0
+djangorestframework==3.8.2
+django-rest-auth==0.9.3
