@@ -44,8 +44,11 @@ def build_proxy_block(hostID):
         return False
     else:
         proxyblock = ''
+        print("Proxy block started")
+
         # For every proxy associated with this hostname
         for proxy in proxies:
+            print("Generating proxy: ", proxy.name)
             # Build the proxy block based on the found values in the DB
             proxyblock += '\t\t proxy ' + proxy.proxy_from + ' ' + proxy.proxy_to + ' { \n'
             if proxy.load_policy:
@@ -90,13 +93,14 @@ def build_proxy_block(hostID):
 
             # Close off the proxyblock
             proxyblock += '\t\t } \n'
-
+        print("Proxy block Ended")
         return proxyblock
 
 
 def build_ssl_block(caddyhost):
     user = User.objects.get(pk=1)
     certblock = ''
+    print("Cert block started")
     if not caddyhost.tls:
         certblock = '\ttls off \n } \n \n'
 
@@ -112,14 +116,15 @@ def build_ssl_block(caddyhost):
                 cert.key_upload.key_file.path) + '\n } \n \n'
     else:
         certblock = '\ttls ' + user.email + '\n } \n \n'
-
+    print("Cert block ended")
     return certblock
 
 
 def build_host_block(caddyhost):
     # Start the host part of the block
     # Set the host name to respond to
-
+    print("Host block started")
+    print("Generating host: ", caddyhost.host_name)
     if caddyhost.force_redirect_https:
         proxyblock = caddyhost.host_name + ':443 { \n'
     else:
@@ -127,7 +132,7 @@ def build_host_block(caddyhost):
     # Add the root path
     proxyblock += '\t root ' + caddyhost.root_path + '\n'
     proxyblock += build_proxy_block(hostID=caddyhost.id)
-
+    print("Host block ended",caddyhost.host_name)
     return proxyblock
 
 
@@ -149,12 +154,13 @@ def caddyfile_build():
                 block = build_host_block(caddyhost=caddyhost)
                 ssl = build_ssl_block(caddyhost=caddyhost)
                 block += ssl
+                caddyfile.write(block)
 
-        caddyfile.write(block)
-        caddyfile.close()
-        generate_dash()
-        reload_caddy()
+    caddyfile.close()
+    generate_dash()
+    reload_caddy()
 
+    return True
 
 # def generate_caddyfile():
 #     user = User.objects.get(pk=1)
