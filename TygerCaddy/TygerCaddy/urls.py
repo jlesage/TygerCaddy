@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
+
 from .api_urls import router
 
 urlpatterns = [
@@ -34,6 +35,7 @@ urlpatterns = [
     path('accounts/logout/', auth_views.logout, {'next_page': '/accounts/login'}, name='logout'),
     path('accounts/password/change/', auth_views.password_change, {'template_name': 'dashboard/pass-change.html'},  name='update-password'),
     path('accounts/password/change/done/', auth_views.password_change_done, {'template_name': 'dashboard/pass-change-done.html'}, name='password_change_done'),
+    path('v2/', TemplateView.as_view(template_name='angular/index.html'), name='angular_v2'),
 ]
 
 urlpatterns += [
