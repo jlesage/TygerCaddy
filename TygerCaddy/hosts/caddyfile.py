@@ -131,8 +131,11 @@ def build_host_block(caddyhost):
         proxyblock = caddyhost.host_name + ' { \n'
     # Add the root path
     proxyblock += '\t root ' + caddyhost.root_path + '\n'
+    # Add the basic auth if defined.
+    if caddyhost.basic_auth:
+        proxyblock += '\t basicauth / ' + caddyhost.basic_username + ' ' + caddyhost.basic_password + '\n'
     proxyblock += build_proxy_block(hostID=caddyhost.id)
-    print("Host block ended",caddyhost.host_name)
+    print("Host block ended", caddyhost.host_name)
     return proxyblock
 
 

@@ -13,7 +13,8 @@ from .models import Host
 
 class CreateHost(LoginRequiredMixin, CreateView):
     model = Host
-    fields = ['host_name', 'root_path', 'tls', 'staging', 'custom_ssl', 'custom_certs', 'force_redirect_https']
+    fields = ['host_name', 'root_path', 'tls', 'staging', 'custom_ssl', 'custom_certs', 'force_redirect_https',
+              'basic_auth', 'basic_username', 'basic_password']
     title = 'Add Host'
     success_url = reverse_lazy('dashboard')
 
@@ -40,7 +41,8 @@ class AllHosts(LoginRequiredMixin, ListView):
 
 class UpdateHost(LoginRequiredMixin, UpdateView):
     model = Host
-    fields = ['host_name', 'root_path', 'tls', 'staging', 'custom_ssl', 'custom_certs', 'force_redirect_https']
+    fields = ['host_name', 'root_path', 'tls', 'staging', 'custom_ssl', 'custom_certs', 'force_redirect_https',
+              'basic_auth', 'basic_username', 'basic_password']
     slug_field = 'host_name'
     success_url = reverse_lazy('dashboard')
     title = 'Update Host'

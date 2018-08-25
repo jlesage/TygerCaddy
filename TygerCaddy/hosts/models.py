@@ -18,6 +18,9 @@ class Host(models.Model):
     custom_ssl = models.BooleanField(default=False)
     custom_certs = models.ManyToManyField(Certificate, blank=True)
     force_redirect_https = models.BooleanField(default=True)
+    basic_auth = models.BooleanField(default=False)
+    basic_username = models.CharField(max_length=200, blank=True, null=True)
+    basic_password = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.host_name
