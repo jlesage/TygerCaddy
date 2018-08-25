@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from .caddyfile import caddyfile_build
+from .caddyfile import caddyfile_build, reload_caddy
 from .models import Host
 
 
@@ -76,4 +76,11 @@ class DeleteHost(LoginRequiredMixin, DeleteView):
 def generate(request):
     run = caddyfile_build()
     html = "<html><body><h2>Caddyfile has been regenerated</h2></body></html>"
+    return HttpResponse(html)
+
+
+@login_required
+def reload(request):
+    run = reload_caddy()
+    html = "<html><body><h2>Caddy has been reloaded</h2></body></html>"
     return HttpResponse(html)

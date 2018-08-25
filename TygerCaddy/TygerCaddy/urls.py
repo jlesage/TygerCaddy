@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.views.generic import RedirectView, TemplateView
-from hosts.views import generate
+from hosts.views import generate, reload
 
 from .api_urls import router
 
@@ -42,5 +42,6 @@ urlpatterns = [
 urlpatterns += [
     path('api/', include(router.urls)),
     path('api/generate/', generate, name="generate"),
+    path('api/reload/', reload, name="generate"),
     path('api-auth/', include('rest_auth.urls'))
 ]

@@ -1,8 +1,7 @@
-from django.conf.urls import url, include
 from rest_framework import routers
 from hosts.api.api_views import HostViewset
 from proxies.api.api_views import ProxyViewset, HeaderViewset
-from config.api.api_views import ConfigViewset
+from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'hosts', HostViewset)
