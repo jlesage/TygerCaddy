@@ -18,5 +18,5 @@ class HostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Host
         fields = ('id', 'host_name', 'root_path', 'tls', 'staging', 'dns_verification', 'dns_provider',
-                  'custom_ssl', 'custom_certs', 'force_redirect_https', 'proxy_set')
-
+                  'custom_ssl', 'custom_certs', 'force_redirect_https', 'proxy_set',
+                  'basic_auth', 'basic_username', 'basic_password')
