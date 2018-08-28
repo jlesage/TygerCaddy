@@ -53,7 +53,7 @@ class Index(View):
                             )
         new_config.save()
         generate_keyfile()
-        generate_dash()
+        generate_dash('w+')
 
         return redirect('login')
 

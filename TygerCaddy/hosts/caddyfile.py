@@ -103,7 +103,7 @@ def generate_caddyfile():
     return True
 
 
-def generate_dash():
+def generate_dash(fmode='a+'):
     project = settings.BASE_DIR
     caddyfilepath = project + '/data/caddyfile.conf'
     config = Config.objects.get(pk=1)
@@ -116,7 +116,7 @@ def generate_dash():
                                                         'root ' + str(config.root_dir) + '\n' \
                                                         '} \n'
 
-    caddyfile = open(caddyfilepath, "a+")
+    caddyfile = open(caddyfilepath, fmode)
     caddyfile.write(block)
     caddyfile.close()
 
