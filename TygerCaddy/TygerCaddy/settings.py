@@ -16,6 +16,9 @@ from pathlib import Path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
+CADDY_LOG_PATH = BASE_DIR + '/data/logs/caddy.txt'
+UWSGI_LOG_PATH = BASE_DIR + '/data/logs/uwsgi.txt'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 

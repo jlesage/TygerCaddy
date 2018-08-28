@@ -8,14 +8,8 @@ from django.conf import settings
 
 class LogsIndex(LoginRequiredMixin, View):
     def get(self, request):
-        project = settings.BASE_DIR
-        path = project + '/data/logs/'
-        caddylogpath = path + 'caddy.txt'
-        uwsgilogpath = path + 'uwsgi.txt'
-
-        caddylog = open(caddylogpath, 'r+')
-        uwsgilog = open(uwsgilogpath, 'r+')
-
+        caddylog = open(settings.CADDY_LOG_PATH, 'r+')
+        uwsgilog = open(settings.UWSGI_LOG_PATH, 'r+')
 
         caddy = caddylog.read()
         caddy.replace('\n', '<br>')
