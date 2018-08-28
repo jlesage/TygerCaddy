@@ -108,13 +108,13 @@ def generate_dash():
     caddyfilepath = project + '/data/caddyfile.conf'
     config = Config.objects.get(pk=1)
 
-    block = config.interface + ':' + str(config.port) + ' { \n \n' \
-                                                        'proxy / ' + config.proxy_host + ' { \n' \
-                                                        'transparent \n' \
-                                                        'except ' + config.proxy_exception + '\n' \
-                                                        '} \n \n' \
-                                                        'root ' + str(config.root_dir) + '\n' \
-                                                        '} \n'
+    block = config.interface + ':' + str(config.port) + ' { \n' \
+                                                        '\tproxy / ' + config.proxy_host + ' {\n' \
+                                                        '\t\ttransparent\n' \
+                                                        '\t\texcept ' + config.proxy_exception + '\n' \
+                                                        '\t}\n' \
+                                                        '\troot ' + str(config.root_dir) + '\n' \
+                                                        '}\n'
 
     caddyfile = open(caddyfilepath, "a+")
     caddyfile.write(block)
