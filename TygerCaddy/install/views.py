@@ -48,7 +48,7 @@ class Index(View):
                             proxy_host=config['proxy-host'],
                             name='primary', port=config['port'],
                             proxy_exception='/assets',
-                            root_dir='/apps/TygerCaddy/TygerCaddy',
+                            root_dir=settings.BASE_DIR,
                             dns_challenge=dns_check,
                             )
         new_config.save()
