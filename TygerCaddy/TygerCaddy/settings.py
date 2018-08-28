@@ -83,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django_settings_export.settings_export',
             ],
         },
     },
@@ -144,6 +145,20 @@ STATIC_ROOT = ''
 STATIC_URL = '/assets/'
 
 STATICFILES_DIRS = ( os.path.join('assets'), )
+
+# Simplified installation.
+# When simplified installation is enabled, default Caddy configuration settings
+# to access the TygerCaddy web interface are used and not asked to user during
+# installation.
+SIMPLIFIED_INSTALL = False
+SIMPLIFIED_INSTALL_DEFAULT_LISTEN_IP = '0.0.0.0'
+SIMPLIFIED_INSTALL_DEFAULT_LISTEN_PORT = '80'
+SIMPLIFIED_INSTALL_DEFAULT_BACKEND_PROXY = '127.0.0.1:9090'
+
+# Settings that should be made available to templates.
+SETTINGS_EXPORT = [
+    'SIMPLIFIED_INSTALL',
+]
 
 try:
     from .install import *

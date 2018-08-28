@@ -27,6 +27,15 @@ class Index(View):
         else:
             dns_check = False
 
+        if settings.SIMPLIFIED_INSTALL:
+            listen_ip = settings.SIMPLIFIED_INSTALL_DEFAULT_LISTEN_IP
+            listen_port = settings.SIMPLIFIED_INSTALL_DEFAULT_LISTEN_PORT
+            backend_proxy = settings.SIMPLIFIED_INSTALL_DEFAULT_BACKEND_PROXY
+        else:
+            listen_ip = form['listen_ip']
+            listen_port = form['listen_port']
+            backend_proxy = form['backend_proxy']
+
         #  if not form['dns_provider']:
         #      dns_provider = ""
         #  else:
@@ -35,9 +44,9 @@ class Index(View):
             'username': form['username'],
             'password': form['password'],
             'email': form['email'],
-            'interface': form['listen_ip'],
-            'port': form['listen_port'],
-            'proxy-host': form['backend_proxy'],
+            'interface': listen_ip,
+            'port': listen_port,
+            'proxy-host': backend_proxy,
             'dns-switch': dns_check,
             # 'dns-provider': dns_provider,
             'dash-colour': 'orange'

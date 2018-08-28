@@ -21,7 +21,7 @@
 
 
 <div class="container">
-    <div id="install-box">
+    <div id="install-box" {% if settings.SIMPLIFIED_INSTALL == True %}style="width: 350px;"{% endif %}>
         <div class="logo">
 
 
@@ -37,7 +37,7 @@
             <div class="controls">
                 {% csrf_token %}
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-{% if settings.SIMPLIFIED_INSTALL == False %}6{% else %}12{% endif %}">
                         <div class="form-group text-light">
                     <label for="username">Username</label>
                     <input type="text" name="username" placeholder="Username" class="form-control" required/>
@@ -57,6 +57,7 @@
                     <input type="email" name="email" placeholder="me@me.com" class="form-control" required/>
                 </div>
                     </div>
+{% if settings.SIMPLIFIED_INSTALL == False %}
                     <div class="col-lg-6">
                         <div class="form-group text-light">
                             <label for="listen_ip">Listening IP </label>
@@ -75,6 +76,7 @@
                                    value="0.0.0.0:9090" class="form-control" required/>
                         </div>
                     </div>
+{% endif %}
                 </div>
 
 
@@ -111,6 +113,7 @@
                     minlength: 3,
                     email: true,
                 },
+{% if settings.SIMPLIFIED_INSTALL == False %}
                 listen_ip: {
                     required: true,
                     minlength: 7,
@@ -123,6 +126,7 @@
                     required: true,
                     minlength: 3,
                 },
+{% endif %}
             },
         });
 
